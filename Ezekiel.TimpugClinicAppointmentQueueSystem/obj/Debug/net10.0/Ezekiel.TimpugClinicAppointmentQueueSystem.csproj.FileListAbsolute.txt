@@ -1,0 +1,9 @@
+C:\Users\HP\EzekielTimpug.ClinicAppointmentQueueSystem\Ezekiel.TimpugClinicAppointmentQueueSystem\obj\Debug\net10.0\Ezekiel.TimpugClinicAppointmentQueueSystem.csproj.AssemblyReference.cache
+C:\Users\HP\EzekielTimpug.ClinicAppointmentQueueSystem\Ezekiel.TimpugClinicAppointmentQueueSystem\obj\Debug\net10.0\rpswa.dswa.cache.json
+C:\Users\HP\EzekielTimpug.ClinicAppointmentQueueSystem\Ezekiel.TimpugClinicAppointmentQueueSystem\obj\Debug\net10.0\Ezekiel.TimpugClinicAppointmentQueueSystem.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\HP\EzekielTimpug.ClinicAppointmentQueueSystem\Ezekiel.TimpugClinicAppointmentQueueSystem\obj\Debug\net10.0\Ezekiel.TimpugClinicAppointmentQueueSystem.AssemblyInfoInputs.cache
+C:\Users\HP\EzekielTimpug.ClinicAppointmentQueueSystem\Ezekiel.TimpugClinicAppointmentQueueSystem\obj\Debug\net10.0\Ezekiel.TimpugClinicAppointmentQueueSystem.AssemblyInfo.cs
+C:\Users\HP\EzekielTimpug.ClinicAppointmentQueueSystem\Ezekiel.TimpugClinicAppointmentQueueSystem\obj\Debug\net10.0\Ezekiel.TimpugClinicAppointmentQueueSystem.csproj.CoreCompileInputs.cache
+C:\Users\HP\EzekielTimpug.ClinicAppointmentQueueSystem\Ezekiel.TimpugClinicAppointmentQueueSystem\obj\Debug\net10.0\Ezekiel.TimpugClinicAppointmentQueueSystem.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\HP\EzekielTimpug.ClinicAppointmentQueueSystem\Ezekiel.TimpugClinicAppointmentQueueSystem\obj\Debug\net10.0\Ezekiel.TimpugClinicAppointmentQueueSystem.RazorAssemblyInfo.cache
+C:\Users\HP\EzekielTimpug.ClinicAppointmentQueueSystem\Ezekiel.TimpugClinicAppointmentQueueSystem\obj\Debug\net10.0\Ezekiel.TimpugClinicAppointmentQueueSystem.RazorAssemblyInfo.cs

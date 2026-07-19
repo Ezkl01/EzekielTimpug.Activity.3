@@ -73,6 +73,10 @@
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
               "version": "[9.0.0, )"
+            },
+            "Resend": {
+              "target": "Package",
+              "version": "[0.6.0, )"
             }
           },
           "imports": [

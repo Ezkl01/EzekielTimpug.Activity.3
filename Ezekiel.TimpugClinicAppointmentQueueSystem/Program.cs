@@ -1,4 +1,5 @@
 using Ezekiel.TimpugClinicAppointmentQueueSystem.Infrastructure.Data;   
+using Ezekiel.TimpugClinicAppointmentQueueSystem.Infrastructure.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using BCrypt.Net;
@@ -39,6 +40,10 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+
+
+builder.Services.AddScoped<InviteTokenService>();
+
 
 var app = builder.Build();
 

@@ -1,0 +1,70 @@
+@page "/account/invite"
+@model Invite
+
+<div class="mask d-flex align-items-center py-5 gradient-custom-3">
+        <div class="container">
+            <div class="row d-flex justify-content-center align-items-center">
+
+                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+
+                    <div class="card shadow" style="border-radius:15px;">
+                        <div class="card-body p-4">
+
+                            <h2 class="text-uppercase text-center mb-5">
+                                Invite
+                            </h2>
+
+                            <form method="post" class="mt-5">
+                                <div class="mb-3">
+                                    <label class="form-label">Email address</label>
+                                    <input type="email"
+                                           class="form-control"
+                                           asp-for="@Model.UserInviteDto.UserName">
+                                    <span asp-validation-for="@Model.UserInviteDto.UserName"
+                                          class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">First Name</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           asp-for="@Model.UserInviteDto.FirstName">
+                                    <span asp-validation-for="@Model.UserInviteDto.FirstName"
+                                          class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           asp-for="@Model.UserInviteDto.LastName">
+                                    <span asp-validation-for="@Model.UserInviteDto.LastName"
+                                          class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Date of Birth</label>
+                                    <input type="date"
+                                           class="form-control"
+                                           asp-for="@Model.UserInviteDto.DateOfBirth">
+                                    <span asp-validation-for="@Model.UserInviteDto.DateOfBirth"
+                                          class="text-danger"></span>
+                                </div>
+ 
+                                <div class="mb-3">
+                                    <div asp-validation-summary="All" class="text-danger"></div>
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit"
+                                            class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">
+                                        Submit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

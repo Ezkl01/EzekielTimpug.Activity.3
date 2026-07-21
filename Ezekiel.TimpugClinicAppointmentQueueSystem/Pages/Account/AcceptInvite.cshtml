@@ -1,0 +1,24 @@
+@page "/account/accept-invite"
+@model AcceptInvite
+
+
+<form method="post" class="mt-5">
+  <div class="mb-3">
+    <div asp-validation-summary="All" class="text-danger"></div>
+  </div>    
+  <div class="mb-3">
+    <span class="text-info">Welcome to School Events! Please enter a new password for your account.</span>
+  </div>
+  <div class="mb-3">
+    <input type="hidden" class="form-control" id="exampleInputUserId1" asp-for="@Model.UserAcceptInviteDto!.UserId">
+    <label for="exampleInputPassword1" class="form-label">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" asp-for="@Model.UserAcceptInviteDto!.Password">
+    <span asp-validation-for="@Model.UserAcceptInviteDto!.Password" class="text-danger"></span>
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputConfirmPassword1" class="form-label">Confirm Password</label>
+    <input type="password" class="form-control" id="exampleInputConfirmPassword1" asp-for="@Model.UserAcceptInviteDto!.ConfirmPassword">
+    <span asp-validation-for="@Model.UserAcceptInviteDto!.ConfirmPassword" class="text-danger"></span>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

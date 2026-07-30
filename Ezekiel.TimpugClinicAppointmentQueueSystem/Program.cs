@@ -1,12 +1,24 @@
 using Ezekiel.TimpugClinicAppointmentQueueSystem.Infrastructure.Data;   
+using Ezekiel.TimpugClinicAppointmentQueueSystem.Infrastructure.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using BCrypt.Net;
+using Resend;
  
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddOptions();
+builder.Services.AddHttpClient<ResendClient>();
+builder.Services.Configure<ResendClientOptions>(options =>
+{
+    options.ApiToken = builder.Configuration["Resend:ApiKey"]
+        ?? throw new InvalidOperationException("Resend API key 'Resend:ApiKey' not found.");
+});
+builder.Services.AddTransient<IResend, ResendClient>();
+
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
@@ -28,6 +40,10 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+
+
+builder.Services.AddScoped<InviteTokenService>();
+
 
 var app = builder.Build();
 

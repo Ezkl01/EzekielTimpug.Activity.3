@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Ezekiel.TimpugClinicAppointmentQueueSystem")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cc6f42e9078b0d4c8cbf283fbf83dea94c8b3119")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e4c0992fe5f407f66b658b3b3f202f9cab0a1a49")]
 [assembly: System.Reflection.AssemblyProductAttribute("Ezekiel.TimpugClinicAppointmentQueueSystem")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Ezekiel.TimpugClinicAppointmentQueueSystem")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

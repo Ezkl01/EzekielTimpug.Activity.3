@@ -81,7 +81,7 @@ public class Login : PageModel
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.UserName ?? user.FirstName!),
-                new Claim("UserId", user.Id!.ToString()!) // You can add custom claims as needed
+                new Claim(ClaimTypes.NameIdentifier, user.Id!.ToString()!)
             };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

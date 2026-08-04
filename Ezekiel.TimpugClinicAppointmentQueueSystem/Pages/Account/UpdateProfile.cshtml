@@ -1,0 +1,41 @@
+@page "/account/update-profile"
+@model UpdateProfile
+
+
+<form method="post" class="mt-5">
+    <div class="mask d-flex align-items-center py-5 gradient-custom-3">
+        <div class="container">
+            <div class="row d-flex justify-content-center align-items-center">
+
+                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+
+                    <div class="card shadow" style="border-radius:15px;">
+                        <div class="card-body p-4">
+                    <div class="mb-3">
+                        <img class="card-img-top mb-3" style="max-width: 200px; height: auto;" src="@(string.IsNullOrEmpty(Model.UserUpdateDto.ProfileImage)
+                            ? "/users/default.png": Model.UserUpdateDto.ProfileImage)" alt="@Model.UserUpdateDto.FirstName @Model.UserUpdateDto.LastName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Email address</label>
+                        <p class="card-text">@Model.UserUpdateDto.Username </p>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputFirstName1" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="exampleInputFirstName1" asp-for="@Model.UserUpdateDto.FirstName">
+                        <span asp-validation-for="@Model.UserUpdateDto.FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputLastName1" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="exampleInputLastName1" asp-for="@Model.UserUpdateDto.LastName">
+                        <span asp-validation-for="@Model.UserUpdateDto.LastName" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputDateOfBirth1" class="form-label">Date of Birth</label>
+                        <input type="date" class="form-control" id="exampleInputDateOfBirth1" asp-for="@Model.UserUpdateDto.DateOfBirth">
+                        <span asp-validation-for="@Model.UserUpdateDto.DateOfBirth" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                    </div>    
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>

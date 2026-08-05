@@ -46,7 +46,7 @@ public class UpdateProfile : PageModel
         var avatarDiskPath = Path.Combine(_environment.WebRootPath, "users", $"{user.Id}.png");
         if (System.IO.File.Exists(avatarDiskPath))
         {
-                        UserUpdateDto.ProfileImage = $"/users/{user.Id}.png?v={DateTime.UtcNow.Ticks}";        }
+            UserUpdateDto.ProfileImage = $"/users/{user.Id}.png?v={DateTime.UtcNow.Ticks}";        }
         else
         {
             UserUpdateDto.ProfileImage = "/users/default.png?v={DateTime.UtcNow.Ticks}";// Path to the default profile image

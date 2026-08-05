@@ -80,7 +80,6 @@ private string ComputeHash(Stream stream)
 
     public IActionResult OnPost()
     {
-        // Reload profile information so it stays visible if validation fails.
         LoadUserData();
         
         if (!ModelState.IsValid)
@@ -150,7 +149,6 @@ private string ComputeHash(Stream stream)
                 uploadsFolder,
                 $"{user.Id}.png");
 
-// Check if the user already has an avatar
 if (System.IO.File.Exists(filePath))
 {
     // Save uploaded image into memory
@@ -160,7 +158,6 @@ if (System.IO.File.Exists(filePath))
     uploadedMemory.Position = 0;
     var uploadedHash = ComputeHash(uploadedMemory);
 
-    // Read the existing avatar and CLOSE the stream immediately
     string existingHash;
     using (var existingStream = System.IO.File.OpenRead(filePath))
     {
@@ -181,7 +178,7 @@ if (System.IO.File.Exists(filePath))
     // Reset memory stream
     uploadedMemory.Position = 0;
 
-    // Delete old avatar (optional)
+    // Delete old avatar
     System.IO.File.Delete(filePath);
 
     // Save new avatar

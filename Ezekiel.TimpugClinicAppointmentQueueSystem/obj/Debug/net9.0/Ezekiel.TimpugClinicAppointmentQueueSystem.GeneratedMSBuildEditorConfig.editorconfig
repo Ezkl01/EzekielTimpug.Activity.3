@@ -35,6 +35,10 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxBY2NlcHRJbnZpdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/HP/EzekielTimpug.ClinicAppointmentQueueSystem1/Ezekiel.TimpugClinicAppointmentQueueSystem/Pages/Account/ChangePassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxDaGFuZ2VQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/HP/EzekielTimpug.ClinicAppointmentQueueSystem1/Ezekiel.TimpugClinicAppointmentQueueSystem/Pages/Account/Invite.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxJbnZpdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

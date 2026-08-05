@@ -79,8 +79,6 @@ public class AcceptInvite : PageModel
             return Page();
         }        
 
-        // Hash the password using BCrypt
-        //string hashedPassword = BCrypt.Net.BCrypt.HashPassword(UserAcceptInviteDto!.Password!);
         var hashedPassword = BCrypt.Net.BCrypt.HashPassword(UserAcceptInviteDto!.Password!);
         Console.WriteLine($"Clear Text Password: {UserAcceptInviteDto!.Password!}"); 
         Console.WriteLine($"Hashed Password: {hashedPassword}"); 

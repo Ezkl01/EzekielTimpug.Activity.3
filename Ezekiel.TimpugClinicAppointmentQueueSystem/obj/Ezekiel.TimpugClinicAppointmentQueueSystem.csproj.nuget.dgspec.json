@@ -86,6 +86,10 @@
               "target": "Package",
               "version": "[0.6.0, )"
             },
+            "SixLabors.ImageSharp": {
+              "target": "Package",
+              "version": "[2.1.11, )"
+            },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
               "version": "[8.19.2, )"

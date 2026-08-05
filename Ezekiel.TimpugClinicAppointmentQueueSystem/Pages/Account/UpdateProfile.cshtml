@@ -14,9 +14,12 @@
                     <div class="mb-3">
                         <img class="card-img-top mb-3" style="max-width: 200px; height: auto;" src="@(string.IsNullOrEmpty(Model.UserUpdateDto.ProfileImage)
                             ? "/users/default.png": Model.UserUpdateDto.ProfileImage)" alt="@Model.UserUpdateDto.FirstName @Model.UserUpdateDto.LastName">
+                        <a asp-page="/Account/UpdateAvatar" class="btn btn-outline-primary">
+                             <i class="bi bi-camera"></i> Update Avatar
+                        </a>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Email address</label>
+                        <label for="exampleInputEmail1" class="form-label">Email Address</label>
                         <p class="card-text">@Model.UserUpdateDto.Username </p>
                     </div>
                     <div class="mb-3">
@@ -38,4 +41,7 @@
                         <div asp-validation-summary="All" class="text-danger"></div>
                     </div>    
                     <button type="submit" class="btn btn-primary">Submit</button>
+                     <button type="button"class="btn btn-danger"onclick="window.location.href='/account/profile'"> 
+                            Return
+                    </button>
                     </form>

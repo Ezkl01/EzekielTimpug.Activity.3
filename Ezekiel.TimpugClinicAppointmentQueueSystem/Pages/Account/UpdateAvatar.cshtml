@@ -1,0 +1,42 @@
+@page "/account/update-avatar"
+@model UpdateAvatar
+
+
+<form method="post" enctype="multipart/form-data" class="mt-5">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+
+                <div class="card shadow" style="border-radius:15px;">
+                    <div class="card-body p-5">
+
+                        <div class="row align-items-center">
+
+                            <!-- Left Side -->
+                            <div class="col-md-4 text-center">
+
+                                <img src="@Model.UserAvatarDto.ProfileImage"
+                                     class="img-fluid rounded shadow"
+                                     style="width:200px;height:200px;object-fit:cover;"
+                                     alt="@Model.UserAvatarDto.FirstName @Model.UserAvatarDto.LastName">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="mb-4">
+                                <label for="exampleInputEmail1" class="form-label">New Avatar</label>
+                                <input type="file" class="form-control" id="exampleInputEmail1" asp-for="@Model.UserAvatarDto.AvatarImage">
+                                <span asp-validation-for="@Model.UserAvatarDto.AvatarImage" class="text-danger"></span>
+                            </div>  
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Email Address</label>
+                                <p class="card-text">@Model.UserAvatarDto.Username </p>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Name</label>
+                                <p class="card-text">@Model.UserAvatarDto.FirstName @Model.UserAvatarDto.LastName</p>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="button"class="btn btn-danger"onclick="window.location.href='/account/profile'">
+                                    Return
+                            </button>
+                            </form>

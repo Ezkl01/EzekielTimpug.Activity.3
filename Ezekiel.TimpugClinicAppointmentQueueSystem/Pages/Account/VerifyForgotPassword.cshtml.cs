@@ -9,17 +9,18 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
-using Ezekiel.TimpugClinicAppointmentQueueSystem.Infrastructure.Helpers;
-using Resend;
 using Ezekiel.TimpugClinicAppointmentQueueSystem.Infrastructure.Data;
-public class AcceptInvite : PageModel
+using Resend;
+using Ezekiel.TimpugClinicAppointmentQueueSystem.Infrastructure.Helpers;
+public class VerifyForgotPassword : PageModel
 {
     private readonly ClinicAppointmentDbContext _dbContext;
     private readonly IConfiguration _configuration;
     private readonly IResend _resend;
-    private readonly ILogger<AcceptInvite> _logger;
+    private readonly ILogger<VerifyForgotPassword> _logger;
     private readonly UserTokenService userTokenService;
-    public AcceptInvite (ClinicAppointmentDbContext dbContext, IConfiguration configuration, IResend resend, UserTokenService userTokenService, ILogger<AcceptInvite> logger)
+
+    public VerifyForgotPassword(ClinicAppointmentDbContext dbContext, IConfiguration configuration, IResend resend, UserTokenService userTokenService, ILogger<VerifyForgotPassword> logger)
     {
         _dbContext = dbContext;
         _configuration = configuration;
@@ -29,7 +30,7 @@ public class AcceptInvite : PageModel
     }
 
     [BindProperty]
-    public UserAcceptInviteDto? UserAcceptInviteDto { get; set; }
+    public VerifyForgotPasswordDto? VerifyForgotPasswordDto { get; set; }
 
     public async Task<IActionResult> OnGet(string token)
     {
@@ -38,16 +39,16 @@ public class AcceptInvite : PageModel
             return RedirectToPage("/Account/Forbidden");
         }
 
-        var inviteToken = userTokenService.ValidateInviteToken(token);                     
-        if (inviteToken == null)
+        var resetToken = userTokenService.ValidateResetToken(token);
+        if (resetToken == null)
         {
-            ModelState.AddModelError(string.Empty, "Invalid or expired invite token.");
+            ModelState.AddModelError(string.Empty, "Invalid or expired reset token.");
             return RedirectToPage("/Account/Forbidden");
         }
 
-        this.UserAcceptInviteDto = new UserAcceptInviteDto
+        this.VerifyForgotPasswordDto = new VerifyForgotPasswordDto
         {
-           UserId = inviteToken.UserId
+           UserId = resetToken.UserId
         };
 
         return Page();
@@ -61,13 +62,13 @@ public class AcceptInvite : PageModel
             return Page();
         }
 
-        var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == UserAcceptInviteDto!.UserId);
+        var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == VerifyForgotPasswordDto!.UserId);
         if (user == null)
         {
             ModelState.AddModelError(string.Empty, "User not found.");
             return Page();
         }
-        var passwordErrors = PasswordValidator.Validate(UserAcceptInviteDto!.Password!);
+        var passwordErrors = PasswordValidator.Validate(VerifyForgotPasswordDto!.Password!);
         if (passwordErrors.Any())
         {
             foreach (var error in passwordErrors)
@@ -78,20 +79,30 @@ public class AcceptInvite : PageModel
             return Page();
         }        
 
-        var hashedPassword = BCrypt.Net.BCrypt.HashPassword(UserAcceptInviteDto!.Password!);
-        Console.WriteLine($"Clear Text Password: {UserAcceptInviteDto!.Password!}"); 
+        // Hash the password using BCrypt
+        //string hashedPassword = BCrypt.Net.BCrypt.HashPassword(VerifyForgotPasswordDto!.Password!);
+        var hashedPassword = BCrypt.Net.BCrypt.HashPassword(VerifyForgotPasswordDto!.Password!);
+        Console.WriteLine($"Clear Text Password: {VerifyForgotPasswordDto!.Password!}"); 
         Console.WriteLine($"Hashed Password: {hashedPassword}"); 
 
-        var userPassword = new UserLoginInfo(user.Id, "password", hashedPassword);
-
-        await _dbContext.UserLoginInfos.AddAsync(userPassword);
+        var userPassword = _dbContext.UserLoginInfos.FirstOrDefault(u => u.UserId == user.Id && u.Key == "password");
+        if (userPassword != null)
+        {
+            userPassword.Value = hashedPassword;
+        }
+        else
+        {
+            userPassword = new UserLoginInfo(user.Id, "password", hashedPassword);
+            _dbContext.UserLoginInfos.Add(userPassword);
+        }
+        
         await _dbContext.SaveChangesAsync();
 
         return RedirectToPage("/Account/Login");
     }
 }
 
-public class UserAcceptInviteDto
+public class VerifyForgotPasswordDto
 {
     [Required(ErrorMessage = "UserId is required.")]
     public Guid UserId { get; set; }

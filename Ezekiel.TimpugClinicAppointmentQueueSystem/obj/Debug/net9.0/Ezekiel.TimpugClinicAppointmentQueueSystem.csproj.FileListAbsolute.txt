@@ -447,5 +447,6 @@ C:\Users\HP\EzekielTimpug.ClinicAppointmentQueueSystem1\Ezekiel.TimpugClinicAppo
 C:\Users\HP\EzekielTimpug.ClinicAppointmentQueueSystem1\Ezekiel.TimpugClinicAppointmentQueueSystem\obj\Debug\net9.0\ref\Ezekiel.TimpugClinicAppointmentQueueSystem.dll
 C:\Users\HP\EzekielTimpug.ClinicAppointmentQueueSystem1\Ezekiel.TimpugClinicAppointmentQueueSystem\obj\Debug\net9.0\Ezekiel.TimpugClinicAppointmentQueueSystem.sourcelink.json
 C:\Users\HP\EzekielTimpug.ClinicAppointmentQueueSystem1\Ezekiel.TimpugClinicAppointmentQueueSystem\bin\Debug\net9.0\Resend.dll
-C:\Users\HP\EzekielTimpug.ClinicAppointmentQueueSystem1\Ezekiel.TimpugClinicAppointmentQueueSystem\obj\Debug\net9.0\compressed\igtb4y0rma-{0}-p0idqtzdjw-p0idqtzdjw.gz
 C:\Users\HP\EzekielTimpug.ClinicAppointmentQueueSystem1\Ezekiel.TimpugClinicAppointmentQueueSystem\bin\Debug\net9.0\Microsoft.Bcl.Cryptography.dll
+C:\Users\HP\EzekielTimpug.ClinicAppointmentQueueSystem1\Ezekiel.TimpugClinicAppointmentQueueSystem\obj\Debug\net9.0\compressed\igtb4y0rma-{0}-shu26rio0m-shu26rio0m.gz
+C:\Users\HP\EzekielTimpug.ClinicAppointmentQueueSystem1\Ezekiel.TimpugClinicAppointmentQueueSystem\bin\Debug\net9.0\SixLabors.ImageSharp.dll

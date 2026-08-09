@@ -29,9 +29,9 @@ builder.Services.AddDbContext<ClinicAppointmentDbContext>(options =>
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/Account/Login";
-        options.LogoutPath = "/Account/Logout";
-        options.AccessDeniedPath = "/Account/AccessDenied";
+        options.LoginPath = "/account/login";
+        options.LogoutPath = "/account/logout";
+        options.AccessDeniedPath = "/account/access-denied";
     });
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
@@ -42,7 +42,7 @@ builder.Services.AddSession(options =>
 });
 
 
-builder.Services.AddScoped<InviteTokenService>();
+builder.Services.AddScoped<UserTokenService>();
 
 
 var app = builder.Build();

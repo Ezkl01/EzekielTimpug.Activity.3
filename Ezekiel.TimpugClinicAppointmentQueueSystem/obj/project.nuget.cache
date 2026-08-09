@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "fCSs3ukr1+k=",
+  "dgSpecHash": "1qAmYVhtvVk=",
   "success": true,
   "projectFilePath": "C:\\Users\\HP\\EzekielTimpug.ClinicAppointmentQueueSystem1\\Ezekiel.TimpugClinicAppointmentQueueSystem\\Ezekiel.TimpugClinicAppointmentQueueSystem.csproj",
   "expectedPackageFiles": [
@@ -59,6 +59,7 @@
     "C:\\Users\\HP\\.nuget\\packages\\mysqlconnector\\2.4.0\\mysqlconnector.2.4.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\pomelo.entityframeworkcore.mysql\\9.0.0\\pomelo.entityframeworkcore.mysql.9.0.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\resend\\0.6.0\\resend.0.6.0.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\sixlabors.imagesharp\\2.1.11\\sixlabors.imagesharp.2.1.11.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\system.clientmodel\\1.0.0\\system.clientmodel.1.0.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\system.codedom\\6.0.0\\system.codedom.6.0.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\system.collections.immutable\\7.0.0\\system.collections.immutable.7.0.0.nupkg.sha512",

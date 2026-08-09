@@ -16,6 +16,7 @@
           "Microsoft.IdentityModel.Tokens": "8.19.2",
           "Pomelo.EntityFrameworkCore.MySql": "9.0.0",
           "Resend": "0.6.0",
+          "SixLabors.ImageSharp": "2.1.11",
           "System.IdentityModel.Tokens.Jwt": "8.19.2"
         },
         "runtime": {
@@ -633,6 +634,14 @@
           }
         }
       },
+      "SixLabors.ImageSharp/2.1.11": {
+        "runtime": {
+          "lib/netcoreapp3.1/SixLabors.ImageSharp.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.1.11.0"
+          }
+        }
+      },
       "System.ClientModel/1.0.0": {
         "dependencies": {
           "System.Memory.Data": "1.0.2"
@@ -1079,6 +1088,13 @@
       "sha512": "sha512-tYqh8kDmv2onFxV417PNwaD8SClhTRFG/WtiPoZpizGOzy9aQ0dXXW6lB3mwcIv1pbFOyubN+KprYkFoXY1/lw==",
       "path": "resend/0.6.0",
       "hashPath": "resend.0.6.0.nupkg.sha512"
+    },
+    "SixLabors.ImageSharp/2.1.11": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-tUvsejgzUmEbES114yLseRxmFiYlQbH5RyaYXUQsEL7ksDo1/kW+ZL1EfD6iSUfxj7LHU8p110oFvSrRfsaWSQ==",
+      "path": "sixlabors.imagesharp/2.1.11",
+      "hashPath": "sixlabors.imagesharp.2.1.11.nupkg.sha512"
     },
     "System.ClientModel/1.0.0": {
       "type": "package",

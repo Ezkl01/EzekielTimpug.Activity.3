@@ -86,8 +86,6 @@ body{
     text-align: left;
 }
 
-
-
 .gradient-custom-4 {
 /* fallback for old browsers */
 background: rgb(132, 213, 250);
@@ -97,4 +95,11 @@ background: -webkit-linear-gradient(to right, rgb(140, 132, 250), rgba(143, 211,
 
 /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 background: linear-gradient(to right, rgb(132, 165, 250), rgba(143, 211, 244, 1))
+}
+
+.profile-avatar {
+    display: block;
+    margin: 0 auto 20px;
+    width: 150px;
+    height: 150px;
 }

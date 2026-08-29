@@ -1,45 +1,287 @@
 @page "/account/update-profile"
 @model UpdateProfile
 
+@{
+    ViewData["Title"] = "Update Profile";
+}
+@{
+    var profileUrl = User.IsInRole("Admin")
+        ? "/account/admin-profile"
+        : "/account/user-profile";
+}
 
-<form method="post" class="mt-5">
-    <div class="mask d-flex align-items-center py-5 gradient-custom-3">
-        <div class="container">
-            <div class="row d-flex justify-content-center align-items-center">
-                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-                    <div class="card shadow" style="border-radius:15px;">
-                        <div class="card-body p-4">
-                    <div class="mb-3">
-                        <img class="card-img-top mb-3" style="max-width: 200px; height: auto;" src="@(string.IsNullOrEmpty(Model.UserUpdateDto.ProfileImage)
-                            ? "/users/default.png": Model.UserUpdateDto.ProfileImage)" alt="@Model.UserUpdateDto.FirstName @Model.UserUpdateDto.LastName">
-                        <a asp-page="/Account/UpdateAvatar" class="btn btn-outline-primary">
-                             <i class="bi bi-camera"></i> Update Avatar
-                        </a>
+<div class="account-page">
+
+    <!-- =========================
+         CLINICCARE BRAND
+         ========================= -->
+
+    <div class="account-page-brand">
+
+        <div class="account-brand-icon">
+            <i class="fas fa-hospital"></i>
+        </div>
+
+        <div class="account-brand-text">
+            <h2>ClinicCare</h2>
+            <span>Appointment System</span>
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         MAIN CARD
+         ========================= -->
+
+    <div class="account-card">
+
+        <!-- HEADER -->
+
+        <div class="account-card-header">
+
+            <div class="account-header-icon">
+                <i class="fas fa-user-pen"></i>
+            </div>
+
+            <div>
+
+                <span class="account-header-label">
+                    ACCOUNT SETTINGS
+                </span>
+
+                <h1>
+                    Update Profile
+                </h1>
+
+                <p>
+                    Manage and update your personal information.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- BODY -->
+
+        <div class="account-card-body">
+
+
+            <!-- =========================
+                 PROFILE PREVIEW
+                 ========================= -->
+
+            <div class="profile-preview-section">
+
+                <div class="profile-image-wrapper">
+
+                    <img src="@(string.IsNullOrEmpty(Model.UserUpdateDto.ProfileImage)
+                        ? "/users/default.png"
+                        : Model.UserUpdateDto.ProfileImage)"
+                         alt="@Model.UserUpdateDto.FirstName @Model.UserUpdateDto.LastName"
+                         class="profile-preview-image" />
+
+                    <a asp-page="/Account/UpdateAvatar"
+                       class="profile-camera-button">
+
+                        <i class="fas fa-camera"></i>
+
+                    </a>
+
+                </div>
+
+
+                <div class="profile-preview-info">
+
+                    <h2>
+                        @Model.UserUpdateDto.FirstName
+                        @Model.UserUpdateDto.LastName
+                    </h2>
+
+                    <p>
+                        Update your personal information and profile picture.
+                    </p>
+
+                    <a asp-page="/Account/UpdateAvatar"
+                       class="change-avatar-link">
+
+                        <i class="fas fa-camera"></i>
+                        Change Profile Picture
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="account-divider"></div>
+
+
+            <!-- =========================
+                 PERSONAL INFORMATION
+                 ========================= -->
+
+            <div class="account-section-heading">
+
+                <div class="account-section-icon green">
+                    <i class="fas fa-user"></i>
+                </div>
+
+                <div>
+
+                    <h2>
+                        Personal Information
+                    </h2>
+
+                    <p>
+                        Keep your information accurate and up to date.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <form method="post" class="account-form">
+
+
+                <!-- EMAIL -->
+
+                <div class="account-form-group full-width">
+
+                    <label>
+                        <i class="fas fa-envelope"></i>
+                        Email Address
+                    </label>
+
+                    <div class="account-readonly-input">
+
+                        <i class="fas fa-envelope"></i>
+
+                        <span>
+                            @Model.UserUpdateDto.Username
+                        </span>
+
                     </div>
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Email Address</label>
-                        <p class="card-text">@Model.UserUpdateDto.Username </p>
+
+                </div>
+
+
+                <!-- FIRST + LAST NAME -->
+
+                <div class="account-form-row">
+
+                    <div class="account-form-group">
+
+                        <label asp-for="UserUpdateDto.FirstName">
+                            <i class="fas fa-user"></i>
+                            First Name
+                        </label>
+
+                        <input type="text"
+                               asp-for="UserUpdateDto.FirstName"
+                               class="account-input"
+                               placeholder="Enter your first name" />
+
+                        <span asp-validation-for="UserUpdateDto.FirstName"
+                              class="account-validation">
+                        </span>
+
                     </div>
-                    <div class="mb-3">
-                        <label for="exampleInputFirstName1" class="form-label">First Name</label>
-                        <input type="text" class="form-control" id="exampleInputFirstName1" asp-for="@Model.UserUpdateDto.FirstName">
-                        <span asp-validation-for="@Model.UserUpdateDto.FirstName" class="text-danger"></span>
+
+
+                    <div class="account-form-group">
+
+                        <label asp-for="UserUpdateDto.LastName">
+                            <i class="fas fa-user"></i>
+                            Last Name
+                        </label>
+
+                        <input type="text"
+                               asp-for="UserUpdateDto.LastName"
+                               class="account-input"
+                               placeholder="Enter your last name" />
+
+                        <span asp-validation-for="UserUpdateDto.LastName"
+                              class="account-validation">
+                        </span>
+
                     </div>
-                    <div class="mb-3">
-                        <label for="exampleInputLastName1" class="form-label">Last Name</label>
-                        <input type="text" class="form-control" id="exampleInputLastName1" asp-for="@Model.UserUpdateDto.LastName">
-                        <span asp-validation-for="@Model.UserUpdateDto.LastName" class="text-danger"></span>
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputDateOfBirth1" class="form-label">Date of Birth</label>
-                        <input type="date" class="form-control" id="exampleInputDateOfBirth1" asp-for="@Model.UserUpdateDto.DateOfBirth">
-                        <span asp-validation-for="@Model.UserUpdateDto.DateOfBirth" class="text-danger"></span>
-                    </div>
-                    <div class="mb-3">
-                        <div asp-validation-summary="All" class="text-danger"></div>
-                    </div>    
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                     <button type="button"class="btn btn-danger"onclick="window.location.href='/account/profile'"> 
-                            Return
+
+                </div>
+
+
+                <!-- DATE OF BIRTH -->
+
+                <div class="account-form-group full-width">
+
+                    <label asp-for="UserUpdateDto.DateOfBirth">
+                        <i class="fas fa-calendar"></i>
+                        Date of Birth
+                    </label>
+
+                    <input type="date"
+                           asp-for="UserUpdateDto.DateOfBirth"
+                           class="account-input" />
+
+                    <span asp-validation-for="UserUpdateDto.DateOfBirth"
+                          class="account-validation">
+                    </span>
+
+                </div>
+
+
+                <!-- VALIDATION SUMMARY -->
+
+                <div class="account-validation-summary">
+
+                    <div asp-validation-summary="All"></div>
+
+                </div>
+
+
+                <!-- =========================
+                     BUTTONS
+                     ========================= -->
+
+                <div class="account-form-actions">
+
+                    <button type="submit"
+                            class="account-save-button">
+
+                        <i class="fas fa-check"></i>
+
+                        Save Changes
+
                     </button>
-                    </form>
+
+
+                    <button type="button"
+                            class="account-cancel-button"
+                            onclick="window.location.href='@profileUrl'">
+
+                        <i class="fas fa-arrow-left"></i>
+
+                        Return to Profile
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+}

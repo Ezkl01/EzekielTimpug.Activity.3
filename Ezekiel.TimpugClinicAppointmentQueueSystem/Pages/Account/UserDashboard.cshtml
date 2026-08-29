@@ -1,0 +1,873 @@
+@page "/user/dashboard"
+@model UserDashboardModel
+
+@{
+    ViewData["Title"] = "User Dashboard";
+}
+
+<div class="user-dashboard">
+
+    <!-- =========================
+         SIDEBAR
+         ========================= -->
+
+    <aside class="user-sidebar">
+
+        <div class="user-sidebar-brand">
+
+            <div class="user-brand-icon">
+                <i class="fas fa-solid fa-hospital"></i>
+            </div>
+
+            <div>
+                <h2>ClinicCare</h2>
+                <span>Appointment System</span>
+            </div>
+
+        </div>
+
+
+        <nav class="user-sidebar-nav">
+
+            <div class="user-nav-title">
+                MAIN
+            </div>
+
+            <a href="/user/dashboard"
+               class="user-nav-link active">
+
+                <i class="fas fa-chart-pie"></i>
+
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a href="/appointments"
+               class="user-nav-link">
+
+                <i class="fas fa-calendar-check"></i>
+
+                <span>My Appointments</span>
+
+            </a>
+
+
+            <a href="/doctors"
+               class="user-nav-link">
+
+                <i class="fas fa-user-doctor"></i>
+
+                <span>Doctors</span>
+
+            </a>
+
+
+            <div class="user-nav-title">
+                ACCOUNT
+            </div>
+
+
+            <a href="/account/user-profile"
+               class="user-nav-link">
+
+                <i class="fas fa-user"></i>
+
+                <span>Profile</span>
+
+            </a>
+
+
+            <a href="#"
+               class="user-nav-link">
+
+                <i class="fas fa-gear"></i>
+
+                <span>Settings</span>
+
+            </a>
+
+            <a asp-page="/account/logout" class="user-nav-link">
+
+                <i class="fas fa-right-from-bracket"></i>
+
+                <span>Logout</span>
+
+            </a>
+
+        </nav>
+
+
+        <div class="user-sidebar-bottom">
+
+            <div class="user-mini-profile">
+
+                <div class="user-mini-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+
+                <div>
+
+                    <strong>
+                        @User.Identity?.Name
+                    </strong>
+
+                    <span>
+                        Patient
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN
+         ========================= -->
+
+    <main class="user-main">
+
+
+        <!-- TOPBAR -->
+
+        <header class="user-topbar">
+
+            <div class="user-topbar-left">
+
+                <button type="button"
+                        class="user-mobile-menu">
+
+                    <i class="fas fa-bars"></i>
+
+                </button>
+
+
+                <div>
+
+                    <span class="user-page-label">
+                        PATIENT PORTAL
+                    </span>
+
+                    <h1>
+                        Dashboard
+                    </h1>
+
+                </div>
+
+            </div>
+
+
+            <div class="user-topbar-right">
+
+                <button type="button"
+                        class="user-notification">
+
+                    <i class="far fa-bell"></i>
+
+                    <span></span>
+
+                </button>
+
+
+                <div class="user-profile-top">
+
+                    <div class="user-top-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            @User.Identity?.Name
+                        </strong>
+
+                        <span>
+                            Patient
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =========================
+             CONTENT
+             ========================= -->
+
+        <div class="user-dashboard-content">
+
+
+            <!-- WELCOME -->
+
+            <section class="user-welcome">
+
+                <div class="user-welcome-content">
+
+                    <span class="user-welcome-badge">
+
+                        <i class="fas fa-heart-pulse"></i>
+
+                        PATIENT PORTAL
+
+                    </span>
+
+
+                    <h2>
+                        Welcome back!
+                    </h2>
+
+
+                    <p>
+                        Manage your appointments, find available doctors,
+                        and keep track of your healthcare in one place.
+                    </p>
+
+
+                    <div class="user-welcome-actions">
+
+                        <a href="/appointments"
+                           class="user-primary-button">
+
+                            <i class="fas fa-calendar-plus"></i>
+
+                            Book Appointment
+
+                        </a>
+
+
+                        <a href="/doctors"
+                           class="user-outline-button">
+
+                            <i class="fas fa-user-doctor"></i>
+
+                            Find a Doctor
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="user-welcome-decoration">
+
+                    <div class="user-circle user-circle-one"></div>
+
+                    <div class="user-circle user-circle-two"></div>
+
+                    <i class="fas fa-heart-pulse"></i>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================
+                 STATISTICS
+                 ========================= -->
+
+            <section class="user-stat-grid">
+
+
+                <div class="user-stat-card">
+
+                    <div class="user-stat-top">
+
+                        <div class="user-stat-icon blue">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+
+                        <span class="user-stat-label">
+                            TOTAL
+                        </span>
+
+                    </div>
+
+
+                    <div class="user-stat-info">
+
+                        <span>
+                            My Appointments
+                        </span>
+
+                        <strong>
+                          <!-- Model.TotalAppointments -->
+                        </strong>
+
+                    </div>
+
+
+                    <small>
+                        All your appointments
+                    </small>
+
+                </div>
+
+
+
+                <div class="user-stat-card">
+
+                    <div class="user-stat-top">
+
+                        <div class="user-stat-icon orange">
+                            <i class="fas fa-clock"></i>
+                        </div>
+
+                        <span class="user-stat-label pending">
+                            WAITING
+                        </span>
+
+                    </div>
+
+
+                    <div class="user-stat-info">
+
+                        <span>
+                            Pending
+                        </span>
+
+                        <strong>
+                            <!-- Model.PendingAppointments -->
+                        </strong>
+
+                    </div>
+
+
+                    <small>
+                        Awaiting confirmation
+                    </small>
+
+                </div>
+
+
+
+                <div class="user-stat-card">
+
+                    <div class="user-stat-top">
+
+                        <div class="user-stat-icon green">
+                            <i class="fas fa-circle-check"></i>
+                        </div>
+
+                        <span class="user-stat-label">
+                            CONFIRMED
+                        </span>
+
+                    </div>
+
+
+                    <div class="user-stat-info">
+
+                        <span>
+                            Confirmed
+                        </span>
+
+                        <strong>
+                            <!-- Model.ApprovedAppointments -->
+                        </strong>
+
+                    </div>
+
+
+                    <small>
+                        Confirmed appointments
+                    </small>
+
+                </div>
+
+
+
+                <div class="user-stat-card">
+
+                    <div class="user-stat-top">
+
+                        <div class="user-stat-icon purple">
+                            <i class="fas fa-user-doctor"></i>
+                        </div>
+
+                        <span class="user-stat-label">
+                            CLINIC
+                        </span>
+
+                    </div>
+
+
+                    <div class="user-stat-info">
+
+                        <span>
+                            Available Doctors
+                        </span>
+
+                        <strong>
+                            <!-- Model.TotalDoctors -->
+                        </strong>
+
+                    </div>
+
+
+                    <small>
+                        Doctors available
+                    </small>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================
+                 UPCOMING + QUICK ACTIONS
+                 ========================= -->
+
+            <section class="user-main-grid">
+
+
+                <!-- UPCOMING APPOINTMENT -->
+
+                <div class="user-card upcoming-card">
+
+                    <div class="user-card-header">
+
+                        <div>
+
+                            <span>
+                                NEXT VISIT
+                            </span>
+
+                            <h3>
+                                Upcoming Appointment
+                            </h3>
+
+                        </div>
+
+
+                        <a href="/appointments">
+                            View all
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+
+                    </div>
+
+
+                    <div class="upcoming-content">
+
+                        <div class="appointment-date">
+
+                            <strong>
+                                <!-- Model.UpcomingAppointmentDate -->
+                            </strong>
+
+                            <span>
+                                Upcoming
+                            </span>
+
+                        </div>
+
+
+                        <div class="appointment-details">
+
+                            <h4>
+                                <!-- Model.UpcomingDoctorName -->
+                            </h4>
+
+                            <p>
+                                <i class="fas fa-user-doctor"></i>
+
+                                <!-- Model.UpcomingDoctorSpecialization -->
+                            </p>
+
+                            <p>
+                                <i class="fas fa-clock"></i>
+
+                                <!-- Model.UpcomingAppointmentTime -->
+                            </p>
+
+                        </div>
+
+
+                        <span class="appointment-status">
+                            Confirmed
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- QUICK ACTIONS -->
+
+                <div class="user-card quick-card">
+
+                    <div class="user-card-header">
+
+                        <div>
+
+                            <span>
+                                SHORTCUTS
+                            </span>
+
+                            <h3>
+                                Quick Actions
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="user-quick-actions">
+
+
+                        <a href="/appointments"
+                           class="quick-action">
+
+                            <div class="quick-action-icon blue">
+
+                                <i class="fas fa-calendar-plus"></i>
+
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Book Appointment
+                                </strong>
+
+                                <span>
+                                    Schedule a visit
+                                </span>
+
+                            </div>
+
+                            <i class="fas fa-chevron-right"></i>
+
+                        </a>
+
+
+
+                        <a href="/doctors"
+                           class="quick-action">
+
+                            <div class="quick-action-icon purple">
+
+                                <i class="fas fa-user-doctor"></i>
+
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Find a Doctor
+                                </strong>
+
+                                <span>
+                                    Browse doctors
+                                </span>
+
+                            </div>
+
+                            <i class="fas fa-chevron-right"></i>
+
+                        </a>
+
+
+
+                        <a href="/appointments"
+                           class="quick-action">
+
+                            <div class="quick-action-icon green">
+
+                                <i class="fas fa-calendar-check"></i>
+
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    My Appointments
+                                </strong>
+
+                                <span>
+                                    View your visits
+                                </span>
+
+                            </div>
+
+                            <i class="fas fa-chevron-right"></i>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================
+                 AVAILABLE DOCTORS
+                 ========================= -->
+
+            <section class="user-card doctors-card">
+
+                <div class="user-card-header">
+
+                    <div>
+
+                        <span>
+                            CLINIC STAFF
+                        </span>
+
+                        <h3>
+                            Available Doctors
+                        </h3>
+
+                    </div>
+
+
+                    <a href="/doctors">
+
+                        View all
+
+                        <i class="fas fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+
+                <div class="doctor-grid">
+
+
+                    <!-- DOCTOR 1 -->
+
+                    <div class="doctor-card">
+
+                        <div class="doctor-avatar">
+                            <i class="fas fa-user-doctor"></i>
+                        </div>
+
+                        <div class="doctor-info">
+
+                            <h4>
+                                Dr. Doctor Name
+                            </h4>
+
+                            <span>
+                                General Medicine
+                            </span>
+
+                        </div>
+
+                        <span class="doctor-available">
+
+                            <span></span>
+
+                            Available
+
+                        </span>
+
+                        <a href="/appointments"
+                           class="doctor-book">
+
+                            Book Appointment
+
+                        </a>
+
+                    </div>
+
+
+
+                    <!-- DOCTOR 2 -->
+
+                    <div class="doctor-card">
+
+                        <div class="doctor-avatar purple">
+                            <i class="fas fa-user-doctor"></i>
+                        </div>
+
+                        <div class="doctor-info">
+
+                            <h4>
+                                Dr. Doctor Name
+                            </h4>
+
+                            <span>
+                                Family Medicine
+                            </span>
+
+                        </div>
+
+                        <span class="doctor-available">
+
+                            <span></span>
+
+                            Available
+
+                        </span>
+
+                        <a href="/appointments"
+                           class="doctor-book">
+
+                            Book Appointment
+
+                        </a>
+
+                    </div>
+
+
+
+                    <!-- DOCTOR 3 -->
+
+                    <div class="doctor-card">
+
+                        <div class="doctor-avatar green">
+                            <i class="fas fa-user-doctor"></i>
+                        </div>
+
+                        <div class="doctor-info">
+
+                            <h4>
+                                Dr. Doctor Name
+                            </h4>
+
+                            <span>
+                                Internal Medicine
+                            </span>
+
+                        </div>
+
+                        <span class="doctor-available">
+
+                            <span></span>
+
+                            Available
+
+                        </span>
+
+                        <a href="/appointments"
+                           class="doctor-book">
+
+                            Book Appointment
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================
+                 RECENT APPOINTMENTS
+                 ========================= -->
+
+            <section class="user-card recent-card">
+
+                <div class="user-card-header">
+
+                    <div>
+
+                        <span>
+                            HISTORY
+                        </span>
+
+                        <h3>
+                            Recent Appointments
+                        </h3>
+
+                    </div>
+
+
+                    <a href="/appointments">
+
+                        View all
+
+                        <i class="fas fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+
+                <div class="recent-empty">
+
+                    <div>
+
+                        <i class="fas fa-calendar-xmark"></i>
+
+                    </div>
+
+                    <h4>
+                        Your appointments will appear here
+                    </h4>
+
+                    <p>
+                        Once you make an appointment,
+                        your recent visits will be shown here.
+                    </p>
+
+                    <a href="/appointments"
+                       class="recent-book-button">
+
+                        <i class="fas fa-calendar-plus"></i>
+
+                        Book your first appointment
+
+                    </a>
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+</div>
+
+
+@section Scripts {
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const menuButton =
+                document.querySelector(".user-mobile-menu");
+
+            const sidebar =
+                document.querySelector(".user-sidebar");
+
+
+            if (menuButton && sidebar) {
+
+                menuButton.addEventListener("click", function () {
+
+                    sidebar.classList.toggle("user-sidebar-open");
+
+                });
+
+            }
+
+        });
+
+    </script>
+
+}

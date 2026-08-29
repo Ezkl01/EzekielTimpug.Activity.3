@@ -1,0 +1,1308 @@
+@page "/admin/dashboard"
+@model AdminDashboardModel
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+
+    var role = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
+}
+
+<div class="user-dashboard">
+
+    <!-- =========================
+         SIDEBAR
+         ========================= -->
+
+    <aside class="user-sidebar">
+
+        <!-- BRAND -->
+
+        <div class="user-sidebar-brand">
+
+            <div class="user-brand-icon">
+                <i class="fas fa-hospital"></i>
+            </div>
+
+            <div>
+                <h2>ClinicCare</h2>
+                <span>Appointment System</span>
+            </div>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="user-sidebar-nav">
+
+            <div class="user-nav-title">
+                MAIN
+            </div>
+
+
+            <a href="/admin/dashboard"
+               class="user-nav-link active">
+
+                <i class="fas fa-chart-pie"></i>
+
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a href="/appointments"
+               class="user-nav-link">
+
+                <i class="fas fa-calendar-check"></i>
+
+                <span>Appointments</span>
+
+            </a>
+
+
+            <a href="/doctors"
+               class="user-nav-link">
+
+                <i class="fas fa-user-doctor"></i>
+
+                <span>Doctors</span>
+
+            </a>
+
+
+            <div class="user-nav-title">
+                MANAGEMENT
+            </div>
+
+
+            <a href="/admin/user-role"
+               class="user-nav-link">
+
+                <i class="fas fa-users"></i>
+
+                <span>Manage User</span>
+
+            </a>
+
+            <a href="/account/invite"
+               class="user-nav-link">
+
+                <i class="fas fa-user-plus"></i>
+
+                <span>Invite User</span>
+
+            </a>
+
+
+            <div class="user-nav-title">
+                ACCOUNT
+            </div>
+
+
+            <a href="/account/admin-profile"
+               class="user-nav-link">
+
+                <i class="fas fa-user"></i>
+
+                <span>Profile</span>
+
+            </a>
+
+
+            <a href="#"
+               class="user-nav-link">
+
+                <i class="fas fa-gear"></i>
+
+                <span>Settings</span>
+
+            </a>
+
+
+            <a asp-page="/account/logout"
+               class="user-nav-link">
+
+                <i class="fas fa-right-from-bracket"></i>
+
+                <span>Logout</span>
+
+            </a>
+
+        </nav>
+
+
+        <!-- SIDEBAR PROFILE -->
+
+        <div class="user-sidebar-bottom">
+
+            <div class="user-mini-profile">
+
+                <div class="user-mini-avatar">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+
+                <div>
+
+                    <strong>
+                        @User.Identity?.Name
+                    </strong>
+
+                    <span>
+                        @role
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN CONTENT
+         ========================= -->
+
+    <main class="user-main">
+
+
+        <!-- =========================
+             TOPBAR
+             ========================= -->
+
+        <header class="user-topbar">
+
+            <div class="user-topbar-left">
+
+                <button type="button"
+                        class="user-mobile-menu">
+
+                    <i class="fas fa-bars"></i>
+
+                </button>
+
+
+                <div>
+
+                    <span class="user-page-label">
+                        ADMINISTRATION
+                    </span>
+
+                    <h1>
+                        Dashboard
+                    </h1>
+
+                </div>
+
+            </div>
+
+
+            <div class="user-topbar-right">
+
+                <button type="button"
+                        class="user-notification">
+
+                    <i class="far fa-bell"></i>
+
+                    <span></span>
+
+                </button>
+
+
+                <div class="user-profile-top">
+
+                    <div class="user-top-avatar">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            @User.Identity?.Name
+                        </strong>
+
+                        <span>
+                            @role
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =========================
+             DASHBOARD CONTENT
+             ========================= -->
+
+        <div class="user-dashboard-content">
+
+
+            <!-- =========================
+                 WELCOME
+                 ========================= -->
+
+            <section class="user-welcome">
+
+                <div class="user-welcome-content">
+
+                    <span class="user-welcome-badge">
+
+                        <i class="fas fa-shield-halved"></i>
+
+                        ADMINISTRATOR
+
+                    </span>
+
+
+                    <h2>
+                        Welcome back, Admin!
+                    </h2>
+
+
+                    <p>
+                        Manage appointments, doctors, users, and your
+                        clinic system from one place.
+                    </p>
+
+
+                    <div class="user-welcome-actions">
+
+                        <a href="/appointments"
+                           class="user-primary-button">
+
+                            <i class="fas fa-calendar-check"></i>
+
+                            Manage Appointments
+
+                        </a>
+
+
+                        <a href="/doctors"
+                           class="user-outline-button">
+
+                            <i class="fas fa-user-doctor"></i>
+
+                            View Doctors
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- WELCOME DECORATION -->
+
+                <div class="user-welcome-decoration">
+
+                    <div class="user-circle user-circle-one"></div>
+
+                    <div class="user-circle user-circle-two"></div>
+
+                    <i class="fas fa-shield-halved"></i>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================
+                 STATISTICS
+                 ========================= -->
+
+            <section class="user-stat-grid">
+
+
+                <!-- TOTAL USERS -->
+
+                <div class="user-stat-card">
+
+                    <div class="user-stat-top">
+
+                        <div class="user-stat-icon blue">
+
+                            <i class="fas fa-users"></i>
+
+                        </div>
+
+
+                        <span class="user-stat-label">
+                            USERS
+                        </span>
+
+                    </div>
+
+
+                    <div class="user-stat-info">
+
+                        <span>
+                            Total Users
+                        </span>
+
+                        <strong>
+                            <!-- Model.TotalUsers -->
+                        </strong>
+
+                    </div>
+
+
+                    <small>
+                        Registered clinic users
+                    </small>
+
+                </div>
+
+
+
+                <!-- TOTAL DOCTORS -->
+
+                <div class="user-stat-card">
+
+                    <div class="user-stat-top">
+
+                        <div class="user-stat-icon purple">
+
+                            <i class="fas fa-user-doctor"></i>
+
+                        </div>
+
+
+                        <span class="user-stat-label">
+                            STAFF
+                        </span>
+
+                    </div>
+
+
+                    <div class="user-stat-info">
+
+                        <span>
+                            Total Doctors
+                        </span>
+
+                        <strong>
+                            <!-- Model.TotalDoctors -->
+                        </strong>
+
+                    </div>
+
+
+                    <small>
+                        Available clinic doctors
+                    </small>
+
+                </div>
+
+
+
+                <!-- APPOINTMENTS -->
+
+                <div class="user-stat-card">
+
+                    <div class="user-stat-top">
+
+                        <div class="user-stat-icon green">
+
+                            <i class="fas fa-calendar-check"></i>
+
+                        </div>
+
+
+                        <span class="user-stat-label">
+                            TOTAL
+                        </span>
+
+                    </div>
+
+
+                    <div class="user-stat-info">
+
+                        <span>
+                            Total Appointments
+                        </span>
+
+                        <strong>
+                            <!-- Model.TotalAppointments -->
+                        </strong>
+
+                    </div>
+
+
+                    <small>
+                        All recorded appointments
+                    </small>
+
+                </div>
+
+
+
+                <!-- PENDING -->
+
+                <div class="user-stat-card">
+
+                    <div class="user-stat-top">
+
+                        <div class="user-stat-icon orange">
+
+                            <i class="fas fa-clock"></i>
+
+                        </div>
+
+
+                        <span class="user-stat-label pending">
+                            WAITING
+                        </span>
+
+                    </div>
+
+
+                    <div class="user-stat-info">
+
+                        <span>
+                            Pending Appointments
+                        </span>
+
+                        <strong>
+                            <!-- Model.PendingAppointments -->
+                        </strong>
+
+                    </div>
+
+
+                    <small>
+                        Appointments awaiting approval
+                    </small>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================
+                TODAY'S APPOINTMENTS
+                ========================= -->
+
+            <section class="user-main-grid admin-system-grid">
+
+                <div class="user-card admin-today-card">
+
+                    <div class="user-card-header">
+
+                        <div>
+
+                            <span>
+                                TODAY'S SCHEDULE
+                            </span>
+
+                            <h3>
+                                Upcoming Appointments
+                            </h3>
+
+                        </div>
+
+                        <a href="/appointments">
+
+                            View all
+
+                            <i class="fas fa-arrow-right"></i>
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="admin-appointment-list">
+
+
+                        <!-- APPOINTMENT ITEM -->
+
+                        <div class="admin-appointment-item">
+
+                            <div class="admin-appointment-time">
+
+                                <strong>
+                                    09:00
+                                </strong>
+
+                                <span>
+                                    AM
+                                </span>
+
+                            </div>
+
+
+                            <div class="admin-appointment-icon">
+
+                                <i class="fas fa-user"></i>
+
+                            </div>
+
+
+                            <div class="admin-appointment-info">
+
+                                <strong>
+                                    Patient Name
+                                </strong>
+
+                                <span>
+                                    Consultation • Dr. Doctor Name
+                                </span>
+
+                            </div>
+
+
+                            <span class="admin-appointment-status confirmed">
+
+                                Confirmed
+
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- APPOINTMENT ITEM -->
+
+                        <div class="admin-appointment-item">
+
+                            <div class="admin-appointment-time">
+
+                                <strong>
+                                    10:30
+                                </strong>
+
+                                <span>
+                                    AM
+                                </span>
+
+                            </div>
+
+
+                            <div class="admin-appointment-icon purple">
+
+                                <i class="fas fa-user"></i>
+
+                            </div>
+
+
+                            <div class="admin-appointment-info">
+
+                                <strong>
+                                    Patient Name
+                                </strong>
+
+                                <span>
+                                    Checkup • Dr. Doctor Name
+                                </span>
+
+                            </div>
+
+
+                            <span class="admin-appointment-status pending">
+
+                                Pending
+
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- APPOINTMENT ITEM -->
+
+                        <div class="admin-appointment-item">
+
+                            <div class="admin-appointment-time">
+
+                                <strong>
+                                    01:00
+                                </strong>
+
+                                <span>
+                                    PM
+                                </span>
+
+                            </div>
+
+
+                            <div class="admin-appointment-icon green">
+
+                                <i class="fas fa-user"></i>
+
+                            </div>
+
+
+                            <div class="admin-appointment-info">
+
+                                <strong>
+                                    Patient Name
+                                </strong>
+
+                                <span>
+                                    Follow-up • Dr. Doctor Name
+                                </span>
+
+                            </div>
+
+
+                            <span class="admin-appointment-status confirmed">
+
+                                Confirmed
+
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =========================
+                    SYSTEM OVERVIEW
+                    ========================= -->
+
+                <div class="user-card admin-system-card">
+
+                    <div class="user-card-header">
+
+                        <div>
+
+                            <span>
+                                SYSTEM
+                            </span>
+
+                            <h3>
+                                System Overview
+                            </h3>
+
+                        </div>
+
+
+                        <span class="admin-system-online">
+
+                            <span></span>
+
+                            All Systems Online
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="admin-system-list">
+
+
+                        <!-- SYSTEM STATUS -->
+
+                        <div class="admin-system-item">
+
+                            <div class="admin-system-icon blue">
+
+                                <i class="fas fa-server"></i>
+
+                            </div>
+
+
+                            <div class="admin-system-info">
+
+                                <strong>
+                                    Application
+                                </strong>
+
+                                <span>
+                                    Clinic appointment system is running
+                                </span>
+
+                            </div>
+
+
+                            <div class="admin-system-status">
+
+                                <i class="fas fa-circle-check"></i>
+
+                                <span>
+                                    Operational
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- DATABASE -->
+
+                        <div class="admin-system-item">
+
+                            <div class="admin-system-icon purple">
+
+                                <i class="fas fa-database"></i>
+
+                            </div>
+
+
+                            <div class="admin-system-info">
+
+                                <strong>
+                                    Database
+                                </strong>
+
+                                <span>
+                                    Connection is active
+                                </span>
+
+                            </div>
+
+
+                            <div class="admin-system-status">
+
+                                <i class="fas fa-circle-check"></i>
+
+                                <span>
+                                    Connected
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- SECURITY -->
+
+                        <div class="admin-system-item">
+
+                            <div class="admin-system-icon green">
+
+                                <i class="fas fa-shield-halved"></i>
+
+                            </div>
+
+
+                            <div class="admin-system-info">
+
+                                <strong>
+                                    Security
+                                </strong>
+
+                                <span>
+                                    Authentication is active
+                                </span>
+
+                            </div>
+
+
+                            <div class="admin-system-status">
+
+                                <i class="fas fa-circle-check"></i>
+
+                                <span>
+                                    Protected
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- USER ACCESS -->
+
+                        <div class="admin-system-item">
+
+                            <div class="admin-system-icon orange">
+
+                                <i class="fas fa-users"></i>
+
+                            </div>
+
+
+                            <div class="admin-system-info">
+
+                                <strong>
+                                    User Access
+                                </strong>
+
+                                <span>
+                                    Users can access the appointment portal
+                                </span>
+
+                            </div>
+
+
+                            <div class="admin-system-status">
+
+                                <i class="fas fa-circle-check"></i>
+
+                                <span>
+                                    Active
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- SYSTEM FOOTER -->
+
+                    <div class="admin-system-footer">
+
+                        <i class="fas fa-circle-info"></i>
+
+                        <span>
+                            Your clinic system is currently operating normally.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+            <!-- =========================
+                APPOINTMENT STATUS
+                ========================= -->
+
+            <div class="user-card admin-status-card">
+
+                <div class="user-card-header">
+
+                    <div>
+
+                        <span>
+                            APPOINTMENT STATUS
+                        </span>
+
+                        <h3>
+                            Appointment Summary
+                        </h3>
+
+                    </div>
+
+                    <a href="/appointments">
+
+                        View all
+
+                        <i class="fas fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+
+                <div class="admin-status-summary">
+
+
+                    <!-- APPROVED -->
+
+                    <div class="admin-status-item">
+
+                        <div class="admin-status-top">
+
+                            <div class="admin-status-name">
+
+                                <span class="admin-status-dot approved"></span>
+
+                                <span>
+                                    Approved
+                                </span>
+
+                            </div>
+
+                            <strong>
+                                <!-- Model.ApprovedAppointments -->
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="admin-progress">
+
+                            <div class="admin-progress-fill approved"
+                                style="width: 75%;">
+                            </div>
+
+                        </div>
+
+
+                        <small>
+                            Confirmed appointments
+                        </small>
+
+                    </div>
+
+
+
+                    <!-- PENDING -->
+
+                    <div class="admin-status-item">
+
+                        <div class="admin-status-top">
+
+                            <div class="admin-status-name">
+
+                                <span class="admin-status-dot pending"></span>
+
+                                <span>
+                                    Pending
+                                </span>
+
+                            </div>
+
+                            <strong>
+                                <!-- Model.PendingAppointments -->
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="admin-progress">
+
+                            <div class="admin-progress-fill pending"
+                                style="width: 45%;">
+                            </div>
+
+                        </div>
+
+
+                        <small>
+                            Waiting for approval
+                        </small>
+
+                    </div>
+
+
+
+                    <!-- CANCELLED -->
+
+                    <div class="admin-status-item">
+
+                        <div class="admin-status-top">
+
+                            <div class="admin-status-name">
+
+                                <span class="admin-status-dot cancelled"></span>
+
+                                <span>
+                                    Cancelled
+                                </span>
+
+                            </div>
+
+                            <strong>
+                                <!-- Model.CancelledAppointments -->
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="admin-progress">
+
+                            <div class="admin-progress-fill cancelled"
+                                style="width: 25%;">
+                            </div>
+
+                        </div>
+
+
+                        <small>
+                            Cancelled appointments
+                        </small>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- STATUS FOOTER -->
+
+                <div class="admin-status-footer">
+
+                    <div>
+
+                        <span>
+                            TOTAL APPOINTMENTS
+                        </span>
+
+                        <strong>
+                            <!-- Model.TotalAppointments -->
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <a href="/appointments"
+                    class="admin-status-button">
+
+                        Manage
+
+                        <i class="fas fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                    RECENT USERS
+                    ========================= -->
+
+                <div class="user-card admin-recent-users-card">
+
+                    <div class="user-card-header">
+
+                        <div>
+
+                            <span>
+                                USERS
+                            </span>
+
+                            <h3>
+                                Recently Registered
+                            </h3>
+
+                        </div>
+
+                        <a href="/admin/user-role">
+
+                            View all
+
+                            <i class="fas fa-arrow-right"></i>
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="admin-user-list">
+
+
+                        <!-- USER -->
+
+                        <div class="admin-user-item">
+
+                            <div class="admin-user-avatar">
+
+                                <i class="fas fa-user"></i>
+
+                            </div>
+
+
+                            <div class="admin-user-info">
+
+                                <strong>
+                                    New User
+                                </strong>
+
+                                <span>
+                                    Registered recently
+                                </span>
+
+                            </div>
+
+
+                            <span class="admin-user-role">
+
+                                User
+
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- USER -->
+
+                        <div class="admin-user-item">
+
+                            <div class="admin-user-avatar purple">
+
+                                <i class="fas fa-user"></i>
+
+                            </div>
+
+
+                            <div class="admin-user-info">
+
+                                <strong>
+                                    New User
+                                </strong>
+
+                                <span>
+                                    Registered recently
+                                </span>
+
+                            </div>
+
+
+                            <span class="admin-user-role">
+
+                                User
+
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- USER -->
+
+                        <div class="admin-user-item">
+
+                            <div class="admin-user-avatar green">
+
+                                <i class="fas fa-user"></i>
+
+                            </div>
+
+
+                            <div class="admin-user-info">
+
+                                <strong>
+                                    New User
+                                </strong>
+
+                                <span>
+                                    Registered recently
+                                </span>
+
+                            </div>
+
+
+                            <span class="admin-user-role">
+
+                                User
+
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- =========================
+                 RECENT ACTIVITY
+                 ========================= -->
+
+            <section class="user-card recent-card">
+
+                <div class="user-card-header">
+
+                    <div>
+
+                        <span>
+                            ACTIVITY
+                        </span>
+
+                        <h3>
+                            Recent Activity
+                        </h3>
+
+                    </div>
+
+
+                    <a href="/appointments">
+
+                        View appointments
+
+                        <i class="fas fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+
+                <div class="recent-empty">
+
+                    <div>
+
+                        <i class="fas fa-clock-rotate-left"></i>
+
+                    </div>
+
+
+                    <h4>
+                        Recent activity will appear here
+                    </h4>
+
+
+                    <p>
+                        Appointment and system activities will appear here
+                        as they happen.
+                    </p>
+
+
+                    <a href="/appointments"
+                       class="recent-book-button">
+
+                        <i class="fas fa-calendar-check"></i>
+
+                        View Appointments
+
+                    </a>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+@section Scripts {
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const menuButton =
+                document.querySelector(".user-mobile-menu");
+
+            const sidebar =
+                document.querySelector(".user-sidebar");
+
+
+            if (menuButton && sidebar) {
+
+                menuButton.addEventListener("click", function () {
+
+                    sidebar.classList.toggle("user-sidebar-open");
+
+                });
+
+            }
+
+        });
+
+    </script>
+
+}

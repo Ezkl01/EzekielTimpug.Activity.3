@@ -1,36 +1,291 @@
 @page "/account/update-avatar"
 @model UpdateAvatar
 
+@{
+    ViewData["Title"] = "Update Avatar";
+}
+@{
+    var profileUrl = User.IsInRole("Admin")
+        ? "/account/admin-profile"
+        : "/account/user-profile";
+}
 
-<form method="post" enctype="multipart/form-data" class="mt-5">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-9">
-                <div class="card shadow" style="border-radius:15px;">
-                    <div class="card-body p-5">
-                        <div class="row align-items-center">
-                            <div class="col-md-4 text-center">
-                                <img src="@Model.UserAvatarDto.ProfileImage"
-                                     class="img-fluid rounded shadow"
-                                     style="width:200px;height:200px;object-fit:cover;"
-                                     alt="@Model.UserAvatarDto.FirstName @Model.UserAvatarDto.LastName">
+<div class="account-page update-avatar-page">
+    <!-- =========================
+         BRAND
+    ========================= -->
+
+    <div class="avatar-page-brand">
+
+        <div class="avatar-brand-icon">
+            <i class="fas fa-hospital"></i>
+        </div>
+
+        <div>
+            <h2>ClinicCare</h2>
+            <span>Appointment System</span>
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         MAIN WRAPPER
+    ========================= -->
+
+    <div class="update-avatar-wrapper">
+
+        <div class="update-avatar-card">
+
+
+            <!-- =========================
+                 HEADER
+            ========================= -->
+
+            <div class="update-avatar-header">
+
+                <div class="update-avatar-header-icon">
+                    <i class="fas fa-camera"></i>
+                </div>
+
+                <div>
+
+                    <span>ACCOUNT SETTINGS</span>
+
+                    <h1>Update Avatar</h1>
+
+                    <p>
+                        Upload a new profile picture for your account.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 FORM
+            ========================= -->
+
+            <form method="post"
+                  enctype="multipart/form-data">
+
+
+                <!-- =========================
+                     CONTENT
+                ========================= -->
+
+                <div class="update-avatar-content">
+
+
+                    <!-- =========================
+                         PROFILE PREVIEW
+                    ========================= -->
+
+                    <div class="avatar-preview-section">
+
+                        <div class="avatar-preview-wrapper">
+
+                            <img src="@Model.UserAvatarDto.ProfileImage"
+                                 class="avatar-preview-image"
+                                 alt="@Model.UserAvatarDto.FirstName @Model.UserAvatarDto.LastName">
+
+                            <div class="avatar-preview-badge">
+
+                                <i class="fas fa-camera"></i>
+
                             </div>
-                            <div class="col-md-8">
-                                <div class="mb-4">
-                                <label for="exampleInputEmail1" class="form-label">New Avatar</label>
-                                <input type="file" class="form-control" id="exampleInputEmail1" asp-for="@Model.UserAvatarDto.AvatarImage">
-                                <span asp-validation-for="@Model.UserAvatarDto.AvatarImage" class="text-danger"></span>
-                            </div>  
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Email Address</label>
-                                <p class="card-text">@Model.UserAvatarDto.Username </p>
+
+                        </div>
+
+
+                        <div class="avatar-preview-text">
+
+                            <h3>
+                                Current Profile Picture
+                            </h3>
+
+                            <p>
+                                This is the profile picture currently
+                                displayed on your ClinicCare account.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================
+                         DIVIDER
+                    ========================= -->
+
+                    <div class="avatar-divider"></div>
+
+
+                    <!-- =========================
+                         UPLOAD SECTION
+                    ========================= -->
+
+                    <div class="avatar-upload-section">
+
+
+                        <div class="avatar-section-title">
+
+                            <div class="avatar-section-icon">
+
+                                <i class="fas fa-cloud-arrow-up"></i>
+
                             </div>
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Name</label>
-                                <p class="card-text">@Model.UserAvatarDto.FirstName @Model.UserAvatarDto.LastName</p>
+
+
+                            <div>
+
+                                <h2>
+                                    Upload New Avatar
+                                </h2>
+
+                                <p>
+                                    Choose a new image for your profile.
+                                </p>
+
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                            <button type="button"class="btn btn-danger"onclick="window.location.href='/account/profile'">
-                                    Return
-                            </button>
-                            </form>
+
+                        </div>
+
+
+                        <!-- FILE INPUT -->
+
+                        <div class="avatar-form-group">
+
+                            <label for="exampleInputEmail1">
+
+                                <i class="fas fa-image"></i>
+
+                                New Avatar
+
+                            </label>
+
+
+                            <div class="avatar-file-input-wrapper">
+
+                                <input type="file"
+                                       class="avatar-file-input"
+                                       id="exampleInputEmail1"
+                                       asp-for="@Model.UserAvatarDto.AvatarImage">
+
+                            </div>
+
+
+                            <span asp-validation-for="@Model.UserAvatarDto.AvatarImage"
+                                  class="avatar-validation">
+                            </span>
+
+                        </div>
+
+
+                        <!-- =========================
+                             ACCOUNT INFORMATION
+                        ========================= -->
+
+                        <div class="avatar-info-grid">
+
+
+                            <!-- EMAIL -->
+
+                            <div class="avatar-info-box">
+
+                                <div class="avatar-info-icon blue">
+
+                                    <i class="fas fa-envelope"></i>
+
+                                </div>
+
+
+                                <div>
+
+                                    <span>
+                                        Email Address
+                                    </span>
+
+                                    <strong>
+                                        @Model.UserAvatarDto.Username
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- NAME -->
+
+                            <div class="avatar-info-box">
+
+                                <div class="avatar-info-icon green">
+
+                                    <i class="fas fa-user"></i>
+
+                                </div>
+
+
+                                <div>
+
+                                    <span>
+                                        Name
+                                    </span>
+
+                                    <strong>
+                                        @Model.UserAvatarDto.FirstName
+                                        @Model.UserAvatarDto.LastName
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     ACTIONS
+                ========================= -->
+
+                <div class="avatar-actions">
+
+
+                    <button type="button"
+                            class="avatar-return-button"
+                            onclick="window.location.href='@profileUrl'">
+
+                        <i class="fas fa-arrow-left"></i>
+
+                        Return
+
+                    </button>
+
+
+                    <button type="submit"
+                            class="avatar-save-button">
+
+                        <i class="fas fa-cloud-arrow-up"></i>
+
+                        Upload Avatar
+
+                    </button>
+
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

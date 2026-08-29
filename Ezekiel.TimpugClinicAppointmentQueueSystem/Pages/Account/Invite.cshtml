@@ -1,70 +1,508 @@
 @page "/account/invite"
 @model Invite
 
-<div class="mask d-flex align-items-center py-5 gradient-custom-3">
-        <div class="container">
-            <div class="row d-flex justify-content-center align-items-center">
+@{
+ViewData["Title"] = "Invite User";
 
-                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+var role = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
 
-                    <div class="card shadow" style="border-radius:15px;">
-                        <div class="card-body p-4">
+}
 
-                            <h2 class="text-uppercase text-center mb-5">
-                                Invite
-                            </h2>
+<div class="user-dashboard">
 
-                            <form method="post" class="mt-5">
-                                <div class="mb-3">
-                                    <label class="form-label">Email address</label>
-                                    <input type="email"
-                                           class="form-control"
-                                           asp-for="@Model.UserInviteDto.UserName">
-                                    <span asp-validation-for="@Model.UserInviteDto.UserName"
-                                          class="text-danger"></span>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">First Name</label>
-                                    <input type="text"
-                                           class="form-control"
-                                           asp-for="@Model.UserInviteDto.FirstName">
-                                    <span asp-validation-for="@Model.UserInviteDto.FirstName"
-                                          class="text-danger"></span>
-                                </div>
+<!-- =========================
+     SIDEBAR
+========================= -->
 
-                                <div class="mb-3">
-                                    <label class="form-label">Last Name</label>
-                                    <input type="text"
-                                           class="form-control"
-                                           asp-for="@Model.UserInviteDto.LastName">
-                                    <span asp-validation-for="@Model.UserInviteDto.LastName"
-                                          class="text-danger"></span>
-                                </div>
+<aside class="user-sidebar">
 
-                                <div class="mb-3">
-                                    <label class="form-label">Date of Birth</label>
-                                    <input type="date"
-                                           class="form-control"
-                                           asp-for="@Model.UserInviteDto.DateOfBirth">
-                                    <span asp-validation-for="@Model.UserInviteDto.DateOfBirth"
-                                          class="text-danger"></span>
-                                </div>
- 
-                                <div class="mb-3">
-                                    <div asp-validation-summary="All" class="text-danger"></div>
-                                </div>
-                                <div class="d-flex justify-content-center">
-                                    <button type="submit"
-                                            class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">
-                                        Submit
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- BRAND -->
+
+    <div class="user-sidebar-brand">
+
+        <div class="user-brand-icon">
+            <i class="fas fa-hospital"></i>
         </div>
-    </div>
-</section>
 
+        <div>
+            <h2>ClinicCare</h2>
+            <span>Appointment System</span>
+        </div>
+
+    </div>
+
+
+    <!-- NAVIGATION -->
+
+    <nav class="user-sidebar-nav">
+
+        <div class="user-nav-title">
+            MAIN
+        </div>
+
+        <a href="/admin/dashboard"
+           class="user-nav-link">
+
+            <i class="fas fa-chart-pie"></i>
+
+            <span>Dashboard</span>
+
+        </a>
+
+
+        <a href="/appointments"
+           class="user-nav-link">
+
+            <i class="fas fa-calendar-check"></i>
+
+            <span>Appointments</span>
+
+        </a>
+
+
+        <a href="/doctors"
+           class="user-nav-link">
+
+            <i class="fas fa-user-doctor"></i>
+
+            <span>Doctors</span>
+
+        </a>
+
+
+        <div class="user-nav-title">
+            MANAGEMENT
+        </div>
+
+
+        <a href="/admin/user-role"
+           class="user-nav-link">
+
+            <i class="fas fa-users"></i>
+
+            <span>Manage User</span>
+
+        </a>
+
+
+        <a href="/account/invite"
+           class="user-nav-link active">
+
+            <i class="fas fa-user-plus"></i>
+
+            <span>Invite User</span>
+
+        </a>
+
+
+        <div class="user-nav-title">
+            ACCOUNT
+        </div>
+
+
+        <a href="/account/admin-profile"
+           class="user-nav-link">
+
+            <i class="fas fa-user"></i>
+
+            <span>Profile</span>
+
+        </a>
+
+
+        <a href="#"
+           class="user-nav-link">
+
+            <i class="fas fa-gear"></i>
+
+            <span>Settings</span>
+
+        </a>
+
+
+        <a asp-page="/account/logout"
+           class="user-nav-link">
+
+            <i class="fas fa-right-from-bracket"></i>
+
+            <span>Logout</span>
+
+        </a>
+
+    </nav>
+
+
+    <!-- SIDEBAR PROFILE -->
+
+    <div class="user-sidebar-bottom">
+
+        <div class="user-mini-profile">
+
+            <div class="user-mini-avatar">
+                <i class="fas fa-user-shield"></i>
+            </div>
+
+            <div>
+
+                <strong>
+                    @User.Identity?.Name
+                </strong>
+
+                <span>
+                    @role
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+
+<!-- =========================
+     MAIN CONTENT
+========================= -->
+
+<main class="user-main">
+
+
+    <!-- TOPBAR -->
+
+    <header class="user-topbar">
+
+        <div class="user-topbar-left">
+
+            <button type="button"
+                    class="user-mobile-menu">
+
+                <i class="fas fa-bars"></i>
+
+            </button>
+
+
+            <div>
+
+                <span class="user-page-label">
+                    ADMINISTRATION
+                </span>
+
+                <h1>
+                    Invite User
+                </h1>
+
+            </div>
+
+        </div>
+
+
+        <div class="user-topbar-right">
+
+            <button type="button"
+                    class="user-notification">
+
+                <i class="far fa-bell"></i>
+
+                <span></span>
+
+            </button>
+
+
+            <div class="user-profile-top">
+
+                <div class="user-top-avatar">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+
+                <div>
+
+                    <strong>
+                        @User.Identity?.Name
+                    </strong>
+
+                    <span>
+                        @role
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================
+         INVITE CONTENT
+    ========================= -->
+
+    <div class="user-dashboard-content invite-page-content">
+
+
+        <!-- PAGE HEADER -->
+
+        <section class="invite-page-header">
+
+            <div class="invite-header-info">
+
+                <div class="invite-page-icon">
+
+                    <i class="fas fa-user-plus"></i>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        USER MANAGEMENT
+                    </span>
+
+                    <h2>
+                        Invite New User
+                    </h2>
+
+                    <p>
+                        Create an invitation for a new user to join the ClinicCare Appointment System.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             INVITE CARD
+        ========================= -->
+
+        <section class="invite-card">
+
+
+            <!-- CARD HEADER -->
+
+            <div class="invite-card-header">
+
+                <div>
+
+                    <h3>
+                        User Information
+                    </h3>
+
+                    <p>
+                        Enter the information of the person you want to invite.
+                    </p>
+
+                </div>
+
+
+                <div class="invite-card-icon">
+
+                    <i class="fas fa-envelope"></i>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- FORM -->
+
+            <form method="post"
+                  class="invite-form">
+
+
+                <div asp-validation-summary="All"
+                     class="invite-validation">
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="invite-form-group">
+
+                    <label asp-for="UserInviteDto.UserName">
+
+                        <i class="fas fa-envelope"></i>
+
+                        Email Address
+
+                    </label>
+
+
+                    <input type="email"
+                           class="invite-input"
+                           asp-for="UserInviteDto.UserName"
+                           placeholder="Enter email address" />
+
+
+                    <span asp-validation-for="UserInviteDto.UserName"
+                          class="invite-error">
+                    </span>
+
+                </div>
+
+
+
+                <!-- NAME ROW -->
+
+                <div class="invite-form-row">
+
+
+                    <!-- FIRST NAME -->
+
+                    <div class="invite-form-group">
+
+                        <label asp-for="UserInviteDto.FirstName">
+
+                            <i class="fas fa-user"></i>
+
+                            First Name
+
+                        </label>
+
+
+                        <input type="text"
+                               class="invite-input"
+                               asp-for="UserInviteDto.FirstName"
+                               placeholder="Enter first name" />
+
+
+                        <span asp-validation-for="UserInviteDto.FirstName"
+                              class="invite-error">
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- LAST NAME -->
+
+                    <div class="invite-form-group">
+
+                        <label asp-for="UserInviteDto.LastName">
+
+                            <i class="fas fa-user"></i>
+
+                            Last Name
+
+                        </label>
+
+
+                        <input type="text"
+                               class="invite-input"
+                               asp-for="UserInviteDto.LastName"
+                               placeholder="Enter last name" />
+
+
+                        <span asp-validation-for="UserInviteDto.LastName"
+                              class="invite-error">
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- DATE OF BIRTH -->
+
+                <div class="invite-form-group">
+
+                    <label asp-for="UserInviteDto.DateOfBirth">
+
+                        <i class="fas fa-calendar"></i>
+
+                        Date of Birth
+
+                    </label>
+
+
+                    <input type="date"
+                           class="invite-input"
+                           asp-for="UserInviteDto.DateOfBirth" />
+
+
+                    <span asp-validation-for="UserInviteDto.DateOfBirth"
+                          class="invite-error">
+                    </span>
+
+                </div>
+
+
+
+                <!-- ACTIONS -->
+
+                <div class="invite-form-actions">
+
+
+                    <button type="button"
+                            class="invite-cancel-button"
+                            onclick="window.location.href='/admin/user-role'">
+
+                        <i class="fas fa-arrow-left"></i>
+
+                        Cancel
+
+                    </button>
+
+
+                    <button type="submit"
+                            class="invite-submit-button">
+
+                        <i class="fas fa-paper-plane"></i>
+
+                        Send Invitation
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </section>
+
+
+    </div>
+
+</main>
+
+</div>
+
+@section Scripts {
+
+<partial name="_ValidationScriptsPartial" />
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const menuButton =
+            document.querySelector(".user-mobile-menu");
+
+        const sidebar =
+            document.querySelector(".user-sidebar");
+
+
+        if (menuButton && sidebar) {
+
+            menuButton.addEventListener("click", function () {
+
+                sidebar.classList.toggle("user-sidebar-open");
+
+            });
+
+        }
+
+    });
+
+</script>
+
+}

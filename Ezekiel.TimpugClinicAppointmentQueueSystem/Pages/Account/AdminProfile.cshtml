@@ -1,0 +1,547 @@
+@page "/account/admin-profile"
+@model AdminProfile
+
+@{
+    ViewData["Title"] = "Admin Profile";
+}
+
+<div class="user-dashboard">
+
+    <!-- =========================
+         SIDEBAR
+         ========================= -->
+
+    <aside class="user-sidebar">
+
+        <div class="user-sidebar-brand">
+
+            <div class="user-brand-icon">
+                <i class="fas fa-solid fa-hospital"></i>
+            </div>
+
+            <div>
+                <h2>ClinicCare</h2>
+                <span>Appointment System</span>
+            </div>
+
+        </div>
+
+
+        <nav class="user-sidebar-nav">
+
+            <div class="user-nav-title">
+                MAIN
+            </div>
+
+            <a href="/admin/dashboard"
+               class="user-nav-link">
+
+                <i class="fas fa-chart-pie"></i>
+
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a href="/appointments"
+               class="user-nav-link">
+
+                <i class="fas fa-calendar-check"></i>
+
+                <span>Appointments</span>
+
+            </a>
+
+
+            <a href="/doctors"
+               class="user-nav-link">
+
+                <i class="fas fa-user-doctor"></i>
+
+                <span>Doctors</span>
+
+            </a>
+
+            <div class="user-nav-title">
+                MANAGEMENT
+            </div>
+
+
+            <a href="/admin/user-role"
+               class="user-nav-link">
+
+                <i class="fas fa-users"></i>
+
+                <span>Manage User</span>
+
+            </a>
+
+            <a href="/account/invite"
+               class="user-nav-link">
+
+                <i class="fas fa-user-plus"></i>
+
+                <span>Invite User</span>
+
+            </a>
+            
+            <div class="user-nav-title">
+                ACCOUNT
+            </div>
+
+
+            <a href="/account/admin-profile"
+               class="user-nav-link active">
+
+                <i class="fas fa-user"></i>
+
+                <span>Profile</span>
+
+            </a>
+
+
+            <a href="#"
+               class="user-nav-link">
+
+                <i class="fas fa-gear"></i>
+
+                <span>Settings</span>
+
+            </a>
+
+
+            <a asp-page="/account/logout"
+               class="user-nav-link">
+
+                <i class="fas fa-right-from-bracket"></i>
+
+                <span>Logout</span>
+
+            </a>
+
+        </nav>
+
+
+        <div class="user-sidebar-bottom">
+
+            <div class="user-mini-profile">
+
+                <div class="user-mini-avatar">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+
+                <div>
+
+                    <strong>
+                        @User.Identity?.Name
+                    </strong>
+
+                    <span>
+                        @User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN
+         ========================= -->
+
+    <main class="user-main">
+
+
+        <!-- =========================
+             TOPBAR
+             ========================= -->
+
+        <header class="user-topbar">
+
+            <div class="user-topbar-left">
+
+                <button type="button"
+                        class="user-mobile-menu">
+
+                    <i class="fas fa-bars"></i>
+
+                </button>
+
+
+                <div>
+
+                    <span class="user-page-label">
+                        ACCOUNT
+                    </span>
+
+                    <h1>
+                        Profile
+                    </h1>
+
+                </div>
+
+            </div>
+
+
+            <div class="user-topbar-right">
+
+                <button type="button"
+                        class="user-notification">
+
+                    <i class="far fa-bell"></i>
+
+                    <span></span>
+
+                </button>
+
+
+                <div class="user-profile-top">
+
+                    <div class="user-top-avatar">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            @User.Identity?.Name
+                        </strong>
+
+                        <span>
+                            @User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =========================
+             PROFILE CONTENT
+             ========================= -->
+
+        <div class="user-dashboard-content profile-page-content">
+
+
+            <!-- PROFILE HEADER -->
+
+            <section class="profile-hero">
+
+                <div class="profile-hero-content">
+
+                    <span class="profile-badge">
+
+                        <i class="fas fa-shield-halved"></i>
+
+                        ADMIN PROFILE
+
+                    </span>
+
+
+                    <h2>
+                        Profile Account
+                    </h2>
+
+
+                    <p>
+                        View and manage your personal account information.
+                    </p>
+
+                </div>
+
+
+                <div class="profile-hero-decoration">
+
+                    <div class="profile-circle profile-circle-one"></div>
+
+                    <div class="profile-circle profile-circle-two"></div>
+
+                    <i class="fas fa-shield-halved"></i>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================
+                 PROFILE CARD
+                 ========================= -->
+
+            <section class="profile-main-card">
+
+
+                <!-- LEFT SIDE -->
+
+                <div class="profile-sidebar-section">
+
+                    <div class="profile-image-wrapper">
+
+                        <img src="@Model.UserDto.ProfileImage"
+                             alt="@Model.UserDto.FirstName @Model.UserDto.LastName"
+                             class="profile-main-image">
+
+                    </div>
+
+
+                    <h3>
+                        @Model.UserDto.FirstName @Model.UserDto.LastName
+                    </h3>
+
+
+                    <span class="profile-role">
+
+                        <i class="fas fa-user"></i>
+
+                        @User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value
+                    </span>
+
+
+                    <p class="profile-username">
+
+                        <i class="fas fa-at"></i>
+
+                        @Model.UserDto.Username
+
+                    </p>
+
+
+                    <a href="/account/update-profile"
+                       class="profile-edit-button">
+
+                        <i class="fas fa-pen"></i>
+
+                        Edit Profile
+
+                    </a>
+
+                </div>
+
+
+
+                <!-- RIGHT SIDE -->
+
+                <div class="profile-details-section">
+
+
+                    <div class="profile-section-header">
+
+                        <div>
+
+                            <span>
+                                PERSONAL INFORMATION
+                            </span>
+
+                            <h3>
+                                Account Details
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="profile-details-grid">
+
+
+                        <!-- FULL NAME -->
+
+                        <div class="profile-detail-item">
+
+                            <div class="profile-detail-icon blue">
+
+                                <i class="fas fa-user"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Full Name
+                                </span>
+
+                                <strong>
+                                    @Model.UserDto.FirstName @Model.UserDto.LastName
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- USERNAME -->
+
+                        <div class="profile-detail-item">
+
+                            <div class="profile-detail-icon purple">
+
+                                <i class="fas fa-at"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Username
+                                </span>
+
+                                <strong>
+                                    @Model.UserDto.Username
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- DATE OF BIRTH -->
+
+                        <div class="profile-detail-item">
+
+                            <div class="profile-detail-icon orange">
+
+                                <i class="fas fa-calendar"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Date of Birth
+                                </span>
+
+                                <strong>
+                                    @Model.UserDto.DateOfBirth?.ToString("D")
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- ACCOUNT TYPE -->
+
+                        <div class="profile-detail-item">
+
+                            <div class="profile-detail-icon green">
+
+                                <i class="fas fa-shield-heart"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Account Type
+                                </span>
+
+                                <strong>
+                                    @User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- SECURITY -->
+
+                    <div class="profile-security-section">
+
+                        <div class="profile-security-icon">
+
+                            <i class="fas fa-lock"></i>
+
+                        </div>
+
+
+                        <div class="profile-security-info">
+
+                            <span>
+                                ACCOUNT SECURITY
+                            </span>
+
+                            <h4>
+                                Keep your account secure
+                            </h4>
+
+                            <p>
+                                Update your password regularly to help protect your account.
+                            </p>
+
+                        </div>
+
+
+                        <a href="/account/change-password"
+                           class="profile-password-button">
+
+                            <i class="fas fa-key"></i>
+
+                            Change Password
+
+                        </a>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+</div>
+
+
+@section Scripts {
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const menuButton =
+                document.querySelector(".user-mobile-menu");
+
+            const sidebar =
+                document.querySelector(".user-sidebar");
+
+
+            if (menuButton && sidebar) {
+
+                menuButton.addEventListener("click", function () {
+
+                    sidebar.classList.toggle("user-sidebar-open");
+
+                });
+
+            }
+
+        });
+
+    </script>
+
+}

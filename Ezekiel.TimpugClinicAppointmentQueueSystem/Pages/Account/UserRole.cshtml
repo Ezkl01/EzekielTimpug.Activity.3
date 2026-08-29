@@ -1,0 +1,843 @@
+@page "/admin/user-role"
+@model UserRoleModel
+
+@{
+    ViewData["Title"] = "User Roles";
+
+    var role = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
+}
+
+<div class="user-dashboard">
+
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
+
+    <aside class="user-sidebar">
+
+        <div class="user-sidebar-brand">
+
+            <div class="user-brand-icon">
+                <i class="fas fa-solid fa-hospital"></i>
+            </div>
+
+            <div>
+                <h2>ClinicCare</h2>
+                <span>Appointment System</span>
+            </div>
+
+        </div>
+
+
+        <nav class="user-sidebar-nav">
+
+            <div class="user-nav-title">
+                MAIN
+            </div>
+
+
+            <a href="/admin/dashboard"
+               class="user-nav-link">
+
+                <i class="fas fa-chart-pie"></i>
+
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a href="/appointments"
+               class="user-nav-link">
+
+                <i class="fas fa-calendar-check"></i>
+
+                <span>Appointments</span>
+
+            </a>
+
+
+            <a href="/doctors"
+               class="user-nav-link">
+
+                <i class="fas fa-user-doctor"></i>
+
+                <span>Doctors</span>
+
+            </a>
+
+
+            <div class="user-nav-title">
+                MANAGEMENT
+            </div>
+
+
+            <a href="/admin/user-role"
+               class="user-nav-link">
+
+                <i class="fas fa-users"></i>
+
+                <span>Manage User</span>
+
+            </a>
+
+            <a href="/account/invite"
+               class="user-nav-link">
+
+                <i class="fas fa-user-plus"></i>
+
+                <span>Invite User</span>
+
+            </a>
+
+
+            <div class="user-nav-title">
+                ACCOUNT
+            </div>
+
+
+            <a href="/account/admin-profile"
+               class="user-nav-link">
+
+                <i class="fas fa-user"></i>
+
+                <span>Profile</span>
+
+            </a>
+
+
+            <a href="#"
+               class="user-nav-link">
+
+                <i class="fas fa-gear"></i>
+
+                <span>Settings</span>
+
+            </a>
+
+
+            <a asp-page="/account/logout"
+               class="user-nav-link">
+
+                <i class="fas fa-right-from-bracket"></i>
+
+                <span>Logout</span>
+
+            </a>
+
+        </nav>
+
+
+        <div class="user-sidebar-bottom">
+
+            <div class="user-mini-profile">
+
+                <div class="user-mini-avatar">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+
+                <div>
+
+                    <strong>
+                        @User.Identity?.Name
+                    </strong>
+
+                    <span>
+                        @role
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
+    <main class="user-main">
+
+
+        <!-- =========================
+             TOPBAR
+        ========================= -->
+
+        <header class="user-topbar">
+
+            <div class="user-topbar-left">
+
+                <button type="button"
+                        class="user-mobile-menu">
+
+                    <i class="fas fa-bars"></i>
+
+                </button>
+
+
+                <div>
+
+                    <span class="user-page-label">
+                        ADMINISTRATION
+                    </span>
+
+                    <h1>
+                        Manage Roles
+                    </h1>
+
+                </div>
+
+            </div>
+
+
+            <div class="user-topbar-right">
+
+                <button type="button"
+                        class="user-notification">
+
+                    <i class="far fa-bell"></i>
+
+                    <span></span>
+
+                </button>
+
+
+                <div class="user-profile-top">
+
+                    <div class="user-top-avatar">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            @User.Identity?.Name
+                        </strong>
+
+                        <span>
+                            @role
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =========================
+             USER ROLE CONTENT
+        ========================= -->
+
+        <div class="user-dashboard-content user-role-content">
+
+
+            <!-- PAGE INTRO -->
+
+            <section class="user-role-page-header">
+
+                <div class="user-role-header-info">
+
+                    <div class="user-role-page-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+
+                    <div>
+
+                        <span>
+                            USER MANAGEMENT
+                        </span>
+
+                        <h2>
+                            Manage Role
+                        </h2>
+
+                        <p>
+                            Manage the roles and permissions of registered users.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- SUCCESS MESSAGE -->
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show"
+                     role="alert">
+
+                    <strong>Success!</strong>
+
+                    @TempData["SuccessMessage"]
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="alert">
+                    </button>
+
+                </div>
+            }
+
+
+            <!-- ERROR MESSAGE -->
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show"
+                     role="alert">
+
+                    <strong>Error!</strong>
+
+                    @TempData["ErrorMessage"]
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="alert">
+                    </button>
+
+                </div>
+            }
+
+
+
+            <!-- =========================
+                 USERS CARD
+            ========================= -->
+
+            <section class="user-card user-role-card">
+
+
+                <!-- CARD HEADER -->
+
+                <div class="user-role-card-header">
+
+                    <div class="user-role-title">
+
+                        <div class="user-role-title-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Registered Users
+                            </h3>
+
+                            <p>
+                                View users and update their system roles.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <span class="user-role-count">
+
+                        <i class="fas fa-users"></i>
+
+                        @Model.TotalRecords Users
+
+                    </span>
+
+                </div>
+
+
+
+                <!-- SEARCH -->
+
+                <div class="user-role-search-area">
+
+                    <form method="get"
+                          action="/admin/user-role"
+                          class="user-role-search-form">
+
+                        <div class="user-role-search-input">
+
+                            <i class="fas fa-magnifying-glass"></i>
+
+                            <input type="text"
+                                   id="userSearch"
+                                   name="keyword"
+                                   value="@Model.Keyword"
+                                   placeholder="Search users..."
+                                   autocomplete="off" />
+
+                        </div>
+
+
+                        <button type="submit"
+                                class="user-role-search-button"
+                                id="searchButton">
+
+                            <i class="fas fa-magnifying-glass"></i>
+
+                            Search
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+
+                <!-- =========================
+                     USERS TABLE
+                ========================= -->
+
+                @if (Model.Users.Count == 0)
+                {
+
+                    <div class="user-role-empty">
+
+                        <div class="user-role-empty-icon">
+
+                            <i class="fas fa-users-slash"></i>
+
+                        </div>
+
+                        <h4>
+                            No users found
+                        </h4>
+
+                        <p>
+                            There are currently no registered users matching
+                            your search.
+                        </p>
+
+                    </div>
+
+                }
+                else
+                {
+
+                    <div class="table-responsive user-role-table-wrapper">
+
+                        <table class="table user-role-table align-middle mb-0">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        #
+                                    </th>
+
+                                    <th>
+                                        User
+                                    </th>
+
+                                    <th>
+                                        Username
+                                    </th>
+
+                                    <th>
+                                        Current Role
+                                    </th>
+
+                                    <th class="text-end">
+                                        Change Role
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                @for (int i = 0; i < Model.Users.Count; i++)
+                                {
+                                    var user = Model.Users[i];
+
+                                    <tr>
+
+                                        <!-- NUMBER -->
+
+                                        <td class="user-role-number">
+
+                                            @((Model.PageIndex - 1) * Model.PageSize + i + 1)
+
+                                        </td>
+
+
+                                        <!-- USER -->
+
+                                        <td>
+
+                                            <div class="user-role-user-info">
+
+                                                <div class="user-role-avatar">
+
+                                                    <i class="fas fa-user"></i>
+
+                                                </div>
+
+
+                                                <div>
+
+                                                    <strong>
+                                                        @user.FirstName @user.LastName
+                                                    </strong>
+
+                                                    <small>
+                                                        ID: @user.Id
+                                                    </small>
+
+                                                </div>
+
+                                            </div>
+
+                                        </td>
+
+
+                                        <!-- USERNAME -->
+
+                                        <td>
+
+                                            <span class="user-role-username">
+
+                                                <i class="fas fa-envelope"></i>
+
+                                                @user.UserName
+
+                                            </span>
+
+                                        </td>
+
+
+                                        <!-- CURRENT ROLE -->
+
+                                        <td>
+
+                                            @if (user.Role == "Admin")
+                                            {
+                                                <span class="user-role-badge admin">
+
+                                                    <i class="fas fa-user-shield"></i>
+
+                                                    Admin
+
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="user-role-badge user">
+
+                                                    <i class="fas fa-user"></i>
+
+                                                    User
+
+                                                </span>
+                                            }
+
+                                        </td>
+
+
+                                        <!-- CHANGE ROLE -->
+
+                                        <td class="text-end">
+
+                                            <form method="post"
+                                                  asp-page-handler="ChangeRole"
+                                                  class="user-role-change-form">
+
+                                                <input type="hidden"
+                                                       name="userId"
+                                                       value="@user.Id" />
+
+
+                                                <select name="role"
+                                                        class="user-role-select"
+                                                        onchange="this.form.submit()">
+
+                                                    @if (user.Role == "Admin")
+                                                    {
+                                                        <option value="Admin"
+                                                                selected>
+                                                            Admin
+                                                        </option>
+
+                                                        <option value="User">
+                                                            User
+                                                        </option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="Admin">
+                                                            Admin
+                                                        </option>
+
+                                                        <option value="User"
+                                                                selected>
+                                                            User
+                                                        </option>
+                                                    }
+
+                                                </select>
+
+                                            </form>
+
+                                        </td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+
+                    <!-- =========================
+                         PAGINATION
+                    ========================= -->
+
+                    @if (Model.TotalPages > 1)
+                    {
+
+                        <div class="user-role-pagination-container">
+
+
+                            <!-- SHOWING INFO -->
+
+                            <div class="user-role-showing-info">
+
+                                Showing
+
+                                <strong>
+                                    @((Model.PageIndex - 1) * Model.PageSize + 1)
+                                </strong>
+
+                                -
+
+                                <strong>
+                                    @(Math.Min(
+                                        Model.PageIndex * Model.PageSize,
+                                        Model.TotalRecords))
+                                </strong>
+
+                                of
+
+                                <strong>
+                                    @Model.TotalRecords
+                                </strong>
+
+                                users
+
+                            </div>
+
+
+
+                            <!-- PAGINATION -->
+
+                            <nav aria-label="User pagination">
+
+                                <ul class="pagination mb-0 user-role-pagination">
+
+
+                                    <!-- FIRST -->
+
+                                    <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+
+                                        @if (Model.PageIndex == 1)
+                                        {
+                                            <span class="page-link">
+                                                First
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <a class="page-link"
+                                               href="/admin/user-role?pageIndex=1">
+
+                                                First
+
+                                            </a>
+                                        }
+
+                                    </li>
+
+
+
+                                    <!-- PREVIOUS -->
+
+                                    <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+
+                                        @if (Model.PageIndex == 1)
+                                        {
+                                            <span class="page-link">
+
+                                                &laquo;
+
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <a class="page-link"
+                                               href="/admin/user-role?pageIndex=@(Model.PageIndex - 1)">
+
+                                                &laquo;
+
+                                            </a>
+                                        }
+
+                                    </li>
+
+
+
+                                    <!-- CURRENT PAGE -->
+
+                                    <li class="page-item active">
+
+                                        <span class="page-link">
+
+                                            @Model.PageIndex
+
+                                        </span>
+
+                                    </li>
+
+
+
+                                    <!-- NEXT -->
+
+                                    <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
+
+                                        @if (Model.PageIndex == Model.TotalPages)
+                                        {
+                                            <span class="page-link">
+
+                                                &raquo;
+
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <a class="page-link"
+                                               href="/admin/user-role?pageIndex=@(Model.PageIndex + 1)">
+
+                                                &raquo;
+
+                                            </a>
+                                        }
+
+                                    </li>
+
+
+
+                                    <!-- LAST -->
+
+                                    <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
+
+                                        @if (Model.PageIndex == Model.TotalPages)
+                                        {
+                                            <span class="page-link">
+
+                                                Last
+
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <a class="page-link"
+                                               href="/admin/user-role?pageIndex=@Model.TotalPages">
+
+                                                Last
+
+                                            </a>
+                                        }
+
+                                    </li>
+
+                                </ul>
+
+                            </nav>
+
+                        </div>
+
+                    }
+
+                }
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+
+@section Scripts {
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const menuButton =
+                document.querySelector(".user-mobile-menu");
+
+            const sidebar =
+                document.querySelector(".user-sidebar");
+
+
+            if (menuButton && sidebar) {
+
+                menuButton.addEventListener("click", function () {
+
+                    sidebar.classList.toggle("user-sidebar-open");
+
+                });
+
+            }
+
+
+            const searchInput =
+                document.getElementById("userSearch");
+
+            let searchTimer;
+
+
+            if (searchInput) {
+
+                searchInput.addEventListener("input", function () {
+
+                    clearTimeout(searchTimer);
+
+                    const keyword =
+                        this.value.trim();
+
+
+                    searchTimer = setTimeout(function () {
+
+                        window.location.href =
+                            "/admin/user-role?keyword=" +
+                            encodeURIComponent(keyword);
+
+                    }, 500);
+
+                });
+
+            }
+
+        });
+
+    </script>
+
+}

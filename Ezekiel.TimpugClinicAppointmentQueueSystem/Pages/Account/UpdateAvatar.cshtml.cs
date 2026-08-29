@@ -199,7 +199,12 @@ else
 
         _dbContext.SaveChanges();
 
-        return RedirectToPage("/Account/Profile");
+        if (User.IsInRole("Admin"))
+        {
+            return Redirect("/account/admin-profile");
+        }
+
+        return Redirect("/account/user-profile");
     }
 }
 

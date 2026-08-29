@@ -1,0 +1,567 @@
+@page "/account/user-profile"
+@model Profile
+
+@{
+ViewData["Title"] = "My Profile";
+
+
+var role = User.FindFirst(
+    System.Security.Claims.ClaimTypes.Role
+)?.Value;
+
+
+}
+
+<div class="user-dashboard">
+
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside class="user-sidebar">
+
+    <div class="user-sidebar-brand">
+
+        <div class="user-brand-icon">
+            <i class="fas fa-hospital"></i>
+        </div>
+
+        <div>
+            <h2>ClinicCare</h2>
+            <span>Appointment System</span>
+        </div>
+
+    </div>
+
+
+    <nav class="user-sidebar-nav">
+
+        <div class="user-nav-title">
+            MAIN
+        </div>
+
+        <a href="/user/dashboard"
+           class="user-nav-link">
+
+            <i class="fas fa-chart-pie"></i>
+            <span>Dashboard</span>
+
+        </a>
+
+
+        <a href="/appointments"
+           class="user-nav-link">
+
+            <i class="fas fa-calendar-check"></i>
+            <span>My Appointments</span>
+
+        </a>
+
+
+        <a href="/doctors"
+           class="user-nav-link">
+
+            <i class="fas fa-user-doctor"></i>
+            <span>Doctors</span>
+
+        </a>
+
+
+        <div class="user-nav-title">
+            ACCOUNT
+        </div>
+
+
+        <a href="/account/user-profile"
+           class="user-nav-link active">
+
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+
+        </a>
+
+
+        <a href="#"
+           class="user-nav-link">
+
+            <i class="fas fa-gear"></i>
+            <span>Settings</span>
+
+        </a>
+
+
+        <a asp-page="/account/logout"
+           class="user-nav-link">
+
+            <i class="fas fa-right-from-bracket"></i>
+            <span>Logout</span>
+
+        </a>
+
+    </nav>
+
+
+    <div class="user-sidebar-bottom">
+
+        <div class="user-mini-profile">
+
+            <div class="user-mini-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+
+            <div>
+
+                <strong>
+                    @User.Identity?.Name
+                </strong>
+
+                <span>
+                    @role
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+
+<!-- =========================
+     MAIN CONTENT
+========================= -->
+
+<main class="user-main">
+
+
+    <!-- =========================
+         TOPBAR
+    ========================= -->
+
+    <header class="user-topbar">
+
+        <div class="user-topbar-left">
+
+            <button type="button"
+                    class="user-mobile-menu">
+
+                <i class="fas fa-bars"></i>
+
+            </button>
+
+
+            <div>
+
+                <span class="user-page-label">
+                    ACCOUNT
+                </span>
+
+                <h1>
+                    My Profile
+                </h1>
+
+            </div>
+
+        </div>
+
+
+        <div class="user-topbar-right">
+
+            <button type="button"
+                    class="user-notification">
+
+                <i class="far fa-bell"></i>
+                <span></span>
+
+            </button>
+
+
+            <div class="user-profile-top">
+
+                <div class="user-top-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+
+                <div>
+
+                    <strong>
+                        @User.Identity?.Name
+                    </strong>
+
+                    <span>
+                        @role
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================
+         PROFILE CONTENT
+    ========================= -->
+
+    <div class="user-dashboard-content modern-profile-content">
+
+
+        <!-- PAGE HEADER -->
+
+        <section class="modern-profile-header">
+
+            <div class="modern-profile-header-info">
+
+                <div class="modern-profile-page-icon">
+
+                    <i class="fas fa-user"></i>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        ACCOUNT MANAGEMENT
+                    </span>
+
+                    <h2>
+                        My Profile
+                    </h2>
+
+                    <p>
+                        View and manage your personal account information.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="modern-profile-badge">
+
+                <i class="fas fa-shield-halved"></i>
+
+                @role Account
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             PROFILE CARD
+        ========================= -->
+
+        <section class="modern-profile-card">
+
+
+            <!-- LEFT PROFILE PANEL -->
+
+            <div class="modern-profile-sidebar">
+
+
+                <div class="modern-profile-image-container">
+
+                    @if (!string.IsNullOrEmpty(Model.UserDto.ProfileImage))
+                    {
+                        <img src="@Model.UserDto.ProfileImage"
+                             alt="@Model.UserDto.FirstName @Model.UserDto.LastName"
+                             class="modern-profile-image" />
+                    }
+                    else
+                    {
+                        <div class="modern-profile-image-placeholder">
+
+                            <i class="fas fa-user"></i>
+
+                        </div>
+                    }
+
+                </div>
+
+
+                <h3>
+                    @Model.UserDto.FirstName
+                    @Model.UserDto.LastName
+                </h3>
+
+
+                <span class="modern-profile-role">
+
+                    <i class="fas fa-user"></i>
+
+                    @role
+
+                </span>
+
+
+                <p class="modern-profile-username">
+
+                    <i class="fas fa-at"></i>
+
+                    @Model.UserDto.Username
+
+                </p>
+
+
+                <a href="/account/update-profile"
+                   class="modern-profile-edit-button">
+
+                    <i class="fas fa-pen"></i>
+
+                    Edit Profile
+
+                </a>
+
+            </div>
+
+
+
+            <!-- RIGHT DETAILS PANEL -->
+
+            <div class="modern-profile-details">
+
+
+                <div class="modern-profile-section-header">
+
+                    <div>
+
+                        <span>
+                            PERSONAL INFORMATION
+                        </span>
+
+                        <h3>
+                            Account Details
+                        </h3>
+
+                        <p>
+                            Your personal information and account details.
+                        </p>
+
+                    </div>
+
+
+                    <div class="modern-profile-section-icon">
+
+                        <i class="fas fa-id-card"></i>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- DETAILS GRID -->
+
+                <div class="modern-profile-details-grid">
+
+
+                    <!-- FULL NAME -->
+
+                    <div class="modern-profile-detail-item">
+
+                        <div class="modern-profile-detail-icon">
+
+                            <i class="fas fa-user"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Full Name
+                            </span>
+
+                            <strong>
+                                @Model.UserDto.FirstName
+                                @Model.UserDto.LastName
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- USERNAME -->
+
+                    <div class="modern-profile-detail-item">
+
+                        <div class="modern-profile-detail-icon">
+
+                            <i class="fas fa-at"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Username
+                            </span>
+
+                            <strong>
+                                @Model.UserDto.Username
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- DATE OF BIRTH -->
+
+                    <div class="modern-profile-detail-item">
+
+                        <div class="modern-profile-detail-icon">
+
+                            <i class="fas fa-calendar"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Date of Birth
+                            </span>
+
+                            <strong>
+                                @Model.UserDto.DateOfBirth?.ToString("D")
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ACCOUNT TYPE -->
+
+                    <div class="modern-profile-detail-item">
+
+                        <div class="modern-profile-detail-icon">
+
+                            <i class="fas fa-shield-heart"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Account Type
+                            </span>
+
+                            <strong>
+                                @role
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =========================
+                     SECURITY SECTION
+                ========================= -->
+
+                <div class="modern-profile-security">
+
+
+                    <div class="modern-profile-security-left">
+
+                        <div class="modern-profile-security-icon">
+
+                            <i class="fas fa-lock"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                ACCOUNT SECURITY
+                            </span>
+
+                            <h4>
+                                Keep your account secure
+                            </h4>
+
+                            <p>
+                                Update your password regularly to help protect your account.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <a href="/account/change-password"
+                       class="modern-profile-password-button">
+
+                        <i class="fas fa-key"></i>
+
+                        Change Password
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+</div>
+
+@section Scripts {
+
+
+<partial name="_ValidationScriptsPartial" />
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const menuButton =
+            document.querySelector(".user-mobile-menu");
+
+        const sidebar =
+            document.querySelector(".user-sidebar");
+
+
+        if (menuButton && sidebar) {
+
+            menuButton.addEventListener("click", function () {
+
+                sidebar.classList.toggle("user-sidebar-open");
+
+            });
+
+        }
+
+    });
+
+</script>
+
+
+}

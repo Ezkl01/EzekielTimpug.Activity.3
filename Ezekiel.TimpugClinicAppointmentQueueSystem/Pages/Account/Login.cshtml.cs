@@ -78,22 +78,57 @@ public class Login : PageModel
 
             _dbContext.SaveChanges();
 
+            var roleRecord = _dbContext.Set<UserLoginInfo>().FirstOrDefault(r =>
+                    r.UserId == user.Id
+                 && r.Key != null
+                 && r.Key.ToLower() == "role");
+
+            var roleValue = roleRecord?.Value ?? "User";
+
+            if (roleValue.ToLower() == "admin")
+            {
+                roleValue = "Admin";
+            }
+            else
+            {
+                roleValue = "User";
+            }
+            
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.UserName ?? user.FirstName!),
-                new Claim(ClaimTypes.NameIdentifier, user.Id!.ToString()!)
+                new Claim(ClaimTypes.NameIdentifier, user.Id!.ToString()!),
+                new Claim(ClaimTypes.Role, roleValue)
             };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
+            var authProperties = new AuthenticationProperties
+            {
+                IsPersistent = true,
+                AllowRefresh = true
+            };
+
             await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity)
+                new ClaimsPrincipal(claimsIdentity),
+                authProperties
             );
-            
 
-            HttpContext.Session.SetString("UserLoginTime",DateTime.UtcNow.ToString()); // Store the UserId in session
-            return RedirectToPage("/index"); // Redirect to the desired page after successful login
+        
+            HttpContext.Session.SetString("UserLoginTime", DateTime.UtcNow.ToString());
+
+        if (roleValue == "Admin")
+        {
+            return Redirect("/admin/dashboard");
+        }
+
+        if (roleValue == "User")
+        {
+            return Redirect("/user/dashboard");
+        }
+
+        return Redirect("/index");
             
         }
 

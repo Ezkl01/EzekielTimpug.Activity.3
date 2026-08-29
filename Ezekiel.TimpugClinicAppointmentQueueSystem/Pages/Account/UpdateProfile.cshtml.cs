@@ -8,7 +8,10 @@ using System.Runtime.ExceptionServices;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Ezekiel.TimpugClinicAppointmentQueueSystem.Infrastructure.Data;
+
+[Authorize]
 public class UpdateProfile : PageModel
 {  
 
@@ -97,7 +100,13 @@ public class UpdateProfile : PageModel
         user.DateOfBirth = (DateTime)UserUpdateDto.DateOfBirth!;
 
         _dbContext.SaveChanges();
-        return RedirectToPage("/Account/Profile");
+
+        if (User.IsInRole("Admin"))
+        {
+            return Redirect("/account/admin-profile");
+        }
+
+        return Redirect("/account/user-profile");
     }
 
 }

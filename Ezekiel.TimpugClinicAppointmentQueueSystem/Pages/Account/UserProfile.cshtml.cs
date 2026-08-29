@@ -8,7 +8,10 @@ using System.Runtime.ExceptionServices;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Ezekiel.TimpugClinicAppointmentQueueSystem.Infrastructure.Data;
+
+[Authorize(Roles = "User")]
 public class Profile : PageModel
 {  
 

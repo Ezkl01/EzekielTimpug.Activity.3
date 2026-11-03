@@ -1,0 +1,1497 @@
+
+@page "/admin/reports"
+@model AdminReportsModel
+
+@{
+    ViewData["Title"] = "Appointment Reports";
+}
+
+<div class="user-dashboard">
+
+    <!-- =========================================
+         ADMIN SIDEBAR
+    ========================================== -->
+
+    <aside class="user-sidebar" id="userSidebar">
+
+        <div class="user-sidebar-brand">
+
+            <div class="user-brand-icon">
+                <i class="fas fa-hospital"></i>
+            </div>
+
+            <div>
+                <h2>ClinicCare</h2>
+                <span>Appointment System</span>
+            </div>
+
+        </div>
+
+
+        <nav class="user-sidebar-nav">
+
+            <div class="user-nav-title">
+                MAIN
+            </div>
+
+            <a href="/admin/dashboard"
+               class="user-nav-link">
+
+                <i class="fas fa-chart-pie"></i>
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a href="/appointments"
+               class="user-nav-link">
+
+                <i class="fas fa-calendar-check"></i>
+                <span>Appointment</span>
+
+            </a>
+
+
+            <a href="/admin/reports"
+               class="user-nav-link active">
+
+                <i class="fas fa-file-medical"></i>
+                <span>Report</span>
+
+            </a>
+
+
+            <a href="/admin/doctors"
+               class="user-nav-link">
+
+                <i class="fas fa-user-doctor"></i>
+                <span>Doctor</span>
+
+            </a>
+
+
+            <div class="user-nav-title">
+                MANAGEMENT
+            </div>
+
+
+            <a href="/admin/user-role"
+               class="user-nav-link">
+
+                <i class="fas fa-users"></i>
+                <span>Manage User</span>
+
+            </a>
+
+
+            <a href="/account/invite"
+               class="user-nav-link">
+
+                <i class="fas fa-user-plus"></i>
+                <span>Invite User</span>
+
+            </a>
+
+
+            <div class="user-nav-title">
+                ACCOUNT
+            </div>
+
+
+            <a href="/account/admin-profile"
+               class="user-nav-link">
+
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+
+            </a>
+
+
+            <button type="button"
+                    class="user-nav-link"
+                    id="openLogoutModal">
+
+                <i class="fas fa-right-from-bracket"></i>
+                <span>Logout</span>
+
+            </button>
+
+        </nav>
+
+    </aside>
+
+
+
+    <!-- =========================================
+         MAIN CONTENT
+    ========================================== -->
+
+    <main class="user-main">
+
+
+        <!-- TOPBAR -->
+
+        <header class="user-topbar">
+
+            <div class="user-topbar-left">
+
+                <button type="button"
+                        class="user-mobile-menu">
+
+                    <i class="fas fa-bars"></i>
+
+                </button>
+
+                <div>
+
+                    <span class="user-page-label">
+                        ADMINISTRATION PORTAL
+                    </span>
+
+                    <h1>
+                        Appointment Reports
+                    </h1>
+
+                </div>
+
+            </div>
+
+
+            <div class="user-topbar-right">
+
+                <div class="user-profile-top">
+
+                    <div class="user-top-avatar">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            @User.Identity?.Name
+                        </strong>
+
+                        <span>
+                            Administrator
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =========================================
+             PAGE CONTENT
+        ========================================== -->
+
+        <div class="user-dashboard-content">
+
+
+            <!-- PAGE INTRO -->
+
+            <div class="reports-page-heading">
+
+                <div>
+
+                    <span class="user-page-label">
+                        CLINIC MANAGEMENT
+                    </span>
+
+                    <h2>
+                        Appointment Reports
+                    </h2>
+
+                    <p>
+                        View, monitor, search, and organize
+                        appointment records from all patients.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =====================================
+                 REPORT STATISTICS
+            ====================================== -->
+
+            <section class="user-stat-grid">
+
+
+                <!-- TOTAL -->
+
+                <div class="user-stat-card">
+
+                    <div class="user-stat-top">
+
+                        <div class="user-stat-icon blue">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+
+                        <span class="user-stat-label">
+                            TOTAL
+                        </span>
+
+                    </div>
+
+                    <div class="user-stat-info">
+
+                        <span>
+                            Total Appointments
+                        </span>
+
+                        <strong>
+                            @Model.TotalAppointments
+                        </strong>
+
+                    </div>
+
+                    <small>
+                        All clinic appointment records
+                    </small>
+
+                </div>
+
+
+
+                <!-- PENDING -->
+
+                <div class="user-stat-card">
+
+                    <div class="user-stat-top">
+
+                        <div class="user-stat-icon orange">
+                            <i class="fas fa-clock"></i>
+                        </div>
+
+                        <span class="user-stat-label pending">
+                            WAITING
+                        </span>
+
+                    </div>
+
+                    <div class="user-stat-info">
+
+                        <span>
+                            Pending
+                        </span>
+
+                        <strong>
+                            @Model.TotalPending
+                        </strong>
+
+                    </div>
+
+                    <small>
+                        Awaiting confirmation
+                    </small>
+
+                </div>
+
+
+
+                <!-- CONFIRMED -->
+
+                <div class="user-stat-card">
+
+                    <div class="user-stat-top">
+
+                        <div class="user-stat-icon green">
+                            <i class="fas fa-circle-check"></i>
+                        </div>
+
+                        <span class="user-stat-label">
+                            CONFIRMED
+                        </span>
+
+                    </div>
+
+                    <div class="user-stat-info">
+
+                        <span>
+                            Confirmed
+                        </span>
+
+                        <strong>
+                            @Model.TotalConfirmed
+                        </strong>
+
+                    </div>
+
+                    <small>
+                        Approved appointments
+                    </small>
+
+                </div>
+
+
+
+                <!-- COMPLETED -->
+
+                <div class="user-stat-card">
+
+                    <div class="user-stat-top">
+
+                        <div class="user-stat-icon purple">
+                            <i class="fas fa-check-double"></i>
+                        </div>
+
+                        <span class="user-stat-label">
+                            COMPLETED
+                        </span>
+
+                    </div>
+
+                    <div class="user-stat-info">
+
+                        <span>
+                            Completed
+                        </span>
+
+                        <strong>
+                            @Model.TotalCompleted
+                        </strong>
+
+                    </div>
+
+                    <small>
+                        Finished appointments
+                    </small>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =====================================
+                 APPOINTMENT HISTORY
+            ====================================== -->
+
+            <section class="user-card reports-card">
+
+
+                <!-- HEADER -->
+
+                <div class="user-card-header">
+
+                    <div>
+
+                        <span>
+                            CLINIC RECORD MANAGEMENT
+                        </span>
+
+                        <h3>
+                            All Appointment Records
+                        </h3>
+
+                    </div>
+
+
+                    <div class="reports-record-count">
+
+                        <i class="fas fa-file-medical"></i>
+
+                        <span id="reportCount">
+                            @Model.ReportAppointments.Count
+                        </span>
+
+                        Records
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- FILTERS -->
+
+                <div class="reports-filter-container">
+
+
+                    <!-- SEARCH -->
+
+                    <div class="reports-filter-group">
+
+                        <label for="reportSearch">
+                            Search
+                        </label>
+
+                        <div class="reports-search-box">
+
+                            <i class="fas fa-search"></i>
+
+                            <input type="text"
+                                   id="reportSearch"
+                                   placeholder="Search patient, doctor, code..." />
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- STATUS -->
+
+                    <div class="reports-filter-group">
+
+                        <label for="reportStatus">
+                            Filter by Status
+                        </label>
+
+                        <select id="reportStatus">
+
+                            <option value="all">
+                                All Status
+                            </option>
+
+                            <option value="pending">
+                                Pending
+                            </option>
+
+                            <option value="confirmed">
+                                Confirmed
+                            </option>
+
+                            <option value="completed">
+                                Completed
+                            </option>
+
+                            <option value="cancelled">
+                                Cancelled
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- DATE -->
+
+                    <div class="reports-filter-group">
+
+                        <label for="reportDate">
+                            Filter by Date
+                        </label>
+
+                        <input type="date"
+                               id="reportDate" />
+
+                    </div>
+
+
+
+                    <!-- SORT -->
+
+                    <div class="reports-filter-group">
+
+                        <label for="reportSort">
+                            Sort By
+                        </label>
+
+                        <select id="reportSort">
+
+                            <option value="newest">
+                                Newest First
+                            </option>
+
+                            <option value="oldest">
+                                Oldest First
+                            </option>
+
+                            <option value="patient-asc">
+                                Patient A-Z
+                            </option>
+
+                            <option value="patient-desc">
+                                Patient Z-A
+                            </option>
+
+                            <option value="doctor-asc">
+                                Doctor A-Z
+                            </option>
+
+                            <option value="doctor-desc">
+                                Doctor Z-A
+                            </option>
+
+                            <option value="status-asc">
+                                Status A-Z
+                            </option>
+
+                            <option value="status-desc">
+                                Status Z-A
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- RESET -->
+
+                    <div class="reports-filter-group reports-reset-group">
+
+                        <label>
+                            Actions
+                        </label>
+
+                        <button type="button"
+                                id="resetReportFilters"
+                                class="reports-reset-button">
+
+                            <i class="fas fa-rotate-left"></i>
+
+                            Reset Filters
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =====================================
+                     TABLE
+                ====================================== -->
+
+                <div class="reports-table-wrapper">
+
+                    <table class="reports-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Appointment Date</th>
+
+                                <th>Time</th>
+
+                                <th>Doctor</th>
+
+                                <th>Patient</th>
+
+                                <th>Patient Code</th>
+
+                                <th>Status</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="reportTableBody">
+
+                            @foreach (var appointment in Model.ReportAppointments)
+                            {
+                                var status = string.IsNullOrWhiteSpace(appointment.Status)
+                                    ? "Pending"
+                                    : appointment.Status;
+
+                                var patient = string.IsNullOrWhiteSpace(appointment.Patient)
+                                    ? "Not available"
+                                    : appointment.Patient;
+
+                                var doctor = string.IsNullOrWhiteSpace(appointment.Doctor)
+                                    ? "Not assigned"
+                                    : appointment.Doctor;
+
+                                var patientCode = appointment.PatientCode.ToString();
+                                if (string.IsNullOrWhiteSpace(patientCode))
+                                {
+                                    patientCode = "N/A";
+                                }
+
+                                <tr class="report-row"
+
+                                    data-date="@appointment.Date.ToString("yyyy-MM-dd")"
+
+                                    data-status="@status.ToLowerInvariant()"
+
+                                    data-patient="@patient"
+
+                                    data-doctor="@doctor"
+
+                                    data-search="@($"{patient} {doctor} {patientCode} {status} {appointment.Date:MMMM dd yyyy} {appointment.Time}")">
+
+
+                                    <!-- DATE -->
+
+                                    <td>
+
+                                        <div class="reports-date">
+
+                                            <i class="fas fa-calendar-day"></i>
+
+                                            <strong>
+                                                @appointment.Date.ToString("MMM dd, yyyy")
+                                            </strong>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <!-- TIME -->
+
+                                    <td>
+
+                                        <span class="reports-time">
+
+                                            <i class="fas fa-clock"></i>
+
+                                            @appointment.Time
+
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- DOCTOR -->
+
+                                    <td>
+
+                                        <div class="reports-doctor">
+
+                                            <div class="reports-doctor-icon">
+
+                                                <i class="fas fa-user-doctor"></i>
+
+                                            </div>
+
+                                            <strong>
+                                                @doctor
+                                            </strong>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <!-- PATIENT -->
+
+                                    <td>
+
+                                        <span class="reports-patient">
+                                            @patient
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- PATIENT CODE -->
+
+                                    <td>
+
+                                        <span class="reports-patient">
+                                            @patientCode
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- STATUS -->
+
+                                    <td>
+
+                                        <span class="reports-status
+                                            @(status.ToLowerInvariant() == "pending" ? "pending" :
+                                              status.ToLowerInvariant() == "confirmed" ? "confirmed" :
+                                              status.ToLowerInvariant() == "completed" ? "completed" :
+                                              status.ToLowerInvariant() == "cancelled" ? "cancelled" :
+                                              "default")">
+
+                                            @status
+
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+
+
+                    <!-- =====================================
+                         PAGINATION
+                    ====================================== -->
+
+                    <div class="reports-pagination"
+                         id="reportPagination">
+
+                        <div class="reports-pagination-info">
+
+                            <span id="paginationInfo">
+                                Showing 0–0 of 0 records
+                            </span>
+
+                        </div>
+
+
+                        <div class="reports-pagination-controls"
+                             id="paginationControls">
+
+                            <button type="button"
+                                    id="prevPage"
+                                    class="reports-page-button"
+                                    disabled>
+
+                                <i class="fas fa-chevron-left"></i>
+
+                                Previous
+
+                            </button>
+
+
+                            <div class="reports-page-numbers"
+                                 id="pageNumbers">
+                            </div>
+
+
+                            <button type="button"
+                                    id="nextPage"
+                                    class="reports-page-button">
+
+                                Next
+
+                                <i class="fas fa-chevron-right"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- NO FILTER RESULTS -->
+
+                    <div id="reportNoResults"
+                         class="reports-empty"
+                         style="display:none;">
+
+                        <div class="reports-empty-icon">
+
+                            <i class="fas fa-file-circle-xmark"></i>
+
+                        </div>
+
+                        <h4>
+                            No appointments found
+                        </h4>
+
+                        <p>
+                            Try changing your search or filters.
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- NO APPOINTMENTS -->
+
+                    @if (!Model.ReportAppointments.Any())
+                    {
+                        <div class="reports-empty">
+
+                            <div class="reports-empty-icon">
+
+                                <i class="fas fa-calendar-xmark"></i>
+
+                            </div>
+
+                            <h4>
+                                No appointment records
+                            </h4>
+
+                            <p>
+                                Appointment records from patients
+                                will appear here.
+                            </p>
+
+                        </div>
+                    }
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =====================================
+                 CANCELLED SUMMARY
+            ====================================== -->
+
+            <section class="reports-summary-card">
+
+                <div class="reports-summary-icon">
+
+                    <i class="fas fa-calendar-xmark"></i>
+
+                </div>
+
+                <div>
+
+                    <h4>
+                        Cancelled Appointments
+                    </h4>
+
+                    <p>
+                        Total cancelled appointments:
+
+                        <strong>
+                            @Model.TotalCancelled
+                        </strong>
+
+                    </p>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =====================================
+                 LOGOUT MODAL
+            ====================================== -->
+
+            <div class="logout-modal-overlay"
+                 id="logoutModal">
+
+                <div class="logout-modal-box">
+
+                    <div class="logout-modal-icon">
+
+                        <i class="fas fa-sign-out-alt"></i>
+
+                    </div>
+
+                    <h2>
+                        Log out?
+                    </h2>
+
+                    <p>
+                        Are you sure you want to log out
+                        of your administrator account?
+                    </p>
+
+
+                    <div class="logout-modal-actions">
+
+                        <button type="button"
+                                class="logout-cancel-btn"
+                                id="closeLogoutModal">
+
+                            Cancel
+
+                        </button>
+
+
+                        <form method="post"
+                              asp-page="/Account/Logout">
+
+                            @Html.AntiForgeryToken()
+
+                            <button type="submit"
+                                    class="logout-confirm-btn">
+
+                                <i class="fas fa-sign-out-alt"></i>
+
+                                Yes, Log Out
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </main>
+
+</div>
+
+
+
+@section Scripts {
+
+    <script>
+
+        // ==========================================
+        // LOGOUT MODAL
+        // ==========================================
+
+        const openLogoutModal =
+            document.getElementById("openLogoutModal");
+
+        const closeLogoutModal =
+            document.getElementById("closeLogoutModal");
+
+        const logoutModal =
+            document.getElementById("logoutModal");
+
+
+        if (openLogoutModal && logoutModal) {
+
+            openLogoutModal.addEventListener("click", function () {
+
+                logoutModal.classList.add("show");
+
+            });
+
+        }
+
+
+        if (closeLogoutModal && logoutModal) {
+
+            closeLogoutModal.addEventListener("click", function () {
+
+                logoutModal.classList.remove("show");
+
+            });
+
+        }
+
+
+        if (logoutModal) {
+
+            logoutModal.addEventListener("click", function (event) {
+
+                if (event.target === logoutModal) {
+
+                    logoutModal.classList.remove("show");
+
+                }
+
+            });
+
+        }
+
+
+
+        // ==========================================
+        // MOBILE SIDEBAR
+        // ==========================================
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const menuButton =
+                document.querySelector(".user-mobile-menu");
+
+            const sidebar =
+                document.querySelector(".user-sidebar");
+
+
+            if (menuButton && sidebar) {
+
+                menuButton.addEventListener("click", function () {
+
+                    sidebar.classList.toggle("user-sidebar-open");
+
+                });
+
+            }
+
+        });
+
+
+
+        // ==========================================
+        // REPORT FILTERS, SORTING AND PAGINATION
+        // ==========================================
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const searchInput =
+                document.getElementById("reportSearch");
+
+            const statusFilter =
+                document.getElementById("reportStatus");
+
+            const dateFilter =
+                document.getElementById("reportDate");
+
+            const sortFilter =
+                document.getElementById("reportSort");
+
+            const resetButton =
+                document.getElementById("resetReportFilters");
+
+            const tableBody =
+                document.getElementById("reportTableBody");
+
+            const noResults =
+                document.getElementById("reportNoResults");
+
+            const reportCount =
+                document.getElementById("reportCount");
+
+            const paginationInfo =
+                document.getElementById("paginationInfo");
+
+            const paginationControls =
+                document.getElementById("paginationControls");
+
+            const pageNumbers =
+                document.getElementById("pageNumbers");
+
+            const prevPage =
+                document.getElementById("prevPage");
+
+            const nextPage =
+                document.getElementById("nextPage");
+
+
+            if (!tableBody) return;
+
+
+            // ======================================
+            // PAGINATION SETTINGS
+            // ======================================
+
+            const recordsPerPage = 10;
+
+            let currentPage = 1;
+
+            let filteredRows = [];
+
+
+            // ======================================
+            // FILTER AND SORT RECORDS
+            // ======================================
+
+            function getFilteredRows() {
+
+                const search =
+                    searchInput.value.toLowerCase().trim();
+
+                const status =
+                    statusFilter.value;
+
+                const date =
+                    dateFilter.value;
+
+                const sort =
+                    sortFilter.value;
+
+
+                let rows = Array.from(
+                    tableBody.querySelectorAll(".report-row")
+                );
+
+
+                // FILTER
+
+                rows = rows.filter(function (row) {
+
+                    const rowSearch =
+                        row.dataset.search.toLowerCase();
+
+                    const rowStatus =
+                        row.dataset.status;
+
+                    const rowDate =
+                        row.dataset.date;
+
+
+                    const matchesSearch =
+                        rowSearch.includes(search);
+
+                    const matchesStatus =
+                        status === "all" ||
+                        rowStatus === status;
+
+                    const matchesDate =
+                        date === "" ||
+                        rowDate === date;
+
+
+                    return matchesSearch &&
+                           matchesStatus &&
+                           matchesDate;
+
+                });
+
+
+                // SORT
+
+                rows.sort(function (a, b) {
+
+                    const dateA = a.dataset.date;
+                    const dateB = b.dataset.date;
+
+                    const patientA =
+                        a.dataset.patient.toLowerCase();
+
+                    const patientB =
+                        b.dataset.patient.toLowerCase();
+
+                    const doctorA =
+                        a.dataset.doctor.toLowerCase();
+
+                    const doctorB =
+                        b.dataset.doctor.toLowerCase();
+
+                    const statusA =
+                        a.dataset.status;
+
+                    const statusB =
+                        b.dataset.status;
+
+
+                    switch (sort) {
+
+                        case "newest":
+                            return dateB.localeCompare(dateA);
+
+                        case "oldest":
+                            return dateA.localeCompare(dateB);
+
+                        case "patient-asc":
+                            return patientA.localeCompare(patientB);
+
+                        case "patient-desc":
+                            return patientB.localeCompare(patientA);
+
+                        case "doctor-asc":
+                            return doctorA.localeCompare(doctorB);
+
+                        case "doctor-desc":
+                            return doctorB.localeCompare(doctorA);
+
+                        case "status-asc":
+                            return statusA.localeCompare(statusB);
+
+                        case "status-desc":
+                            return statusB.localeCompare(statusA);
+
+                        default:
+                            return 0;
+
+                    }
+
+                });
+
+
+                return rows;
+
+            }
+
+
+
+            // ======================================
+            // DISPLAY CURRENT PAGE
+            // ======================================
+
+            function displayPage() {
+
+                const totalRecords =
+                    filteredRows.length;
+
+                const totalPages =
+                    Math.ceil(totalRecords / recordsPerPage);
+
+
+                // VALIDATE CURRENT PAGE
+
+                if (totalPages === 0) {
+
+                    currentPage = 1;
+
+                }
+                else if (currentPage > totalPages) {
+
+                    currentPage = totalPages;
+
+                }
+
+
+                // CALCULATE RECORD RANGE
+
+                const startIndex =
+                    (currentPage - 1) * recordsPerPage;
+
+                const endIndex =
+                    Math.min(
+                        startIndex + recordsPerPage,
+                        totalRecords
+                    );
+
+
+                // HIDE ALL ROWS
+
+                const allRows = Array.from(
+                    tableBody.querySelectorAll(".report-row")
+                );
+
+                allRows.forEach(function (row) {
+
+                    row.style.display = "none";
+
+                });
+
+
+                // SHOW CURRENT PAGE RECORDS
+
+                const currentRows =
+                    filteredRows.slice(startIndex, endIndex);
+
+
+                currentRows.forEach(function (row) {
+
+                    row.style.display = "";
+
+                    tableBody.appendChild(row);
+
+                });
+
+
+                // UPDATE RECORD COUNT
+
+                reportCount.textContent = totalRecords;
+
+
+                // UPDATE PAGINATION INFO
+
+                if (totalRecords === 0) {
+
+                    paginationInfo.textContent =
+                        "Showing 0–0 of 0 records";
+
+                }
+                else {
+
+                    paginationInfo.textContent =
+                        `Showing ${startIndex + 1}–${endIndex} of ${totalRecords} records`;
+
+                }
+
+
+                // NO RESULTS MESSAGE
+
+                const hasOriginalRecords =
+                    allRows.length > 0;
+
+                noResults.style.display =
+                    hasOriginalRecords && totalRecords === 0
+                        ? "block"
+                        : "none";
+
+
+                // PREVIOUS BUTTON
+
+                prevPage.disabled =
+                    currentPage === 1 || totalPages === 0;
+
+
+                // NEXT BUTTON
+
+                nextPage.disabled =
+                    currentPage === totalPages || totalPages === 0;
+
+
+                // NUMBERED PAGE BUTTONS
+
+                pageNumbers.innerHTML = "";
+
+
+                for (let i = 1; i <= totalPages; i++) {
+
+                    const pageButton =
+                        document.createElement("button");
+
+                    pageButton.type = "button";
+
+                    pageButton.textContent = i;
+
+                    pageButton.className =
+                        "reports-page-number";
+
+
+                    if (i === currentPage) {
+
+                        pageButton.classList.add("active");
+
+                        pageButton.setAttribute(
+                            "aria-current",
+                            "page"
+                        );
+
+                    }
+
+
+                    pageButton.addEventListener("click", function () {
+
+                        currentPage = i;
+
+                        displayPage();
+
+                    });
+
+
+                    pageNumbers.appendChild(pageButton);
+
+                }
+
+
+                // HIDE PAGINATION IF ONLY ONE PAGE
+
+                paginationControls.style.display =
+                    totalPages <= 1
+                        ? "none"
+                        : "flex";
+
+            }
+
+
+
+            // ======================================
+            // APPLY FILTERS
+            // ======================================
+
+            function filterReports() {
+
+                currentPage = 1;
+
+                filteredRows = getFilteredRows();
+
+                displayPage();
+
+            }
+
+
+
+            // ======================================
+            // PREVIOUS PAGE
+            // ======================================
+
+            prevPage.addEventListener("click", function () {
+
+                if (currentPage > 1) {
+
+                    currentPage--;
+
+                    displayPage();
+
+                }
+
+            });
+
+
+
+            // ======================================
+            // NEXT PAGE
+            // ======================================
+
+            nextPage.addEventListener("click", function () {
+
+                const totalPages =
+                    Math.ceil(
+                        filteredRows.length / recordsPerPage
+                    );
+
+                if (currentPage < totalPages) {
+
+                    currentPage++;
+
+                    displayPage();
+
+                }
+
+            });
+
+
+
+            // ======================================
+            // SEARCH
+            // ======================================
+
+            searchInput.addEventListener(
+                "input",
+                filterReports
+            );
+
+
+
+            // ======================================
+            // STATUS FILTER
+            // ======================================
+
+            statusFilter.addEventListener(
+                "change",
+                filterReports
+            );
+
+
+
+            // ======================================
+            // DATE FILTER
+            // ======================================
+
+            dateFilter.addEventListener(
+                "change",
+                filterReports
+            );
+
+
+
+            // ======================================
+            // SORT
+            // ======================================
+
+            sortFilter.addEventListener(
+                "change",
+                filterReports
+            );
+
+
+
+            // ======================================
+            // RESET FILTERS
+            // ======================================
+
+            resetButton.addEventListener("click", function () {
+
+                searchInput.value = "";
+
+                statusFilter.value = "all";
+
+                dateFilter.value = "";
+
+                sortFilter.value = "newest";
+
+                filterReports();
+
+            });
+
+
+
+            // ======================================
+            // INITIAL LOAD
+            // ======================================
+
+            filterReports();
+
+        });
+
+    </script>
+
+}

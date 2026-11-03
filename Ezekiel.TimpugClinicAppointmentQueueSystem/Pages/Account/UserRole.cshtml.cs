@@ -15,87 +15,103 @@ public class UserRoleModel : PageModel
     }
 
     public List<UserRoleViewModel> Users { get; set; } = new();
+
     public int PageIndex { get; set; } = 1;
     public int PageSize { get; set; } = 10;
     public int TotalPages { get; set; }
     public int TotalRecords { get; set; }
     public string Keyword { get; set; } = "";
 
-        public async Task OnGetAsync(int pageIndex = 1,string keyword = "")   
-        {
-
+    // =========================================================
+    // GET USERS
+    // =========================================================
+    public async Task OnGetAsync(
+        int pageIndex = 1,
+        string keyword = "")
+    {
         Keyword = keyword?.Trim() ?? "";
+
         if (pageIndex < 1)
-        {
             pageIndex = 1;
-        }
 
-        // Count users based on search
+        // =====================================================
+        // COUNT ONLY ACTIVE / NON-DELETED USERS
+        // =====================================================
         var countQuery = _dbContext.Users
-            .AsNoTracking();
+            .AsNoTracking()
+            .Where(u => !u.IsDeleted);
 
+        // =====================================================
+        // SEARCH
+        // =====================================================
         if (!string.IsNullOrWhiteSpace(Keyword))
         {
             var search = Keyword.ToLower();
 
             countQuery = countQuery.Where(u =>
                 (u.FirstName != null &&
-                u.FirstName.ToLower().Contains(search))
+                 u.FirstName.ToLower().Contains(search))
                 ||
                 (u.LastName != null &&
-                u.LastName.ToLower().Contains(search))
+                 u.LastName.ToLower().Contains(search))
             );
         }
 
-    TotalRecords = await countQuery.CountAsync();
+        TotalRecords = await countQuery.CountAsync();
 
-
-        // Calculate total pages
+        // =====================================================
+        // PAGINATION
+        // =====================================================
         TotalPages = (int)Math.Ceiling(
             TotalRecords / (double)PageSize
         );
 
-
-        // Make sure page number does not exceed total pages
         if (TotalPages > 0 && pageIndex > TotalPages)
-        {
             pageIndex = TotalPages;
-        }
-
 
         PageIndex = pageIndex;
 
-
-        // Load users
         await LoadUsersAsync();
     }
 
-    // CHANGE THE USER'S ROLE
+    // =========================================================
+    // CHANGE USER ROLE
+    // =========================================================
     public async Task<IActionResult> OnPostChangeRoleAsync(
         Guid userId,
         string role)
     {
+        // Only allow Admin or User
         if (role != "Admin" && role != "User")
         {
-            TempData["ErrorMessage"] = "Invalid role selected.";
+            TempData["ErrorMessage"] =
+                "Invalid role selected.";
+
             return RedirectToPage();
         }
 
+        // Find user
         var user = await _dbContext.Users
-            .FirstOrDefaultAsync(u => u.Id == userId);
+            .FirstOrDefaultAsync(u =>
+                u.Id == userId &&
+                !u.IsDeleted);
 
         if (user == null)
         {
-            TempData["ErrorMessage"] = "User not found.";
+            TempData["ErrorMessage"] =
+                "User not found.";
+
             return RedirectToPage();
         }
 
+        // Find existing role record
         var roleRecord = await _dbContext.UserLoginInfos
             .FirstOrDefaultAsync(r =>
                 r.UserId == userId &&
                 r.Key != null &&
                 r.Key.ToLower() == "role");
 
+        // Create role if it doesn't exist
         if (roleRecord == null)
         {
             roleRecord = new UserLoginInfo(
@@ -108,6 +124,7 @@ public class UserRoleModel : PageModel
         }
         else
         {
+            // Update existing role
             roleRecord.Value = role;
         }
 
@@ -119,33 +136,119 @@ public class UserRoleModel : PageModel
         return RedirectToPage();
     }
 
+    // =========================================================
+    // SOFT DELETE USER
+    // =========================================================
+    public async Task<IActionResult> OnPostDeleteAsync(
+        Guid userId)
+    {
+        // =====================================================
+        // GET CURRENT LOGGED-IN USER
+        // =====================================================
+        var currentUserIdString = User.FindFirst(
+            System.Security.Claims.ClaimTypes.NameIdentifier
+        )?.Value;
+
+        // =====================================================
+        // PREVENT ADMIN FROM DELETING THEIR OWN ACCOUNT
+        // =====================================================
+        if (Guid.TryParse(
+            currentUserIdString,
+            out Guid currentUserId))
+        {
+            if (currentUserId == userId)
+            {
+                TempData["ErrorMessage"] =
+                    "You cannot delete your own account.";
+
+                return RedirectToPage();
+            }
+        }
+
+        // =====================================================
+        // FIND USER
+        // ONLY FIND NON-DELETED USER
+        // =====================================================
+        var user = await _dbContext.Users
+            .FirstOrDefaultAsync(u =>
+                u.Id == userId &&
+                !u.IsDeleted);
+
+        if (user == null)
+        {
+            TempData["ErrorMessage"] =
+                "User not found.";
+
+            return RedirectToPage();
+        }
+
+        // =====================================================
+        // REMOVE LOGIN INFORMATION
+        // =====================================================
+        var loginInfo = await _dbContext.UserLoginInfos
+            .Where(r => r.UserId == userId)
+            .ToListAsync();
+
+        if (loginInfo.Any())
+        {
+            _dbContext.UserLoginInfos.RemoveRange(loginInfo);
+        }
+
+        // =====================================================
+        // SOFT DELETE
+        // DO NOT REMOVE THE USER FROM THE USERS TABLE
+        // =====================================================
+        user.IsDeleted = true;
+
+        await _dbContext.SaveChangesAsync();
+
+        TempData["SuccessMessage"] =
+            $"User {user.UserName} has been deleted successfully.";
+
+        return RedirectToPage();
+    }
+
+    // =========================================================
+    // LOAD USERS
+    // =========================================================
     private async Task LoadUsersAsync()
     {
+        // =====================================================
+        // ONLY LOAD NON-DELETED USERS
+        // =====================================================
         var usersQuery = _dbContext.Users
-            .AsNoTracking();
+            .AsNoTracking()
+            .Where(u => !u.IsDeleted);
 
+        // =====================================================
+        // SEARCH
+        // =====================================================
         if (!string.IsNullOrWhiteSpace(Keyword))
         {
             var search = Keyword.ToLower();
 
             usersQuery = usersQuery.Where(u =>
                 (u.FirstName != null &&
-                u.FirstName.ToLower().Contains(search))
+                 u.FirstName.ToLower().Contains(search))
                 ||
                 (u.LastName != null &&
-                u.LastName.ToLower().Contains(search))
+                 u.LastName.ToLower().Contains(search))
             );
         }
 
+        // =====================================================
+        // PAGINATION
+        // =====================================================
         var skip = (PageIndex - 1) * PageSize;
-
 
         var users = await usersQuery
             .Skip(skip)
             .Take(PageSize)
             .ToListAsync();
 
-
+        // =====================================================
+        // GET ROLE RECORDS
+        // =====================================================
         var roleRecords = await _dbContext.UserLoginInfos
             .AsNoTracking()
             .Where(r =>
@@ -153,14 +256,19 @@ public class UserRoleModel : PageModel
                 r.Key.ToLower() == "role")
             .ToListAsync();
 
-
+        // =====================================================
+        // CONVERT TO VIEW MODEL
+        // =====================================================
         Users = users.Select(user =>
         {
             var roleRecord = roleRecords
-                .FirstOrDefault(r => r.UserId == user.Id);
+                .FirstOrDefault(r =>
+                    r.UserId == user.Id);
 
-            var roleValue = roleRecord?.Value ?? "User";
+            var roleValue =
+                roleRecord?.Value ?? "User";
 
+            // Normalize role
             if (roleValue.Equals(
                 "admin",
                 StringComparison.OrdinalIgnoreCase))
@@ -186,6 +294,9 @@ public class UserRoleModel : PageModel
 }
 
 
+// =============================================================
+// USER ROLE VIEW MODEL
+// =============================================================
 public class UserRoleViewModel
 {
     public Guid? Id { get; set; }

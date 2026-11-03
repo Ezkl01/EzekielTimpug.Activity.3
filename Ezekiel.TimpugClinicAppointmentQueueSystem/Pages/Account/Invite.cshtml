@@ -10,9 +10,7 @@ var role = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
 
 <div class="user-dashboard">
 
-<!-- =========================
-     SIDEBAR
-========================= -->
+<!--SIDEBAR -->
 
 <aside class="user-sidebar">
 
@@ -55,17 +53,23 @@ var role = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
 
             <i class="fas fa-calendar-check"></i>
 
-            <span>Appointments</span>
+            <span>Appointment</span>
 
         </a>
 
 
-        <a href="/doctors"
+         <a href="/admin/reports"
+               class="user-nav-link">
+                <i class="fas fa-file-medical"></i>
+                <span>Report</span>
+            </a>
+            
+        <a href="/admin/doctors"
            class="user-nav-link">
 
             <i class="fas fa-user-doctor"></i>
 
-            <span>Doctors</span>
+            <span>Doctor</span>
 
         </a>
 
@@ -110,61 +114,23 @@ var role = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
         </a>
 
 
-        <a href="#"
-           class="user-nav-link">
+        <button type="button"
+            class="user-nav-link"
+            id="openLogoutModal">
 
-            <i class="fas fa-gear"></i>
+                <i class="fas fa-right-from-bracket"></i>
 
-            <span>Settings</span>
+                <span>Logout</span>
 
-        </a>
-
-
-        <a asp-page="/account/logout"
-           class="user-nav-link">
-
-            <i class="fas fa-right-from-bracket"></i>
-
-            <span>Logout</span>
-
-        </a>
+            </button>
 
     </nav>
-
-
-    <!-- SIDEBAR PROFILE -->
-
-    <div class="user-sidebar-bottom">
-
-        <div class="user-mini-profile">
-
-            <div class="user-mini-avatar">
-                <i class="fas fa-user-shield"></i>
-            </div>
-
-            <div>
-
-                <strong>
-                    @User.Identity?.Name
-                </strong>
-
-                <span>
-                    @role
-                </span>
-
-            </div>
-
-        </div>
-
-    </div>
-
 </aside>
 
 
 
-<!-- =========================
-     MAIN CONTENT
-========================= -->
+<!--
+     MAIN CONTENT -->
 
 <main class="user-main">
 
@@ -236,9 +202,7 @@ var role = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
 
 
 
-    <!-- =========================
-         INVITE CONTENT
-    ========================= -->
+    <!--INVITE CONTENT-->
 
     <div class="user-dashboard-content invite-page-content">
 
@@ -278,9 +242,7 @@ var role = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
 
 
 
-        <!-- =========================
-             INVITE CARD
-        ========================= -->
+        <!--INVITE CARD-->
 
         <section class="invite-card">
 
@@ -469,6 +431,46 @@ var role = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
 
         </section>
 
+         <!--
+                    LOGOUT CONFIRMATION MODAL
+             -->
+
+                <div class="logout-modal-overlay" id="logoutModal">
+
+                    <div class="logout-modal-box">
+
+                        <div class="logout-modal-icon">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </div>
+
+                        <h2>Log out?</h2>
+
+                        <p>
+                            Are you sure you want to log out of your account?
+                        </p>
+
+                        <div class="logout-modal-actions">
+
+                            <button type="button"
+                                    class="logout-cancel-btn"
+                                    id="closeLogoutModal">
+                                Cancel
+                            </button>
+
+                            <form method="post" asp-page="/Account/Logout">
+                                @Html.AntiForgeryToken()
+
+                                <button type="submit" class="logout-confirm-btn">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Yes, Log Out
+                                </button>
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
     </div>
 
@@ -481,6 +483,27 @@ var role = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
 <partial name="_ValidationScriptsPartial" />
 
 <script>
+
+    const openLogoutModal = document.getElementById("openLogoutModal");
+    const closeLogoutModal = document.getElementById("closeLogoutModal");
+    const logoutModal = document.getElementById("logoutModal");
+
+    // OPEN MODAL
+    openLogoutModal.addEventListener("click", function () {
+        logoutModal.classList.add("show");
+    });
+
+    // CLOSE MODAL
+    closeLogoutModal.addEventListener("click", function () {
+        logoutModal.classList.remove("show");
+    });
+
+    // CLOSE WHEN CLICKING OUTSIDE THE BOX
+    logoutModal.addEventListener("click", function (event) {
+        if (event.target === logoutModal) {
+            logoutModal.classList.remove("show");
+        }
+    });
 
     document.addEventListener("DOMContentLoaded", function () {
 

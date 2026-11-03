@@ -19,14 +19,20 @@ public class Logout : PageModel
         _dbContext = dbContext;
     }
 
-    public async Task<IActionResult> OnGet()
+    public void Onget()
+    {
+        
+    }
+    public async Task<IActionResult> OnPostAsync()
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
         if (userId == null)
         {
             return RedirectToPage("/Account/Login");
         }
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             return RedirectToPage("/Account/Login");
     }

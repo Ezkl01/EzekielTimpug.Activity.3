@@ -28,6 +28,9 @@ namespace Ezekiel.TimpugClinicAppointmentQueueSystem.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
+                    b.Property<string>("ContactInfo")
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime(6)");
 
@@ -63,6 +66,9 @@ namespace Ezekiel.TimpugClinicAppointmentQueueSystem.Migrations
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Specialty")
                         .IsRequired()

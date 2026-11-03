@@ -9,7 +9,7 @@
 
     <!-- =========================
          SIDEBAR
-         ========================= -->
+    ========================== -->
 
     <aside class="user-sidebar">
 
@@ -43,7 +43,7 @@
             </a>
 
 
-            <a href="/appointments"
+            <a href="/user/appointments"
                class="user-nav-link">
 
                 <i class="fas fa-calendar-check"></i>
@@ -51,17 +51,13 @@
                 <span>My Appointments</span>
 
             </a>
-
-
-            <a href="/doctors"
+            <a href="/user/reports"
                class="user-nav-link">
 
-                <i class="fas fa-user-doctor"></i>
-
-                <span>Doctors</span>
+                <i class="fas fa-file-medical"></i>
+                <span>Report</span>
 
             </a>
-
 
             <div class="user-nav-title">
                 ACCOUNT
@@ -77,23 +73,15 @@
 
             </a>
 
-
-            <a href="#"
-               class="user-nav-link">
-
-                <i class="fas fa-gear"></i>
-
-                <span>Settings</span>
-
-            </a>
-
-            <a asp-page="/account/logout" class="user-nav-link">
+            <button type="button"
+                    class="user-nav-link"
+                    id="openLogoutModal">
 
                 <i class="fas fa-right-from-bracket"></i>
 
                 <span>Logout</span>
 
-            </a>
+            </button>
 
         </nav>
 
@@ -128,7 +116,7 @@
 
     <!-- =========================
          MAIN
-         ========================= -->
+    ========================== -->
 
     <main class="user-main">
 
@@ -202,7 +190,7 @@
 
         <!-- =========================
              CONTENT
-             ========================= -->
+        ========================== -->
 
         <div class="user-dashboard-content">
 
@@ -275,10 +263,12 @@
 
             <!-- =========================
                  STATISTICS
-                 ========================= -->
+            ========================== -->
 
             <section class="user-stat-grid">
 
+
+                <!-- TOTAL APPOINTMENTS -->
 
                 <div class="user-stat-card">
 
@@ -298,23 +288,25 @@
                     <div class="user-stat-info">
 
                         <span>
-                            My Appointments
+                            Clinic Appointments
                         </span>
 
                         <strong>
-                          <!-- Model.TotalAppointments -->
+                            @Model.TotalAppointments
                         </strong>
 
                     </div>
 
 
                     <small>
-                        All your appointments
+                        All of Clinic appointments
                     </small>
 
                 </div>
 
 
+
+                <!-- PENDING -->
 
                 <div class="user-stat-card">
 
@@ -338,7 +330,7 @@
                         </span>
 
                         <strong>
-                            <!-- Model.PendingAppointments -->
+                            @Model.TotalPendingAppointments
                         </strong>
 
                     </div>
@@ -351,6 +343,8 @@
                 </div>
 
 
+
+                <!-- CONFIRMED -->
 
                 <div class="user-stat-card">
 
@@ -374,7 +368,7 @@
                         </span>
 
                         <strong>
-                            <!-- Model.ApprovedAppointments -->
+                            @Model.TotalConfirmedAppointments
                         </strong>
 
                     </div>
@@ -387,6 +381,8 @@
                 </div>
 
 
+
+                <!-- AVAILABLE DOCTORS -->
 
                 <div class="user-stat-card">
 
@@ -410,7 +406,7 @@
                         </span>
 
                         <strong>
-                            <!-- Model.TotalDoctors -->
+                            @Model.TotalDoctors
                         </strong>
 
                     </div>
@@ -424,358 +420,9 @@
 
             </section>
 
-
-
-            <!-- =========================
-                 UPCOMING + QUICK ACTIONS
-                 ========================= -->
-
-            <section class="user-main-grid">
-
-
-                <!-- UPCOMING APPOINTMENT -->
-
-                <div class="user-card upcoming-card">
-
-                    <div class="user-card-header">
-
-                        <div>
-
-                            <span>
-                                NEXT VISIT
-                            </span>
-
-                            <h3>
-                                Upcoming Appointment
-                            </h3>
-
-                        </div>
-
-
-                        <a href="/appointments">
-                            View all
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-
-                    </div>
-
-
-                    <div class="upcoming-content">
-
-                        <div class="appointment-date">
-
-                            <strong>
-                                <!-- Model.UpcomingAppointmentDate -->
-                            </strong>
-
-                            <span>
-                                Upcoming
-                            </span>
-
-                        </div>
-
-
-                        <div class="appointment-details">
-
-                            <h4>
-                                <!-- Model.UpcomingDoctorName -->
-                            </h4>
-
-                            <p>
-                                <i class="fas fa-user-doctor"></i>
-
-                                <!-- Model.UpcomingDoctorSpecialization -->
-                            </p>
-
-                            <p>
-                                <i class="fas fa-clock"></i>
-
-                                <!-- Model.UpcomingAppointmentTime -->
-                            </p>
-
-                        </div>
-
-
-                        <span class="appointment-status">
-                            Confirmed
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- QUICK ACTIONS -->
-
-                <div class="user-card quick-card">
-
-                    <div class="user-card-header">
-
-                        <div>
-
-                            <span>
-                                SHORTCUTS
-                            </span>
-
-                            <h3>
-                                Quick Actions
-                            </h3>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="user-quick-actions">
-
-
-                        <a href="/appointments"
-                           class="quick-action">
-
-                            <div class="quick-action-icon blue">
-
-                                <i class="fas fa-calendar-plus"></i>
-
-                            </div>
-
-                            <div>
-
-                                <strong>
-                                    Book Appointment
-                                </strong>
-
-                                <span>
-                                    Schedule a visit
-                                </span>
-
-                            </div>
-
-                            <i class="fas fa-chevron-right"></i>
-
-                        </a>
-
-
-
-                        <a href="/doctors"
-                           class="quick-action">
-
-                            <div class="quick-action-icon purple">
-
-                                <i class="fas fa-user-doctor"></i>
-
-                            </div>
-
-                            <div>
-
-                                <strong>
-                                    Find a Doctor
-                                </strong>
-
-                                <span>
-                                    Browse doctors
-                                </span>
-
-                            </div>
-
-                            <i class="fas fa-chevron-right"></i>
-
-                        </a>
-
-
-
-                        <a href="/appointments"
-                           class="quick-action">
-
-                            <div class="quick-action-icon green">
-
-                                <i class="fas fa-calendar-check"></i>
-
-                            </div>
-
-                            <div>
-
-                                <strong>
-                                    My Appointments
-                                </strong>
-
-                                <span>
-                                    View your visits
-                                </span>
-
-                            </div>
-
-                            <i class="fas fa-chevron-right"></i>
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-
-            <!-- =========================
-                 AVAILABLE DOCTORS
-                 ========================= -->
-
-            <section class="user-card doctors-card">
-
-                <div class="user-card-header">
-
-                    <div>
-
-                        <span>
-                            CLINIC STAFF
-                        </span>
-
-                        <h3>
-                            Available Doctors
-                        </h3>
-
-                    </div>
-
-
-                    <a href="/doctors">
-
-                        View all
-
-                        <i class="fas fa-arrow-right"></i>
-
-                    </a>
-
-                </div>
-
-
-                <div class="doctor-grid">
-
-
-                    <!-- DOCTOR 1 -->
-
-                    <div class="doctor-card">
-
-                        <div class="doctor-avatar">
-                            <i class="fas fa-user-doctor"></i>
-                        </div>
-
-                        <div class="doctor-info">
-
-                            <h4>
-                                Dr. Doctor Name
-                            </h4>
-
-                            <span>
-                                General Medicine
-                            </span>
-
-                        </div>
-
-                        <span class="doctor-available">
-
-                            <span></span>
-
-                            Available
-
-                        </span>
-
-                        <a href="/appointments"
-                           class="doctor-book">
-
-                            Book Appointment
-
-                        </a>
-
-                    </div>
-
-
-
-                    <!-- DOCTOR 2 -->
-
-                    <div class="doctor-card">
-
-                        <div class="doctor-avatar purple">
-                            <i class="fas fa-user-doctor"></i>
-                        </div>
-
-                        <div class="doctor-info">
-
-                            <h4>
-                                Dr. Doctor Name
-                            </h4>
-
-                            <span>
-                                Family Medicine
-                            </span>
-
-                        </div>
-
-                        <span class="doctor-available">
-
-                            <span></span>
-
-                            Available
-
-                        </span>
-
-                        <a href="/appointments"
-                           class="doctor-book">
-
-                            Book Appointment
-
-                        </a>
-
-                    </div>
-
-
-
-                    <!-- DOCTOR 3 -->
-
-                    <div class="doctor-card">
-
-                        <div class="doctor-avatar green">
-                            <i class="fas fa-user-doctor"></i>
-                        </div>
-
-                        <div class="doctor-info">
-
-                            <h4>
-                                Dr. Doctor Name
-                            </h4>
-
-                            <span>
-                                Internal Medicine
-                            </span>
-
-                        </div>
-
-                        <span class="doctor-available">
-
-                            <span></span>
-
-                            Available
-
-                        </span>
-
-                        <a href="/appointments"
-                           class="doctor-book">
-
-                            Book Appointment
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-
             <!-- =========================
                  RECENT APPOINTMENTS
-                 ========================= -->
+            ========================== -->
 
             <section class="user-card recent-card">
 
@@ -794,7 +441,7 @@
                     </div>
 
 
-                    <a href="/appointments">
+                    <a href="/user/appointments">
 
                         View all
 
@@ -836,6 +483,62 @@
             </section>
 
 
+
+            <!-- =========================
+                 LOGOUT MODAL
+            ========================== -->
+
+            <div class="logout-modal-overlay"
+                 id="logoutModal">
+
+                <div class="logout-modal-box">
+
+                    <div class="logout-modal-icon">
+
+                        <i class="fas fa-sign-out-alt"></i>
+
+                    </div>
+
+                    <h2>
+                        Log out?
+                    </h2>
+
+                    <p>
+                        Are you sure you want to log out of your account?
+                    </p>
+
+                    <div class="logout-modal-actions">
+
+                        <button type="button"
+                                class="logout-cancel-btn"
+                                id="closeLogoutModal">
+
+                            Cancel
+
+                        </button>
+
+                        <form method="post"
+                              asp-page="/Account/Logout">
+
+                            @Html.AntiForgeryToken()
+
+                            <button type="submit"
+                                    class="logout-confirm-btn">
+
+                                <i class="fas fa-sign-out-alt"></i>
+
+                                Yes, Log Out
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
     </main>
@@ -843,9 +546,65 @@
 </div>
 
 
+
 @section Scripts {
 
     <script>
+
+        // ==========================================
+        // LOGOUT MODAL
+        // ==========================================
+
+        const openLogoutModal =
+            document.getElementById("openLogoutModal");
+
+        const closeLogoutModal =
+            document.getElementById("closeLogoutModal");
+
+        const logoutModal =
+            document.getElementById("logoutModal");
+
+
+        if (openLogoutModal && logoutModal) {
+
+            openLogoutModal.addEventListener("click", function () {
+
+                logoutModal.classList.add("show");
+
+            });
+
+        }
+
+
+        if (closeLogoutModal && logoutModal) {
+
+            closeLogoutModal.addEventListener("click", function () {
+
+                logoutModal.classList.remove("show");
+
+            });
+
+        }
+
+
+        if (logoutModal) {
+
+            logoutModal.addEventListener("click", function (event) {
+
+                if (event.target === logoutModal) {
+
+                    logoutModal.classList.remove("show");
+
+                }
+
+            });
+
+        }
+
+
+        // ==========================================
+        // MOBILE SIDEBAR
+        // ==========================================
 
         document.addEventListener("DOMContentLoaded", function () {
 
@@ -860,7 +619,9 @@
 
                 menuButton.addEventListener("click", function () {
 
-                    sidebar.classList.toggle("user-sidebar-open");
+                    sidebar.classList.toggle(
+                        "user-sidebar-open"
+                    );
 
                 });
 

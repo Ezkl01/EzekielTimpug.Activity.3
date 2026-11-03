@@ -47,8 +47,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxBZG1pblByb2ZpbGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/HP/EzekielTimpug.ClinicAppointmentQueueSystem1/Ezekiel.TimpugClinicAppointmentQueueSystem/Pages/Account/AdminReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxBZG1pblJlcG9ydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/HP/EzekielTimpug.ClinicAppointmentQueueSystem1/Ezekiel.TimpugClinicAppointmentQueueSystem/Pages/Account/Appointment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxBcHBvaW50bWVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/HP/EzekielTimpug.ClinicAppointmentQueueSystem1/Ezekiel.TimpugClinicAppointmentQueueSystem/Pages/Account/ChangePassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxDaGFuZ2VQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/HP/EzekielTimpug.ClinicAppointmentQueueSystem1/Ezekiel.TimpugClinicAppointmentQueueSystem/Pages/Account/Doctor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxEb2N0b3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/HP/EzekielTimpug.ClinicAppointmentQueueSystem1/Ezekiel.TimpugClinicAppointmentQueueSystem/Pages/Account/ForgotPassword.cshtml]
@@ -71,12 +83,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/HP/EzekielTimpug.ClinicAppointmentQueueSystem1/Ezekiel.TimpugClinicAppointmentQueueSystem/Pages/Account/Reports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxSZXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/HP/EzekielTimpug.ClinicAppointmentQueueSystem1/Ezekiel.TimpugClinicAppointmentQueueSystem/Pages/Account/UpdateAvatar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxVcGRhdGVBdmF0YXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/HP/EzekielTimpug.ClinicAppointmentQueueSystem1/Ezekiel.TimpugClinicAppointmentQueueSystem/Pages/Account/UpdateProfile.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxVcGRhdGVQcm9maWxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/HP/EzekielTimpug.ClinicAppointmentQueueSystem1/Ezekiel.TimpugClinicAppointmentQueueSystem/Pages/Account/UserAppointment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxVc2VyQXBwb2ludG1lbnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/HP/EzekielTimpug.ClinicAppointmentQueueSystem1/Ezekiel.TimpugClinicAppointmentQueueSystem/Pages/Account/UserDashboard.cshtml]

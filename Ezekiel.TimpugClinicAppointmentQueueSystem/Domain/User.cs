@@ -5,10 +5,12 @@ public class User
         Id = Guid.NewGuid();
         UserName = userName;
         DateOfBirth = dateOfBirth;
+        IsDeleted = false;
     }
     public Guid? Id { get; set; }
     public string? UserName { get; set; }
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public DateTime DateOfBirth { get; set; }
+    public bool IsDeleted { get; set; } = false;
 }

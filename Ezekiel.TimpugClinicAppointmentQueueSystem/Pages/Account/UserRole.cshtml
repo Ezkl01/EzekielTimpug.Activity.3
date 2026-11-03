@@ -1,17 +1,20 @@
 @page "/admin/user-role"
+
 @model UserRoleModel
 
 @{
     ViewData["Title"] = "User Roles";
 
-    var role = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
+    var role = User.FindFirst(
+        System.Security.Claims.ClaimTypes.Role
+    )?.Value;
 }
 
 <div class="user-dashboard">
 
-    <!-- =========================
+    <!-- =========================================================
          SIDEBAR
-    ========================= -->
+    ========================================================== -->
 
     <aside class="user-sidebar">
 
@@ -35,7 +38,6 @@
                 MAIN
             </div>
 
-
             <a href="/admin/dashboard"
                class="user-nav-link">
 
@@ -51,17 +53,25 @@
 
                 <i class="fas fa-calendar-check"></i>
 
-                <span>Appointments</span>
+                <span>Appointment</span>
 
             </a>
 
 
-            <a href="/doctors"
+            <a href="/admin/reports"
+               class="user-nav-link">
+
+                <i class="fas fa-file-medical"></i>
+                <span>Report</span>
+
+            </a>
+
+            <a href="/admin/doctors"
                class="user-nav-link">
 
                 <i class="fas fa-user-doctor"></i>
 
-                <span>Doctors</span>
+                <span>Doctor</span>
 
             </a>
 
@@ -72,13 +82,14 @@
 
 
             <a href="/admin/user-role"
-               class="user-nav-link">
+               class="user-nav-link active">
 
                 <i class="fas fa-users"></i>
 
                 <span>Manage User</span>
 
             </a>
+
 
             <a href="/account/invite"
                class="user-nav-link">
@@ -105,66 +116,30 @@
             </a>
 
 
-            <a href="#"
-               class="user-nav-link">
-
-                <i class="fas fa-gear"></i>
-
-                <span>Settings</span>
-
-            </a>
-
-
-            <a asp-page="/account/logout"
-               class="user-nav-link">
+            <button type="button"
+                    class="user-nav-link"
+                    id="openLogoutModal">
 
                 <i class="fas fa-right-from-bracket"></i>
 
                 <span>Logout</span>
 
-            </a>
+            </button>
 
         </nav>
-
-
-        <div class="user-sidebar-bottom">
-
-            <div class="user-mini-profile">
-
-                <div class="user-mini-avatar">
-                    <i class="fas fa-user-shield"></i>
-                </div>
-
-                <div>
-
-                    <strong>
-                        @User.Identity?.Name
-                    </strong>
-
-                    <span>
-                        @role
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
-
     </aside>
 
 
-
-    <!-- =========================
+    <!-- =========================================================
          MAIN
-    ========================= -->
+    ========================================================== -->
 
     <main class="user-main">
 
 
-        <!-- =========================
+        <!-- =====================================================
              TOPBAR
-        ========================= -->
+        ====================================================== -->
 
         <header class="user-topbar">
 
@@ -230,10 +205,9 @@
         </header>
 
 
-
-        <!-- =========================
+        <!-- =====================================================
              USER ROLE CONTENT
-        ========================= -->
+        ====================================================== -->
 
         <div class="user-dashboard-content user-role-content">
 
@@ -267,7 +241,6 @@
                 </div>
 
             </section>
-
 
 
             <!-- SUCCESS MESSAGE -->
@@ -310,10 +283,9 @@
             }
 
 
-
-            <!-- =========================
+            <!-- =================================================
                  USERS CARD
-            ========================= -->
+            ================================================== -->
 
             <section class="user-card user-role-card">
 
@@ -354,7 +326,6 @@
                 </div>
 
 
-
                 <!-- SEARCH -->
 
                 <div class="user-role-search-area">
@@ -392,10 +363,9 @@
                 </div>
 
 
-
-                <!-- =========================
+                <!-- =================================================
                      USERS TABLE
-                ========================= -->
+                ================================================== -->
 
                 @if (Model.Users.Count == 0)
                 {
@@ -448,7 +418,7 @@
                                     </th>
 
                                     <th class="text-end">
-                                        Change Role
+                                        Actions
                                     </th>
 
                                 </tr>
@@ -464,11 +434,13 @@
 
                                     <tr>
 
+
                                         <!-- NUMBER -->
 
                                         <td class="user-role-number">
 
-                                            @((Model.PageIndex - 1) * Model.PageSize + i + 1)
+                                            @((Model.PageIndex - 1) *
+                                                Model.PageSize + i + 1)
 
                                         </td>
 
@@ -546,49 +518,79 @@
                                         </td>
 
 
-                                        <!-- CHANGE ROLE -->
+                                        <!-- ACTIONS -->
 
                                         <td class="text-end">
 
-                                            <form method="post"
-                                                  asp-page-handler="ChangeRole"
-                                                  class="user-role-change-form">
-
-                                                <input type="hidden"
-                                                       name="userId"
-                                                       value="@user.Id" />
+                                            <div class="user-role-actions">
 
 
-                                                <select name="role"
-                                                        class="user-role-select"
-                                                        onchange="this.form.submit()">
+                                                <!-- CHANGE ROLE -->
 
-                                                    @if (user.Role == "Admin")
-                                                    {
-                                                        <option value="Admin"
-                                                                selected>
-                                                            Admin
-                                                        </option>
+                                                <form method="post"
+                                                      asp-page-handler="ChangeRole"
+                                                      class="user-role-change-form">
 
-                                                        <option value="User">
-                                                            User
-                                                        </option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="Admin">
-                                                            Admin
-                                                        </option>
+                                                    <input type="hidden"
+                                                           name="userId"
+                                                           value="@user.Id" />
 
-                                                        <option value="User"
-                                                                selected>
-                                                            User
-                                                        </option>
-                                                    }
 
-                                                </select>
+                                                    <select name="role"
+                                                            class="user-role-select"
+                                                            onchange="this.form.submit()">
 
-                                            </form>
+                                                        @if (user.Role == "Admin")
+                                                        {
+                                                            <option value="Admin"
+                                                                    selected>
+                                                                Admin
+                                                            </option>
+
+                                                            <option value="User">
+                                                                User
+                                                            </option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="Admin">
+                                                                Admin
+                                                            </option>
+
+                                                            <option value="User"
+                                                                    selected>
+                                                                User
+                                                            </option>
+                                                        }
+
+                                                    </select>
+
+                                                </form>
+
+
+                                                <!-- DELETE USER -->
+
+                                                <form method="post"
+                                                      asp-page-handler="Delete"
+                                                      class="user-role-delete-form"
+                                                      onsubmit="return confirm('Are you sure you want to delete this user? This action cannot be undone.');">
+
+                                                    <input type="hidden"
+                                                           name="userId"
+                                                           value="@user.Id" />
+
+                                                    <button type="submit"
+                                                            class="user-role-delete-button"
+                                                            title="Delete User">
+
+                                                        <i class="fas fa-trash"></i>
+
+                                                    </button>
+
+                                                </form>
+
+
+                                            </div>
 
                                         </td>
 
@@ -602,10 +604,9 @@
                     </div>
 
 
-
-                    <!-- =========================
+                    <!-- =================================================
                          PAGINATION
-                    ========================= -->
+                    ================================================== -->
 
                     @if (Model.TotalPages > 1)
                     {
@@ -620,7 +621,8 @@
                                 Showing
 
                                 <strong>
-                                    @((Model.PageIndex - 1) * Model.PageSize + 1)
+                                    @((Model.PageIndex - 1) *
+                                        Model.PageSize + 1)
                                 </strong>
 
                                 -
@@ -640,7 +642,6 @@
                                 users
 
                             </div>
-
 
 
                             <!-- PAGINATION -->
@@ -663,7 +664,7 @@
                                         else
                                         {
                                             <a class="page-link"
-                                               href="/admin/user-role?pageIndex=1">
+                                               href="/admin/user-role?pageIndex=1&keyword=@Uri.EscapeDataString(Model.Keyword)">
 
                                                 First
 
@@ -673,7 +674,6 @@
                                     </li>
 
 
-
                                     <!-- PREVIOUS -->
 
                                     <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
@@ -681,15 +681,13 @@
                                         @if (Model.PageIndex == 1)
                                         {
                                             <span class="page-link">
-
                                                 &laquo;
-
                                             </span>
                                         }
                                         else
                                         {
                                             <a class="page-link"
-                                               href="/admin/user-role?pageIndex=@(Model.PageIndex - 1)">
+                                               href="/admin/user-role?pageIndex=@(Model.PageIndex - 1)&keyword=@Uri.EscapeDataString(Model.Keyword)">
 
                                                 &laquo;
 
@@ -697,7 +695,6 @@
                                         }
 
                                     </li>
-
 
 
                                     <!-- CURRENT PAGE -->
@@ -713,7 +710,6 @@
                                     </li>
 
 
-
                                     <!-- NEXT -->
 
                                     <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
@@ -721,15 +717,13 @@
                                         @if (Model.PageIndex == Model.TotalPages)
                                         {
                                             <span class="page-link">
-
                                                 &raquo;
-
                                             </span>
                                         }
                                         else
                                         {
                                             <a class="page-link"
-                                               href="/admin/user-role?pageIndex=@(Model.PageIndex + 1)">
+                                               href="/admin/user-role?pageIndex=@(Model.PageIndex + 1)&keyword=@Uri.EscapeDataString(Model.Keyword)">
 
                                                 &raquo;
 
@@ -739,7 +733,6 @@
                                     </li>
 
 
-
                                     <!-- LAST -->
 
                                     <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
@@ -747,15 +740,13 @@
                                         @if (Model.PageIndex == Model.TotalPages)
                                         {
                                             <span class="page-link">
-
                                                 Last
-
                                             </span>
                                         }
                                         else
                                         {
                                             <a class="page-link"
-                                               href="/admin/user-role?pageIndex=@Model.TotalPages">
+                                               href="/admin/user-role?pageIndex=@Model.TotalPages&keyword=@Uri.EscapeDataString(Model.Keyword)">
 
                                                 Last
 
@@ -776,6 +767,64 @@
 
             </section>
 
+
+            <!-- =====================================================
+                 LOGOUT CONFIRMATION MODAL
+            ====================================================== -->
+
+            <div class="logout-modal-overlay"
+                 id="logoutModal">
+
+                <div class="logout-modal-box">
+
+                    <div class="logout-modal-icon">
+
+                        <i class="fas fa-sign-out-alt"></i>
+
+                    </div>
+
+                    <h2>
+                        Log out?
+                    </h2>
+
+                    <p>
+                        Are you sure you want to log out of your account?
+                    </p>
+
+
+                    <div class="logout-modal-actions">
+
+                        <button type="button"
+                                class="logout-cancel-btn"
+                                id="closeLogoutModal">
+
+                            Cancel
+
+                        </button>
+
+
+                        <form method="post"
+                              asp-page="/Account/Logout">
+
+                            @Html.AntiForgeryToken()
+
+                            <button type="submit"
+                                    class="logout-confirm-btn">
+
+                                <i class="fas fa-sign-out-alt"></i>
+
+                                Yes, Log Out
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
     </main>
@@ -783,10 +832,70 @@
 </div>
 
 
-
 @section Scripts {
 
     <script>
+
+        // =====================================================
+        // LOGOUT MODAL
+        // =====================================================
+
+        const openLogoutModal =
+            document.getElementById("openLogoutModal");
+
+        const closeLogoutModal =
+            document.getElementById("closeLogoutModal");
+
+        const logoutModal =
+            document.getElementById("logoutModal");
+
+
+        // OPEN MODAL
+
+        if (openLogoutModal && logoutModal) {
+
+            openLogoutModal.addEventListener("click", function () {
+
+                logoutModal.classList.add("show");
+
+            });
+
+        }
+
+
+        // CLOSE MODAL
+
+        if (closeLogoutModal && logoutModal) {
+
+            closeLogoutModal.addEventListener("click", function () {
+
+                logoutModal.classList.remove("show");
+
+            });
+
+        }
+
+
+        // CLOSE WHEN CLICKING OUTSIDE THE BOX
+
+        if (logoutModal) {
+
+            logoutModal.addEventListener("click", function (event) {
+
+                if (event.target === logoutModal) {
+
+                    logoutModal.classList.remove("show");
+
+                }
+
+            });
+
+        }
+
+
+        // =====================================================
+        // MOBILE SIDEBAR
+        // =====================================================
 
         document.addEventListener("DOMContentLoaded", function () {
 
@@ -807,6 +916,10 @@
 
             }
 
+
+            // =================================================
+            // SEARCH
+            // =================================================
 
             const searchInput =
                 document.getElementById("userSearch");
@@ -839,5 +952,4 @@
         });
 
     </script>
-
 }

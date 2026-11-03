@@ -1,0 +1,744 @@
+
+@page "/user/appointments"
+@model UserAppointmentsModel
+
+@{
+    ViewData["Title"] = "My Appointments";
+}
+
+<div class="user-dashboard">
+
+    <!-- SIDEBAR -->
+    <aside class="user-sidebar" id="userSidebar">
+
+        <div class="user-sidebar-brand">
+            <div class="user-brand-icon">
+                <i class="fas fa-hospital"></i>
+            </div>
+            <div>
+                <h2>ClinicCare</h2>
+                <span>Appointment System</span>
+            </div>
+        </div>
+
+        <nav class="user-sidebar-nav">
+
+            <div class="user-nav-title">MAIN</div>
+
+            <a href="/user/dashboard" class="user-nav-link">
+                <i class="fas fa-chart-pie"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="/user/appointments" class="user-nav-link active">
+                <i class="fas fa-calendar-check"></i>
+                <span>My Appointments</span>
+            </a>
+
+            <a href="/user/reports"
+               class="user-nav-link ">
+
+                <i class="fas fa-file-medical"></i>
+                <span>Report</span>
+
+            </a>
+
+            <div class="user-nav-title">ACCOUNT</div>
+
+            <a href="/account/user-profile" class="user-nav-link">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </a>
+
+            <button type="button"
+            class="user-nav-link"
+            id="openLogoutModal">
+
+                <i class="fas fa-right-from-bracket"></i>
+
+                <span>Logout</span>
+
+            </button>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="user-main">
+
+        <!-- TOPBAR -->
+        <header class="user-topbar">
+
+            <div class="user-topbar-left">
+
+                <button type="button" class="user-mobile-menu" id="userMobileMenu">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <div>
+                    <span class="user-page-label">PATIENT PORTAL</span>
+                    <h1>My Appointments</h1>
+                </div>
+
+            </div>
+
+            <div class="user-topbar-right">
+
+                <button type="button" class="user-notification">
+                    <i class="far fa-bell"></i>
+                </button>
+
+                <div class="user-profile-top">
+                    <div class="user-top-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div>
+                        <strong>@User.Identity?.Name</strong>
+                        <span>Patient</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- PAGE CONTENT -->
+        <div class="user-dashboard-content appointment-content">
+
+            <!-- PAGE HEADER: SAME ADMIN DESIGN -->
+            <section class="doctor-page-header">
+
+                <div class="doctor-header-info">
+
+                    <div class="doctor-page-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+
+                    <div>
+                        <span>APPOINTMENT MANAGEMENT</span>
+                        <h2>My Appointments</h2>
+                        <p>
+                            Book your clinic visit and view your appointment history.
+                        </p>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ALERTS -->
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success!</strong> @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Error!</strong> @TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+
+            <!-- =========================================
+                 BOOK APPOINTMENT
+            ========================================== -->
+
+            <section class="user-card doctor-card">
+
+                <div class="doctor-card-header">
+
+                    <div class="doctor-title">
+
+                        <div class="doctor-title-icon">
+                            <i class="fas fa-calendar-plus"></i>
+                        </div>
+
+                        <div>
+                            <h3>Book an Appointment</h3>
+                            <p>Enter your information to request a clinic appointment.</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <form method="post" asp-page-handler="Book">
+
+                    <div class="appointment-modal-body">
+
+                        <div asp-validation-summary="ModelOnly"
+                             class="appointment-form-error mb-3">
+                        </div>
+
+
+                        <!-- PATIENT INFORMATION -->
+                        <div class="user-form-section-title">
+                            <i class="fas fa-user"></i>
+                            Patient Information
+                        </div>
+
+
+                        <div class="appointment-form-row">
+
+                            <div class="appointment-form-group">
+
+                                <label asp-for="Input.PatientCode">
+                                    <i class="fas fa-hashtag"></i> Patient Code
+                                </label>
+
+                                <input asp-for="Input.PatientCode"
+                                       type="number"
+                                       min="1"
+                                       class="appointment-form-input"
+                                       placeholder="Enter your patient code" />
+
+                                <span asp-validation-for="Input.PatientCode"
+                                      class="appointment-form-error"></span>
+
+                            </div>
+
+
+                            <div class="appointment-form-group">
+
+                                <label>Patient Name</label>
+
+                                <input type="text"
+                                       class="appointment-form-input"
+                                       value="@Model.PatientName"
+                                       readonly />
+
+                                <small>Your name is retrieved from your account.</small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="appointment-form-group">
+
+                            <label asp-for="Input.ContactInfo">
+                                <i class="fas fa-phone"></i> Contact Number
+                            </label>
+
+                            <input asp-for="Input.ContactInfo"
+                                   type="tel"
+                                   class="appointment-form-input"
+                                   placeholder="Enter your contact number" />
+
+                            <span asp-validation-for="Input.ContactInfo"
+                                  class="appointment-form-error"></span>
+
+                        </div>
+
+
+                        <!-- APPOINTMENT INFORMATION -->
+                        <div class="user-form-section-title">
+                            <i class="fas fa-calendar-alt"></i>
+                            Appointment Information
+                        </div>
+
+
+                        <div class="appointment-form-group">
+
+                            <label asp-for="Input.Doctor">
+                                <i class="fas fa-user-doctor"></i> Doctor
+                            </label>
+
+                            <input asp-for="Input.Doctor"
+                                   class="appointment-form-input"
+                                   placeholder="Enter doctor's name" />
+
+                            <span asp-validation-for="Input.Doctor"
+                                  class="appointment-form-error"></span>
+
+                        </div>
+
+
+                        <div class="appointment-form-row">
+
+                            <div class="appointment-form-group">
+
+                                <label asp-for="Input.Date">
+                                    <i class="fas fa-calendar"></i> Appointment Date
+                                </label>
+
+                                <input asp-for="Input.Date"
+                                       type="date"
+                                       class="appointment-form-input"
+                                       min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+
+                                <span asp-validation-for="Input.Date"
+                                      class="appointment-form-error"></span>
+
+                            </div>
+
+
+                            <div class="appointment-form-group">
+
+                                <label asp-for="Input.Time">
+                                    <i class="fas fa-clock"></i> Appointment Time
+                                </label>
+
+                                <input asp-for="Input.Time"
+                                       type="time"
+                                       class="appointment-form-input" />
+
+                                <span asp-validation-for="Input.Time"
+                                      class="appointment-form-error"></span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="appointment-form-group">
+
+                            <label asp-for="Input.Notes">
+                                <i class="fas fa-note-sticky"></i> Notes / Reason for Appointment
+                            </label>
+
+                            <textarea asp-for="Input.Notes"
+                                      class="appointment-form-textarea"
+                                      rows="4"
+                                      placeholder="Enter appointment notes (optional)"></textarea>
+
+                            <span asp-validation-for="Input.Notes"
+                                  class="appointment-form-error"></span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="appointment-modal-footer">
+
+                        <span>
+                            <i class="fas fa-info-circle"></i>
+                            Your request will be marked as Pending until reviewed.
+                        </span>
+
+                        <button type="submit" class="appointment-save-button">
+                            <i class="fas fa-calendar-plus"></i>
+                            Book Appointment
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+
+
+            <!-- =========================================
+                 APPOINTMENT HISTORY
+            ========================================== -->
+
+            <section class="user-card doctor-card">
+
+                <!-- CARD HEADER -->
+                <div class="doctor-card-header">
+
+                    <div class="doctor-title">
+
+                        <div class="doctor-title-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+
+                        <div>
+                            <h3>My Appointment History</h3>
+                            <p>View your previous and upcoming appointment requests.</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SEARCH: SAME ADMIN DESIGN -->
+                <div class="doctor-search-area">
+
+                    <form method="get"
+                          action="/user/appointments"
+                          class="doctor-search-form">
+
+                        <div class="doctor-search-input">
+                            <i class="fas fa-magnifying-glass"></i>
+
+                            <input type="text"
+                                   name="keyword"
+                                   value="@Model.Keyword"
+                                   placeholder="Search appointments..."
+                                   autocomplete="off" />
+                        </div>
+
+                        <button type="submit" class="doctor-search-button">
+                            <i class="fas fa-magnifying-glass"></i>
+                            Search
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+                <!-- APPOINTMENT CARDS -->
+                @if (Model.Appointments.Any())
+                {
+                    <div class="appointment-grid">
+
+                        @foreach (var appointment in Model.Appointments)
+                        {
+                            var currentStatus =
+                                string.IsNullOrWhiteSpace(appointment.Status)
+                                    ? "Pending"
+                                    : appointment.Status;
+
+                            var statusClass = currentStatus.ToLowerInvariant() switch
+                            {
+                                "pending" => "status-pending",
+                                "confirmed" => "status-confirmed",
+                                "completed" => "status-completed",
+                                "cancelled" => "status-cancelled",
+                                _ => "status-pending"
+                            };
+
+                            <div class="appointment-grid-card">
+
+                                <!-- CARD TOP -->
+                                <div class="appointment-card-top">
+
+                                    <div class="appointment-card-patient">
+
+                                        <div class="appointment-card-avatar">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+
+                                        <div class="appointment-card-patient-info">
+                                            <h4>@appointment.Doctor</h4>
+                                            <span>Patient: @appointment.Patient</span>
+                                        </div>
+
+                                    </div>
+
+                                    <span class="appointment-status @statusClass">
+                                        @currentStatus
+                                    </span>
+
+                                </div>
+
+
+                                <!-- CARD DETAILS -->
+                                <div class="appointment-card-details">
+
+                                    <div class="appointment-card-detail">
+
+                                        <div class="appointment-detail-icon">
+                                            <i class="fas fa-calendar-days"></i>
+                                        </div>
+
+                                        <div>
+                                            <span class="appointment-detail-label">Appointment Date &amp; Time</span>
+                                            <strong>
+                                                @appointment.Date.ToString("MMM dd, yyyy")
+                                                ·
+                                                @DateTime.Today.Add(appointment.Time).ToString("hh:mm tt")
+                                            </strong>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="appointment-card-detail">
+
+                                        <div class="appointment-detail-icon">
+                                            <i class="fas fa-hashtag"></i>
+                                        </div>
+
+                                        <div>
+                                            <span class="appointment-detail-label">Patient Code</span>
+                                            <strong>@appointment.PatientCode</strong>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="appointment-card-detail">
+
+                                        <div class="appointment-detail-icon">
+                                            <i class="fas fa-phone"></i>
+                                        </div>
+
+                                        <div>
+                                            <span class="appointment-detail-label">Contact Information</span>
+                                            <strong>@appointment.ContactInfo</strong>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                @if (!string.IsNullOrWhiteSpace(appointment.Notes))
+                                {
+                                    <div class="user-history-notes">
+                                        <strong>Notes:</strong>
+                                        <span>@appointment.Notes</span>
+                                    </div>
+                                }
+
+
+                                <!-- CARD FOOTER -->
+                                <div class="appointment-card-footer">
+
+                                    <span>
+                                        <i class="fas fa-calendar-check"></i>
+                                        Appointment #@appointment.Id
+                                    </span>
+
+                                    @if (currentStatus.Equals("Pending", StringComparison.OrdinalIgnoreCase)
+                                        || currentStatus.Equals("Confirmed", StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        <form method="post"
+                                              asp-page-handler="Cancel"
+                                              onsubmit="return confirm('Are you sure you want to cancel this appointment?');">
+
+                                            <input type="hidden"
+                                                   name="id"
+                                                   value="@appointment.Id" />
+
+                                            <button type="submit"
+                                                    class="appointment-cancel-button">
+                                                <i class="fas fa-xmark"></i>
+                                                Cancel
+                                            </button>
+
+                                        </form>
+                                    }
+
+                                </div>
+
+                            </div>
+                        }
+
+                    </div>
+                }
+                else
+                {
+                    <div class="doctor-empty">
+
+                        <div class="doctor-empty-icon">
+                            <i class="fas fa-calendar-xmark"></i>
+                        </div>
+
+                        <h4>No appointments found</h4>
+
+                        <p>
+                            You don't have any appointments matching your search.
+                            Book an appointment using the form above.
+                        </p>
+
+                    </div>
+                }
+
+
+                <!-- PAGINATION: SAME ADMIN DESIGN -->
+                @{
+                    var safeKeyword = Uri.EscapeDataString(Model.Keyword ?? "");
+                }
+
+                @if (Model.TotalPages > 1)
+                {
+                    <div class="user-role-pagination-container">
+
+                        <nav aria-label="Appointment pagination">
+
+                            <ul class="pagination user-role-pagination">
+
+                                <!-- FIRST -->
+                                <li class="page-item @(Model.PageIndex <= 1 ? "disabled" : "")">
+
+                                    @if (Model.PageIndex <= 1)
+                                    {
+                                        <span class="page-link">First</span>
+                                    }
+                                    else
+                                    {
+                                        <a class="page-link"
+                                           href="/user/appointments?pageIndex=1&amp;keyword=@safeKeyword">
+                                            First
+                                        </a>
+                                    }
+
+                                </li>
+
+
+                                <!-- PREVIOUS -->
+                                <li class="page-item @(Model.PageIndex <= 1 ? "disabled" : "")">
+
+                                    @if (Model.PageIndex <= 1)
+                                    {
+                                        <span class="page-link">&laquo;</span>
+                                    }
+                                    else
+                                    {
+                                        <a class="page-link"
+                                           href="/user/appointments?pageIndex=@(Model.PageIndex - 1)&amp;keyword=@safeKeyword">
+                                            &laquo;
+                                        </a>
+                                    }
+
+                                </li>
+
+
+                                <!-- CURRENT PAGE -->
+                                <li class="page-item active">
+                                    <span class="page-link">
+                                        @Model.PageIndex of @Model.TotalPages
+                                    </span>
+                                </li>
+
+
+                                <!-- NEXT -->
+                                <li class="page-item @(Model.PageIndex >= Model.TotalPages ? "disabled" : "")">
+
+                                    @if (Model.PageIndex >= Model.TotalPages)
+                                    {
+                                        <span class="page-link">&raquo;</span>
+                                    }
+                                    else
+                                    {
+                                        <a class="page-link"
+                                           href="/user/appointments?pageIndex=@(Model.PageIndex + 1)&amp;keyword=@safeKeyword">
+                                            &raquo;
+                                        </a>
+                                    }
+
+                                </li>
+
+
+                                <!-- LAST -->
+                                <li class="page-item @(Model.PageIndex >= Model.TotalPages ? "disabled" : "")">
+
+                                    @if (Model.PageIndex >= Model.TotalPages)
+                                    {
+                                        <span class="page-link">Last</span>
+                                    }
+                                    else
+                                    {
+                                        <a class="page-link"
+                                           href="/user/appointments?pageIndex=@Model.TotalPages&amp;keyword=@safeKeyword">
+                                            Last
+                                        </a>
+                                    }
+
+                                </li>
+
+                            </ul>
+
+                        </nav>
+
+                    </div>
+                }
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+ <!-- =========================
+     LOGOUT CONFIRMATION MODAL
+========================= -->
+
+<div class="logout-modal-overlay" id="logoutModal">
+
+    <div class="logout-modal-box">
+
+        <div class="logout-modal-icon">
+            <i class="fas fa-sign-out-alt"></i>
+        </div>
+
+        <h2>Log out?</h2>
+
+        <p>
+            Are you sure you want to log out of your account?
+        </p>
+
+        <div class="logout-modal-actions">
+
+            <button type="button"
+                    class="logout-cancel-btn"
+                    id="closeLogoutModal">
+                Cancel
+            </button>
+
+            <form method="post" asp-page="/Account/Logout">
+                @Html.AntiForgeryToken()
+
+                <button type="submit" class="logout-confirm-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Yes, Log Out
+                </button>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+<!-- MOBILE SIDEBAR -->
+<script>
+
+        const openLogoutModal = document.getElementById("openLogoutModal");
+    const closeLogoutModal = document.getElementById("closeLogoutModal");
+    const logoutModal = document.getElementById("logoutModal");
+
+    // OPEN MODAL
+    openLogoutModal.addEventListener("click", function () {
+        logoutModal.classList.add("show");
+    });
+
+    // CLOSE MODAL
+    closeLogoutModal.addEventListener("click", function () {
+        logoutModal.classList.remove("show");
+    });
+
+    // CLOSE WHEN CLICKING OUTSIDE THE BOX
+    logoutModal.addEventListener("click", function (event) {
+        if (event.target === logoutModal) {
+            logoutModal.classList.remove("show");
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const menuButton = document.getElementById("userMobileMenu");
+        const sidebar = document.getElementById("userSidebar");
+
+        if (menuButton && sidebar) {
+            menuButton.addEventListener("click", function () {
+                sidebar.classList.toggle("user-sidebar-open");
+            });
+        }
+
+    });
+</script>
+
+
+
+}

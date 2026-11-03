@@ -50,23 +50,20 @@ var role = User.FindFirst(
         </a>
 
 
-        <a href="/appointments"
+        <a href="/user/appointments"
            class="user-nav-link">
 
             <i class="fas fa-calendar-check"></i>
             <span>My Appointments</span>
 
         </a>
+            <a href="/user/reports"
+               class="user-nav-link">
 
+                <i class="fas fa-file-medical"></i>
+                <span>Report</span>
 
-        <a href="/doctors"
-           class="user-nav-link">
-
-            <i class="fas fa-user-doctor"></i>
-            <span>Doctors</span>
-
-        </a>
-
+            </a>
 
         <div class="user-nav-title">
             ACCOUNT
@@ -82,50 +79,17 @@ var role = User.FindFirst(
         </a>
 
 
-        <a href="#"
-           class="user-nav-link">
+        <button type="button"
+            class="user-nav-link"
+            id="openLogoutModal">
 
-            <i class="fas fa-gear"></i>
-            <span>Settings</span>
+                <i class="fas fa-right-from-bracket"></i>
 
-        </a>
+                <span>Logout</span>
 
-
-        <a asp-page="/account/logout"
-           class="user-nav-link">
-
-            <i class="fas fa-right-from-bracket"></i>
-            <span>Logout</span>
-
-        </a>
+            </button>
 
     </nav>
-
-
-    <div class="user-sidebar-bottom">
-
-        <div class="user-mini-profile">
-
-            <div class="user-mini-avatar">
-                <i class="fas fa-user"></i>
-            </div>
-
-            <div>
-
-                <strong>
-                    @User.Identity?.Name
-                </strong>
-
-                <span>
-                    @role
-                </span>
-
-            </div>
-
-        </div>
-
-    </div>
-
 </aside>
 
 
@@ -526,6 +490,47 @@ var role = User.FindFirst(
 
         </section>
 
+         <!-- =========================
+                    LOGOUT CONFIRMATION MODAL
+                ========================= -->
+
+                <div class="logout-modal-overlay" id="logoutModal">
+
+                    <div class="logout-modal-box">
+
+                        <div class="logout-modal-icon">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </div>
+
+                        <h2>Log out?</h2>
+
+                        <p>
+                            Are you sure you want to log out of your account?
+                        </p>
+
+                        <div class="logout-modal-actions">
+
+                            <button type="button"
+                                    class="logout-cancel-btn"
+                                    id="closeLogoutModal">
+                                Cancel
+                            </button>
+
+                            <form method="post" asp-page="/Account/Logout">
+                                @Html.AntiForgeryToken()
+
+                                <button type="submit" class="logout-confirm-btn">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Yes, Log Out
+                                </button>
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
     </div>
 
 </main>
@@ -539,6 +544,30 @@ var role = User.FindFirst(
 <partial name="_ValidationScriptsPartial" />
 
 <script>
+
+    
+        
+
+    const openLogoutModal = document.getElementById("openLogoutModal");
+    const closeLogoutModal = document.getElementById("closeLogoutModal");
+    const logoutModal = document.getElementById("logoutModal");
+
+    // OPEN MODAL
+    openLogoutModal.addEventListener("click", function () {
+        logoutModal.classList.add("show");
+    });
+
+    // CLOSE MODAL
+    closeLogoutModal.addEventListener("click", function () {
+        logoutModal.classList.remove("show");
+    });
+
+    // CLOSE WHEN CLICKING OUTSIDE THE BOX
+    logoutModal.addEventListener("click", function (event) {
+        if (event.target === logoutModal) {
+            logoutModal.classList.remove("show");
+        }
+    });
 
     document.addEventListener("DOMContentLoaded", function () {
 

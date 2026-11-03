@@ -1,0 +1,1370 @@
+@page "/admin/doctors"
+
+@model DoctorsModel
+
+@{
+    ViewData["Title"] = "Manage Doctors";
+
+    var role = User.FindFirst(
+        System.Security.Claims.ClaimTypes.Role
+    )?.Value;
+}
+
+
+<div class="user-dashboard">
+
+    <!-- =========================================================
+         SIDEBAR
+    ========================================================== -->
+
+    <aside class="user-sidebar">
+
+        <div class="user-sidebar-brand">
+
+            <div class="user-brand-icon">
+                <i class="fas fa-hospital"></i>
+            </div>
+
+            <div>
+                <h2>ClinicCare</h2>
+                <span>Appointment System</span>
+            </div>
+
+        </div>
+
+
+        <nav class="user-sidebar-nav">
+
+            <div class="user-nav-title">
+                MAIN
+            </div>
+
+
+            <a href="/admin/dashboard"
+               class="user-nav-link">
+
+                <i class="fas fa-chart-pie"></i>
+
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a href="/appointments"
+               class="user-nav-link">
+
+                <i class="fas fa-calendar-check"></i>
+
+                <span>Appointment</span>
+
+            </a>
+
+            <a href="/admin/reports"
+               class="user-nav-link">
+                <i class="fas fa-file-medical"></i>
+                <span>Report</span>
+            </a>
+
+            <a href="/admin/doctors"
+               class="user-nav-link active">
+
+                <i class="fas fa-user-doctor"></i>
+
+                <span>Doctor</span>
+
+            </a>
+
+
+            <div class="user-nav-title">
+                MANAGEMENT
+            </div>
+
+
+            <a href="/admin/user-role"
+               class="user-nav-link">
+
+                <i class="fas fa-users"></i>
+
+                <span>Manage User</span>
+
+            </a>
+
+
+            <a href="/account/invite"
+               class="user-nav-link">
+
+                <i class="fas fa-user-plus"></i>
+
+                <span>Invite User</span>
+
+            </a>
+
+
+            <div class="user-nav-title">
+                ACCOUNT
+            </div>
+
+
+            <a href="/account/admin-profile"
+               class="user-nav-link">
+
+                <i class="fas fa-user"></i>
+
+                <span>Profile</span>
+
+            </a>
+
+
+            <button type="button"
+            class="user-nav-link"
+            id="openLogoutModal">
+
+                <i class="fas fa-right-from-bracket"></i>
+
+                <span>Logout</span>
+
+            </button>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- =========================================================
+         MAIN
+    ========================================================== -->
+
+    <main class="user-main">
+
+
+        <!-- =====================================================
+             TOPBAR
+        ====================================================== -->
+
+        <header class="user-topbar">
+
+            <div class="user-topbar-left">
+
+                <button type="button"
+                        class="user-mobile-menu">
+
+                    <i class="fas fa-bars"></i>
+
+                </button>
+
+
+                <div>
+
+                    <span class="user-page-label">
+                        ADMINISTRATION
+                    </span>
+
+                    <h1>
+                        Manage Doctors
+                    </h1>
+
+                </div>
+
+            </div>
+
+
+            <div class="user-topbar-right">
+
+                <button type="button"
+                        class="user-notification">
+
+                    <i class="far fa-bell"></i>
+
+                    <span></span>
+
+                </button>
+
+
+                <div class="user-profile-top">
+
+                    <div class="user-top-avatar">
+
+                        <i class="fas fa-user-shield"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            @User.Identity?.Name
+                        </strong>
+
+                        <span>
+                            @role
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =====================================================
+             DOCTORS CONTENT
+        ====================================================== -->
+
+        <div class="user-dashboard-content doctor-content">
+
+
+            <!-- =================================================
+                 PAGE INTRO
+            ================================================== -->
+
+            <section class="doctor-page-header">
+
+                <div class="doctor-header-info">
+
+                    <div class="doctor-page-icon">
+
+                        <i class="fas fa-user-doctor"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            DOCTOR MANAGEMENT
+                        </span>
+
+                        <h2>
+                            Manage Doctors
+                        </h2>
+
+                        <p>
+                            View and manage doctors registered
+                            in the ClinicCare appointment system.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 SUCCESS MESSAGE
+            ================================================== -->
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show"
+                     role="alert">
+
+                    <strong>Success!</strong>
+
+                    @TempData["SuccessMessage"]
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="alert">
+                    </button>
+
+                </div>
+            }
+
+
+            <!-- =================================================
+                 ERROR MESSAGE
+            ================================================== -->
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show"
+                     role="alert">
+
+                    <strong>Error!</strong>
+
+                    @TempData["ErrorMessage"]
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="alert">
+                    </button>
+
+                </div>
+            }
+
+
+            <!-- =================================================
+                 DOCTORS CARD
+            ================================================== -->
+
+            <section class="user-card doctor-card">
+
+
+                <!-- =============================================
+                     CARD HEADER
+                ============================================== -->
+
+                <div class="doctor-card-header">
+
+
+                    <div class="doctor-title">
+
+                        <div class="doctor-title-icon">
+
+                            <i class="fas fa-user-doctor"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <h3>
+                                Registered Doctors
+                            </h3>
+
+                            <p>
+                                View doctors and their medical specialties.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================================
+                         CARD ACTIONS
+                    ========================================== -->
+
+                    <div class="doctor-card-actions">
+
+                        <span class="doctor-count">
+
+                            <i class="fas fa-user-doctor"></i>
+
+                            @Model.TotalRecords Doctors
+
+                        </span>
+
+
+                        <button type="button"
+                                class="doctor-add-button"
+                                data-bs-toggle="modal"
+                                data-bs-target="#addDoctorModal">
+
+                            <i class="fas fa-plus"></i>
+
+                            Add Doctor
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     SEARCH
+                ================================================== -->
+
+                <div class="doctor-search-area">
+
+                    <form method="get"
+                          action="/admin/doctors"
+                          class="doctor-search-form">
+
+
+                        <div class="doctor-search-input">
+
+                            <i class="fas fa-magnifying-glass"></i>
+
+                            <input type="text"
+                                   id="doctorSearch"
+                                   name="keyword"
+                                   value="@Model.Keyword"
+                                   placeholder="Search doctors..."
+                                   autocomplete="off" />
+
+                        </div>
+
+
+                        <button type="submit"
+                                class="doctor-search-button">
+
+                            <i class="fas fa-magnifying-glass"></i>
+
+                            Search
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+                <!-- =================================================
+                     DOCTORS TABLE
+                ================================================== -->
+
+                @if (Model.Doctors.Count == 0)
+                {
+
+                    <div class="doctor-empty">
+
+                        <div class="doctor-empty-icon">
+
+                            <i class="fas fa-user-doctor"></i>
+
+                        </div>
+
+
+                        <h4>
+                            No doctors found
+                        </h4>
+
+
+                        <p>
+                            There are currently no registered doctors
+                            matching your search.
+                        </p>
+
+
+                        <button type="button"
+                                class="doctor-empty-add-button"
+                                data-bs-toggle="modal"
+                                data-bs-target="#addDoctorModal">
+
+                            <i class="fas fa-plus"></i>
+
+                            Add Your First Doctor
+
+                        </button>
+
+                    </div>
+
+                }
+                else
+                {
+
+                    <div class="table-responsive doctor-table-wrapper">
+
+                        <table class="table doctor-table align-middle mb-0">
+
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        #
+                                    </th>
+
+                                    <th>
+                                        Doctor
+                                    </th>
+
+                                    <th>
+                                        Doctor ID
+                                    </th>
+
+                                    <th>
+                                        Specialty
+                                    </th>
+
+                                    <th>
+                                        Actions
+                                    </th>
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                @for (
+                                    int i = 0;
+                                    i < Model.Doctors.Count;
+                                    i++
+                                )
+                                {
+
+                                    var doctor = Model.Doctors[i];
+
+
+                                    <tr>
+
+
+                                        <!-- NUMBER -->
+
+                                        <td class="doctor-number">
+
+                                            @(
+                                                (Model.PageIndex - 1)
+                                                * Model.PageSize
+                                                + i + 1
+                                            )
+
+                                        </td>
+
+
+                                        <!-- DOCTOR -->
+
+                                        <td>
+
+                                            <div class="doctor-info">
+
+
+                                                <div class="doctor-avatar">
+
+                                                    <i class="fas fa-user-doctor"></i>
+
+                                                </div>
+
+
+                                                <div>
+
+                                                    <strong>
+                                                        @doctor.FullName
+                                                    </strong>
+
+                                                    <small>
+                                                        Medical Professional
+                                                    </small>
+
+                                                </div>
+
+                                            </div>
+
+                                        </td>
+
+
+                                        <!-- DOCTOR ID -->
+
+                                        <td>
+
+                                            <span class="doctor-id">
+
+                                                <i class="fas fa-id-card"></i>
+
+                                                @doctor.Id
+
+                                            </span>
+
+                                        </td>
+
+
+                                        <!-- SPECIALTY -->
+
+                                        <td>
+
+                                            <span class="doctor-specialty">
+
+                                                <i class="fas fa-stethoscope"></i>
+
+                                                @doctor.Specialty
+
+                                            </span>
+
+                                        </td>
+
+                                        <!-- ACTIONS -->
+
+                                        <td>
+
+                                            <button type="button"
+                                                    class="doctor-delete-button"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#deleteDoctorModal"
+                                                    data-doctor-id="@doctor.Id"
+                                                    data-doctor-name="@doctor.FullName">
+
+                                                <i class="fas fa-trash"></i>
+
+                                                Delete
+
+                                            </button>
+
+                                        </td>
+
+                                    </tr>
+
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         PAGINATION
+                    ================================================== -->
+
+                    @if (Model.TotalPages > 1)
+                    {
+
+                        <div class="doctor-pagination-container">
+
+
+                            <!-- SHOWING INFO -->
+
+                            <div class="doctor-showing-info">
+
+                                Showing
+
+                                <strong>
+
+                                    @(
+                                        (Model.PageIndex - 1)
+                                        * Model.PageSize + 1
+                                    )
+
+                                </strong>
+
+                                -
+
+                                <strong>
+
+                                    @(
+                                        Math.Min(
+                                            Model.PageIndex
+                                            * Model.PageSize,
+                                            Model.TotalRecords
+                                        )
+                                    )
+
+                                </strong>
+
+                                of
+
+                                <strong>
+                                    @Model.TotalRecords
+                                </strong>
+
+                                doctors
+
+                            </div>
+
+
+                            <!-- PAGINATION -->
+
+                            <nav aria-label="Doctor pagination">
+
+                                <ul class="pagination mb-0 doctor-pagination">
+
+
+                                    <!-- FIRST -->
+
+                                    <li class="page-item
+                                        @(Model.PageIndex == 1
+                                            ? "disabled"
+                                            : "")">
+
+                                        @if (Model.PageIndex == 1)
+                                        {
+
+                                            <span class="page-link">
+                                                First
+                                            </span>
+
+                                        }
+                                        else
+                                        {
+
+                                            <a class="page-link"
+                                               href="/admin/doctors?pageIndex=1&keyword=@Model.Keyword">
+
+                                                First
+
+                                            </a>
+
+                                        }
+
+                                    </li>
+
+
+                                    <!-- PREVIOUS -->
+
+                                    <li class="page-item
+                                        @(Model.PageIndex == 1
+                                            ? "disabled"
+                                            : "")">
+
+                                        @if (Model.PageIndex == 1)
+                                        {
+
+                                            <span class="page-link">
+                                                &laquo;
+                                            </span>
+
+                                        }
+                                        else
+                                        {
+
+                                            <a class="page-link"
+                                               href="/admin/doctors?pageIndex=@(Model.PageIndex - 1)&keyword=@Model.Keyword">
+
+                                                &laquo;
+
+                                            </a>
+
+                                        }
+
+                                    </li>
+
+
+                                    <!-- CURRENT PAGE -->
+
+                                    <li class="page-item active">
+
+                                        <span class="page-link">
+
+                                            @Model.PageIndex
+
+                                        </span>
+
+                                    </li>
+
+
+                                    <!-- NEXT -->
+
+                                    <li class="page-item
+                                        @(Model.PageIndex == Model.TotalPages
+                                            ? "disabled"
+                                            : "")">
+
+                                        @if (Model.PageIndex == Model.TotalPages)
+                                        {
+
+                                            <span class="page-link">
+                                                &raquo;
+                                            </span>
+
+                                        }
+                                        else
+                                        {
+
+                                            <a class="page-link"
+                                               href="/admin/doctors?pageIndex=@(Model.PageIndex + 1)&keyword=@Model.Keyword">
+
+                                                &raquo;
+
+                                            </a>
+
+                                        }
+
+                                    </li>
+
+
+                                    <!-- LAST -->
+
+                                    <li class="page-item
+                                        @(Model.PageIndex == Model.TotalPages
+                                            ? "disabled"
+                                            : "")">
+
+                                        @if (Model.PageIndex == Model.TotalPages)
+                                        {
+
+                                            <span class="page-link">
+                                                Last
+                                            </span>
+
+                                        }
+                                        else
+                                        {
+
+                                            <a class="page-link"
+                                               href="/admin/doctors?pageIndex=@Model.TotalPages&keyword=@Model.Keyword">
+
+                                                Last
+
+                                            </a>
+
+                                        }
+
+                                    </li>
+
+                                </ul>
+
+                            </nav>
+
+                        </div>
+
+                    }
+
+                }
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+</div>
+
+
+
+
+<!-- =========================================================
+     DELETE DOCTOR MODAL
+========================================================= -->
+
+<div class="modal fade"
+     id="deleteDoctorModal"
+     tabindex="-1"
+     aria-labelledby="deleteDoctorModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content doctor-delete-modal">
+
+
+            <!-- MODAL HEADER -->
+
+            <div class="doctor-delete-header">
+
+                <div class="doctor-delete-icon">
+
+                    <i class="fas fa-trash"></i>
+
+                </div>
+
+
+                <button type="button"
+                        class="doctor-modal-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+
+                    <i class="fas fa-xmark"></i>
+
+                </button>
+
+            </div>
+
+
+            <!-- MODAL BODY -->
+
+            <div class="doctor-delete-body">
+
+                <h4 id="deleteDoctorModalLabel">
+                    Delete Doctor?
+                </h4>
+
+
+                <p>
+                    Are you sure you want to delete
+                    <strong id="deleteDoctorName">
+                        this doctor
+                    </strong>?
+                </p>
+
+
+                <div class="doctor-delete-warning">
+
+                    <i class="fas fa-circle-exclamation"></i>
+
+                    <span>
+                        This action cannot be undone.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- MODAL FOOTER -->
+
+            <div class="doctor-delete-footer">
+
+
+                <button type="button"
+                        class="doctor-cancel-button"
+                        data-bs-dismiss="modal">
+
+                    Cancel
+
+                </button>
+
+
+                <form method="post"
+                      asp-page-handler="DeleteDoctor"
+                      id="deleteDoctorForm">
+
+
+                    <input type="hidden"
+                           name="id"
+                           id="deleteDoctorId" />
+
+
+                    <input type="hidden"
+                           name="pageIndex"
+                           value="@Model.PageIndex" />
+
+
+                    <input type="hidden"
+                           name="keyword"
+                           value="@Model.Keyword" />
+
+
+                    <button type="submit"
+                            class="doctor-confirm-delete-button">
+
+                        <i class="fas fa-trash"></i>
+
+                        Delete Doctor
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+<!-- =============================================================
+     ADD DOCTOR MODAL
+============================================================= -->
+
+<div class="modal fade"
+     id="addDoctorModal"
+     tabindex="-1"
+     aria-labelledby="addDoctorModalLabel"
+     aria-hidden="true">
+
+
+    <div class="modal-dialog modal-dialog-centered">
+
+
+        <div class="modal-content doctor-modal">
+
+
+            <!-- =================================================
+                 MODAL HEADER
+            ================================================== -->
+
+            <div class="doctor-modal-header">
+
+
+                <div class="doctor-modal-title">
+
+
+                    <div class="doctor-modal-icon">
+
+                        <i class="fas fa-user-doctor"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h4 id="addDoctorModalLabel">
+                            Add New Doctor
+                        </h4>
+
+                        <p>
+                            Register a new doctor in ClinicCare.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <button type="button"
+                        class="doctor-modal-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+
+                    <i class="fas fa-xmark"></i>
+
+                </button>
+
+            </div>
+
+
+            <!-- =================================================
+                 MODAL FORM
+            ================================================== -->
+
+            <form method="post"
+                  asp-page-handler="AddDoctor">
+
+
+                <!-- KEEP SEARCH/PAGINATION -->
+
+                <input type="hidden"
+                       name="pageIndex"
+                       value="@Model.PageIndex" />
+
+                <input type="hidden"
+                       name="keyword"
+                       value="@Model.Keyword" />
+
+
+                <!-- =================================================
+                     MODAL BODY
+                ================================================== -->
+
+                <div class="doctor-modal-body">
+
+
+                    <!-- =================================================
+                         FULL NAME
+                    ================================================== -->
+
+                    <div class="doctor-form-group">
+
+                        <label asp-for="Input.FullName">
+
+                            <i class="fas fa-user"></i>
+
+                            Full Name
+
+                        </label>
+
+
+                        <input asp-for="Input.FullName"
+                               class="doctor-form-input"
+                               placeholder="Enter doctor's full name"
+                               autocomplete="off" />
+
+
+                        <span asp-validation-for="Input.FullName"
+                              class="doctor-form-error">
+                        </span>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         SPECIALTY
+                    ================================================== -->
+
+                    <div class="doctor-form-group">
+
+                        <label asp-for="Input.Specialty">
+
+                            <i class="fas fa-stethoscope"></i>
+
+                            Specialty
+
+                        </label>
+
+
+                        <input asp-for="Input.Specialty"
+                               class="doctor-form-input"
+                               placeholder="e.g. Cardiology"
+                               autocomplete="off" />
+
+
+                        <span asp-validation-for="Input.Specialty"
+                              class="doctor-form-error">
+                        </span>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         DOCTOR ID INFORMATION
+                    ================================================== -->
+
+                    <div class="doctor-id-info">
+
+
+                        <div class="doctor-id-info-icon">
+
+                            <i class="fas fa-id-card"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                Doctor ID
+                            </strong>
+
+
+                            <p>
+                                A unique Doctor ID will be
+                                automatically generated when
+                                this doctor is added.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     MODAL FOOTER
+                ================================================== -->
+
+                <div class="doctor-modal-footer">
+
+
+                    <button type="button"
+                            class="doctor-cancel-button"
+                            data-bs-dismiss="modal">
+
+                        Cancel
+
+                    </button>
+
+
+                    <button type="submit"
+                            class="doctor-save-button">
+
+                        <i class="fas fa-plus"></i>
+
+                        Add Doctor
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+                                                                            
+                <!-- =========================
+                    LOGOUT CONFIRMATION MODAL
+                ========================= -->
+
+                <div class="logout-modal-overlay" id="logoutModal">
+
+                    <div class="logout-modal-box">
+
+                        <div class="logout-modal-icon">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </div>
+
+                        <h2>Log out?</h2>
+
+                        <p>
+                            Are you sure you want to log out of your account?
+                        </p>
+
+                        <div class="logout-modal-actions">
+
+                            <button type="button"
+                                    class="logout-cancel-btn"
+                                    id="closeLogoutModal">
+                                Cancel
+                            </button>
+
+                            <form method="post" asp-page="/Account/Logout">
+                                @Html.AntiForgeryToken()
+
+                                <button type="submit" class="logout-confirm-btn">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Yes, Log Out
+                                </button>
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+
+    <script>
+        
+
+        
+
+    const openLogoutModal = document.getElementById("openLogoutModal");
+    const closeLogoutModal = document.getElementById("closeLogoutModal");
+    const logoutModal = document.getElementById("logoutModal");
+
+    // OPEN MODAL
+    openLogoutModal.addEventListener("click", function () {
+        logoutModal.classList.add("show");
+    });
+
+    // CLOSE MODAL
+    closeLogoutModal.addEventListener("click", function () {
+        logoutModal.classList.remove("show");
+    });
+
+    // CLOSE WHEN CLICKING OUTSIDE THE BOX
+    logoutModal.addEventListener("click", function (event) {
+        if (event.target === logoutModal) {
+            logoutModal.classList.remove("show");
+        }
+    });
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+
+            // =====================================================
+            // MOBILE SIDEBAR
+            // =====================================================
+
+            const menuButton =
+                document.querySelector(".user-mobile-menu");
+
+            const sidebar =
+                document.querySelector(".user-sidebar");
+
+
+            if (menuButton && sidebar) {
+
+                menuButton.addEventListener("click", function () {
+
+                    sidebar.classList.toggle(
+                        "user-sidebar-open"
+                    );
+
+                });
+
+            }
+
+
+            // =====================================================
+            // DOCTOR SEARCH
+            // =====================================================
+
+            const searchInput =
+                document.getElementById("doctorSearch");
+
+            let searchTimer;
+
+
+            if (searchInput) {
+
+                searchInput.addEventListener(
+                    "input",
+                    function () {
+
+                        clearTimeout(searchTimer);
+
+
+                        const keyword =
+                            this.value.trim();
+
+
+                        searchTimer = setTimeout(
+                            function () {
+
+                                window.location.href =
+                                    "/admin/doctors?keyword=" +
+                                    encodeURIComponent(keyword);
+
+                            },
+                            500
+                        );
+
+                    }
+                );
+
+            }
+
+
+            // =====================================================
+            // KEEP MODAL OPEN WHEN VALIDATION FAILS
+            // =====================================================
+
+            const showModal =
+                @((!ViewData.ModelState.IsValid).ToString().ToLower());
+
+
+            if (showModal) {
+
+                const modalElement =
+                    document.getElementById("addDoctorModal");
+
+
+                if (modalElement &&
+                    typeof bootstrap !== "undefined") {
+
+                    const modal =
+                        new bootstrap.Modal(modalElement);
+
+                    modal.show();
+
+                }
+
+            }
+
+
+            // =====================================================
+            // DELETE DOCTOR MODAL
+            // =====================================================
+
+            const deleteDoctorModal =
+                document.getElementById("deleteDoctorModal");
+
+            if (deleteDoctorModal) {
+
+                deleteDoctorModal.addEventListener(
+                    "show.bs.modal",
+                    function (event) {
+
+                        const button = event.relatedTarget;
+
+                        if (!button) {
+                            return;
+                        }
+
+
+                        const doctorId =
+                            button.getAttribute("data-doctor-id");
+
+                        const doctorName =
+                            button.getAttribute("data-doctor-name");
+
+
+                        const idInput =
+                            document.getElementById("deleteDoctorId");
+
+                        const nameElement =
+                            document.getElementById("deleteDoctorName");
+
+
+                        if (idInput) {
+                            idInput.value = doctorId;
+                        }
+
+
+                        if (nameElement) {
+                            nameElement.textContent =
+                                doctorName;
+                        }
+
+                    }
+                );
+
+            }
+
+
+        });
+
+    </script>
+
+}
